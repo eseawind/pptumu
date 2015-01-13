@@ -105,12 +105,13 @@ function computeEndDate(delta)
 
     endDate = convertStringToDate(beginDate).addDays(parseInt(delta));
     endDate = endDate.toString('yyyy-M-dd');
-    $('#end').val(endDate);
-    computeWorkDays();
+    $('#espected_completion').val(endDate);
+	$('#actual_completion').val(endDate);
+    // computeWorkDays();
 }
 
 /* Auto compute the work days. */
-$(function() 
+$(function()
 {
     if(typeof(replaceID) != 'undefined') setModal4List('iframe', replaceID);
     $(".date").bind('dateSelected', function()

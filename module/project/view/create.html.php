@@ -43,28 +43,56 @@
     </div>
   </div>
   <form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
-    <table class='table table-form'> 
+    <table class='table table-form'>
+	  <tr>
+        <th><?php echo $lang->project->code;?></th>
+        <td><?php echo html::input('code', $code, "class='form-control'");?></td>
+      </tr>
       <tr>
         <th class='w-90px'><?php echo $lang->project->name;?></th>
         <td class='w-p25-f'><?php echo html::input('name', $name, "class='form-control'");?></td><td></td>
       </tr>
+	  <tr>
+        <th><?php echo $lang->project->client;?></th>
+        <td><?php echo html::input('client', $client, "class='form-control'");?></td>
+      </tr>
       <tr>
-        <th><?php echo $lang->project->code;?></th>
-        <td><?php echo html::input('code', $code, "class='form-control'");?></td>
-      </tr>  
+        <th><?php echo $lang->project->address;?></th>
+        <td><?php echo html::input('address', $address, "class='form-control'");?></td>
+      </tr>
+	  <tr>
+        <th><?php echo $lang->project->type;?></th>
+        <td>
+          <?php echo html::input('type', $type, "class='form-control'");?>
+        </td>
+      </tr>
       <tr>
         <th><?php echo $lang->project->dateRange;?></th>
         <td>
           <div class='input-group'>
             <?php echo html::input('begin',date('Y-m-d'), "class='form-control w-100px form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->begin . "'");?>
             <span class='input-group-addon'><?php echo $lang->project->to;?></span>
-            <?php echo html::input('end', '', "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->end . "'");?>
+            <?php echo html::input('espected_completion', '', "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->espected_completion . "'");?>
           </div>
         </td>
         <td>
           &nbsp; &nbsp; <?php echo html::radio('delta', $lang->project->endList , '', "onclick='computeEndDate(this.value)'");?>
         </td>
       </tr>
+	  <tr>
+        <th><?php echo $lang->project->actual_completion;?></th>
+        <td>
+          <?php echo html::input('actual_completion', $actual_completion, "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->actual_completion . "'");?>
+        </td>
+      </tr>
+	  <?php print_r($poUsers); ?>
+	  <tr>
+        <th><?php echo $lang->project->manager;?></th>
+        <td>
+          <?php echo html::select('manager_id', $poUsers, $project->manager_id, "class='form-control'");?>
+        </td>
+      </tr>
+	  <?php if (false) { ?>
       <tr>
         <th><?php echo $lang->project->days;?></th>
         <td>
@@ -73,32 +101,26 @@
             <span class='input-group-addon'><?php echo $lang->project->day;?></span>
           </div>
         </td>
-      </tr>  
+      </tr>
       <tr>
         <th><?php echo $lang->project->teamname;?></th>
         <td><?php echo html::input('team', $team, "class='form-control'");?></td>
-      </tr>  
-      <tr>
-        <th><?php echo $lang->project->type;?></th>
-        <td>
-          <?php echo html::select('type', $lang->project->typeList, '', "class='form-control'");?>
-        </td>
-        <td>
-          <div class='help-block'><?php echo $lang->project->typeDesc;?></div>
-        </td>
       </tr>
       <tr>
         <th><?php echo $lang->project->manageProducts;?></th>
         <td class='text-left' id='productsBox' colspan="2"><?php echo html::select("products[]", $allProducts, $products, "class='form-control chosen' data-placeholder='{$lang->project->linkProduct}' multiple");?></td>
       </tr>
+	  <?php } ?>
       <tr>
         <th><?php echo $lang->project->desc;?></th>
         <td colspan='2'><?php echo html::textarea('desc', '', "rows='6' class='form-control'");?></td>
-      </tr>  
+      </tr>
+	  <?php if (false) { ?>
       <tr>
         <th><?php echo $lang->project->acl;?></th>
         <td colspan='2'><?php echo nl2br(html::radio('acl', $lang->project->aclList, $acl, "onclick='setWhite(this.value);'", 'block'));?></td>
-      </tr>  
+      </tr>
+	  <?php } ?>
       <tr id='whitelistBox' <?php if($acl != 'custom') echo "class='hidden'";?>>
         <th><?php echo $lang->project->whitelist;?></th>
         <td colspan='2'><?php echo html::checkbox('whitelist', $groups, $whitelist);?></td>

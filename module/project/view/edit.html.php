@@ -23,7 +23,7 @@
     </div>
   </div>
   <form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
-    <table class='table table-form'> 
+    <table class='table table-form'>
       <tr>
         <th class='w-90px'><?php echo $lang->project->name;?></th>
         <td class='w-p45'><?php echo html::input('name', $project->name, "class='form-control'");?></td><td></td>
