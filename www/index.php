@@ -12,7 +12,7 @@
  * @link        http://www.zentao.net
  */
 /* Set the error reporting. */
-error_reporting(0);
+// error_reporting(1);
 
 /* Start output buffer. */
 ob_start();

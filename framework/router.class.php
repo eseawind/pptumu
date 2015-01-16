@@ -1583,7 +1583,7 @@ class router
         $trace = debug_backtrace();
         extract($trace[0]);
         extract($trace[1]);
-        $log .= ", last called by $file on line $line through function $function.\n";
+        $log .= ", <br />\nlast called by $file on line $line through function $function.\n";
 
         /* Trigger it. */
         trigger_error($log, $exit ? E_USER_ERROR : E_USER_WARNING);
@@ -1606,7 +1606,7 @@ class router
 
         /* Set the error info. */
         $errorLog  = "\n" . date('H:i:s') . " $message in <strong>$file</strong> on line <strong>$line</strong> ";
-        $errorLog .= "when visiting <strong>" . $this->getURI() . "</strong>\n";
+        $errorLog .= "when visiting <strong>" . $this->getURI() . "</strong><br />\n";
 
         /* If the ip is pulic, hidden the full path of scripts. */
         if(PHP_SAPI != 'cli' and !($this->server->server_addr == '127.0.0.1' or filter_var($this->server->server_addr, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE) === false))

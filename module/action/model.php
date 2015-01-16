@@ -211,21 +211,21 @@ class actionModel extends model
             elseif($actionName == 'linked2project')
             {
                 $name = $this->dao->select('name')->from(TABLE_PROJECT)->where('id')->eq($action->extra)->fetch('name');
-                if($name) $action->extra = html::a(helper::createLink('project', 'story', "projectID=$action->extra"), $name);
+			if($name) $action->extra = html::a(helper::createLink('project', 'story', "projectID={$action->extra}"), $name);
             }
             elseif($actionName == 'linked2plan')
             {
                 $title = $this->dao->select('title')->from(TABLE_PRODUCTPLAN)->where('id')->eq($action->extra)->fetch('title');
-                if($title) $action->extra = html::a(helper::createLink('productplan', 'view', "planID=$action->extra"), $title);
+                if($title) $action->extra = html::a(helper::createLink('productplan', 'view', "planID={$action->extra}"), $title);
             }
             elseif($actionName == 'moved')
             {
                 $name = $this->dao->select('name')->from(TABLE_PROJECT)->where('id')->eq($action->extra)->fetch('name');
-                if($name) $action->extra = html::a(helper::createLink('project', 'task', "projectID=$action->extra"), "#$action->extra " . $name);
+                if($name) $action->extra = html::a(helper::createLink('project', 'task', "projectID={$action->extra}"), "#$action->extra " . $name);
             }
             elseif($actionName == 'frombug')
             {
-                $action->extra = html::a(helper::createLink('bug', 'view', "bugID=$action->extra"), $action->extra);
+                $action->extra = html::a(helper::createLink('bug', 'view', "bugID={$action->extra}"), $action->extra);
             }
             $action->history = isset($histories[$actionID]) ? $histories[$actionID] : array();
             $action->comment = $this->file->setImgSize($action->comment, $this->config->action->commonImgSize);

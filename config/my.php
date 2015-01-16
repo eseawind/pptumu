@@ -1,6 +1,6 @@
 <?php
 $config->installed       = true;
-$config->debug           = false;
+$config->debug           = true;
 $config->requestType     = 'PATH_INFO';
 $config->db->host        = '127.0.0.1';
 $config->db->port        = '3306';

@@ -1082,7 +1082,7 @@ class taskModel extends model
     public function processTask($task)
     {
         $today = helper::today();
-       
+        
         /* Delayed or not?. */
         if($task->status !== 'done' and $task->status !== 'cancel' and $task->status != 'closed')
         {

@@ -45,7 +45,7 @@ class commonModel extends model
      * @return void
      */
     public function setCompany()
-    {        
+    {
         $httpHost = $this->server->http_host;
 
         if($this->session->company)

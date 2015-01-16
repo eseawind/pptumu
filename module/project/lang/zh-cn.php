@@ -21,7 +21,8 @@ $lang->project->code          = '项目编号';
 $lang->project->name          = '项目名称';
 $lang->project->client        = '工程业主';
 $lang->project->address       = '项目地点';
-$lang->project->manager       = '项目经理';
+$lang->project->pm            = '项目经理';
+$lang->project->sub_pm        = '项目经理';
 $lang->project->dateRange     = '预计日期';
 $lang->project->to            = '至';
 $lang->project->begin         = '实际开工时间';
@@ -106,7 +107,7 @@ $lang->project->aclList['private'] = '私有项目(只有项目团队成员才�
 $lang->project->aclList['custom']  = '自定义白名单(团队成员和白名单的成员可以访问)';
 
 /* 方法列表。*/
-$lang->project->index            = "项目首页";
+$lang->project->index            = '项目首页';
 $lang->project->task             = '任务列表';
 $lang->project->groupTask        = '分组浏览任务';
 $lang->project->story            = '需求列表';

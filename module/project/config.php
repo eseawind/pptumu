@@ -1,15 +1,15 @@
 <?php
 $config->project = new stdclass();
 $config->project->defaultWorkhours = 7;
-$config->project->orderBy          = 'isDone, status';
+$config->project->orderBy          = 'created, modified';
 $config->project->maxBurnDay       = '31';
 
 global $lang, $app;
 $app->loadLang('task');
 $config->project->create = new stdclass();
 $config->project->edit   = new stdclass();
-$config->project->create->requiredFields = 'name,code,begin,end';
-$config->project->edit->requiredFields   = 'name,code,begin,end';
+$config->project->create->requiredFields = 'name, code';
+$config->project->edit->requiredFields   = 'name, code';
 
 $config->project->editor = new stdclass();
 $config->project->editor->create  = array('id' => 'desc',    'tools' => 'simpleTools');
