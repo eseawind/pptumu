@@ -162,7 +162,6 @@ class common extends control
         }
         else
         {
-            
             $orderBy   = "" . trim($fieldName, '`') . "" . '_' . 'asc';
             $className = 'header';
         }
