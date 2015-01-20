@@ -131,6 +131,9 @@ define('TABLE_EFFORT',        '`' . $config->db->prefix . 'effort`');
 define('TABLE_BURN',          '`' . $config->db->prefix . 'burn`');
 define('TABLE_BUILD',         '`' . $config->db->prefix . 'build`');
 
+define('TABLE_MATERIALTYPE',  '`' . $config->db->prefix . 'materialtype`');
+define('TABLE_MATERIAL',      '`' . $config->db->prefix . 'material`');
+
 define('TABLE_DOCLIB',        '`' . $config->db->prefix . 'doclib`');
 define('TABLE_DOC',           '`' . $config->db->prefix . 'doc`');
 

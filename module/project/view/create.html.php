@@ -1,16 +1,4 @@
-<?php
-/**
- * The create view of project module of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     project
- * @version     $Id: create.html.php 4728 2013-05-03 06:14:34Z chencongzhi520@gmail.com $
- * @link        http://www.zentao.net
- */
-?>
-<?php if(isset($tips)):?>
+<?php if(isset($tips)) { ?>
 <?php $defaultURL = $this-> createLink('project', 'task', 'projectID=' . $projectID);?>
 <?php include '../../common/view/header.lite.html.php';?>
 <body style='background: #e5e5e5'>
@@ -26,7 +14,8 @@
 </body>
 </html>
 <?php exit;?>
-<?php endif;?>
+<?php } ?>
+
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../common/view/datepicker.html.php';?>
 <?php include '../../common/view/kindeditor.html.php';?>
@@ -45,16 +34,16 @@
   <form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
     <table class='table table-form'>
 	  <tr>
-        <th><?php echo $lang->project->code;?></th>
-        <td><?php echo html::input('code', $code, "class='form-control'");?></td>
+        <th class='w-90px'><?php echo $lang->project->code;?></th>
+        <td class='w-p25-f'><?php echo html::input('code', $code, "class='form-control'");?></td><td></td>
       </tr>
       <tr>
-        <th class='w-90px'><?php echo $lang->project->name;?></th>
-        <td class='w-p25-f'><?php echo html::input('name', $name, "class='form-control'");?></td><td></td>
+        <th><?php echo $lang->project->name;?></th>
+        <td><?php echo html::input('name', $name, "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
         <th><?php echo $lang->project->client;?></th>
-        <td><?php echo html::input('client', $client, "class='form-control'");?></td>
+        <td><?php echo html::input('client', $client, "class='form-control'");?></td><td></td>
       </tr>
       <tr>
         <th><?php echo $lang->project->address;?></th>

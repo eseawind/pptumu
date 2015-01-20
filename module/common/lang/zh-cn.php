@@ -18,8 +18,8 @@ $lang->downArrow = '↓';
 $lang->null      = '空';
 $lang->ellipsis  = '…';
 
-$lang->zentaoPMS      = '禅道';
-$lang->welcome        = "%s项目管理系统";
+$lang->zentaoPMS      = '土木工程';
+$lang->welcome        = "%s土木工程管理系统";
 $lang->myControl      = "我的地盘";
 $lang->currentPos     = '当前位置：';
 $lang->logout         = '退出';
@@ -93,6 +93,7 @@ $lang->menu = new stdclass();
 $lang->menu->my       = '<i class="icon-home"></i><span> 我的地盘</span>|my|index';
 $lang->menu->product  = '产品|product|index';
 $lang->menu->project  = '项目|project|index';
+$lang->menu->material = '材料|material|index';
 $lang->menu->qa       = '测试|qa|index';
 $lang->menu->doc      = '文档|doc|index';
 $lang->menu->report   = '统计|report|index';
@@ -105,6 +106,7 @@ $lang->searchObjects['story']       = '需求';
 $lang->searchObjects['task']        = '任务';
 $lang->searchObjects['testcase']    = '用例';
 $lang->searchObjects['project']     = '项目';
+$lang->searchObjects['material']    = '材料';
 $lang->searchObjects['product']     = '产品';
 $lang->searchObjects['user']        = '用户';
 $lang->searchObjects['build']       = '版本';
@@ -211,6 +213,14 @@ $lang->task  = new stdclass();
 $lang->build = new stdclass();
 $lang->task->menu  = $lang->project->menu;
 $lang->build->menu = $lang->project->menu;
+
+/* 材料视图菜单设置。*/
+$lang->material = new stdclass();
+$lang->material->menu = new stdclass();
+
+$lang->material->menu->list      = '材料管理';
+$lang->material->menu->create      = array('link' => '<i class="icon-plus"></i>&nbsp;添加|material|create|', 'subModule' => 'task,tree', 'alias' => 'grouptask,importtask,burn,importbug');
+$lang->material->menu->edit     = array('link' => '修改|material|edit|', 'subModule' => 'story', 'alias' => 'linkstory');
 
 /* QA视图菜单设置。*/
 $lang->bug = new stdclass();

@@ -3,6 +3,7 @@
 $lang->menuOrder[5]  = 'my';
 $lang->menuOrder[10] = 'product';
 $lang->menuOrder[15] = 'project';
+$lang->menuOrder[16] = 'material';
 $lang->menuOrder[20] = 'qa';
 $lang->menuOrder[25] = 'doc';
 $lang->menuOrder[30] = 'report';
@@ -12,6 +13,7 @@ $lang->menuOrder[40] = 'admin';
 /* index menu order. */
 $lang->index->menuOrder[5]  = 'product';
 $lang->index->menuOrder[10] = 'project';
+$lang->index->menuOrder[16] = 'material';
 
 /* my menu order. */
 $lang->my->menuOrder[5]  = 'account';
