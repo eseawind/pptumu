@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 21, 2015 at 12:28 AM
--- Server version: 5.6.21
+-- Generation Time: 2015-01-21 23:14:18
+-- 服务器版本： 5.6.21
 -- PHP Version: 5.5.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_action`
+-- 表的结构 `tm_action`
 --
 
 DROP TABLE IF EXISTS `tm_action`;
@@ -40,10 +40,10 @@ CREATE TABLE IF NOT EXISTS `tm_action` (
   `extra` varchar(255) NOT NULL,
   `read` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=133 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=134 ;
 
 --
--- Dumping data for table `tm_action`
+-- 转存表中的数据 `tm_action`
 --
 
 INSERT INTO `tm_action` (`id`, `objectType`, `objectID`, `product`, `project`, `actor`, `action`, `date`, `comment`, `extra`, `read`) VALUES
@@ -178,12 +178,13 @@ INSERT INTO `tm_action` (`id`, `objectType`, `objectID`, `product`, `project`, `
 (129, 'material', 2, ',0,', 0, 'admin', 'opened', '2015-01-21 00:13:57', '', '', '0'),
 (130, 'material', 3, ',0,', 0, 'admin', 'opened', '2015-01-21 00:17:03', '', '', '0'),
 (131, 'material', 4, ',0,', 0, 'admin', 'opened', '2015-01-21 00:19:38', '', '', '0'),
-(132, 'user', 1, ',0,', 0, 'admin', 'login', '2015-01-21 00:27:23', '', '', '0');
+(132, 'user', 1, ',0,', 0, 'admin', 'login', '2015-01-21 00:27:23', '', '', '0'),
+(133, 'user', 1, ',0,', 0, 'admin', 'login', '2015-01-21 20:26:15', '', '', '0');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_bug`
+-- 表的结构 `tm_bug`
 --
 
 DROP TABLE IF EXISTS `tm_bug`;
@@ -236,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `tm_bug` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `tm_bug`
+-- 转存表中的数据 `tm_bug`
 --
 
 INSERT INTO `tm_bug` (`id`, `product`, `module`, `project`, `plan`, `story`, `storyVersion`, `task`, `toTask`, `toStory`, `title`, `keywords`, `severity`, `pri`, `type`, `os`, `browser`, `hardware`, `found`, `steps`, `status`, `confirmed`, `activatedCount`, `mailto`, `openedBy`, `openedDate`, `openedBuild`, `assignedTo`, `assignedDate`, `resolvedBy`, `resolution`, `resolvedBuild`, `resolvedDate`, `closedBy`, `closedDate`, `duplicateBug`, `linkBug`, `case`, `caseVersion`, `result`, `testtask`, `lastEditedBy`, `lastEditedDate`, `deleted`) VALUES
@@ -248,7 +249,7 @@ INSERT INTO `tm_bug` (`id`, `product`, `module`, `project`, `plan`, `story`, `st
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_build`
+-- 表的结构 `tm_build`
 --
 
 DROP TABLE IF EXISTS `tm_build`;
@@ -269,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `tm_build` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `tm_build`
+-- 转存表中的数据 `tm_build`
 --
 
 INSERT INTO `tm_build` (`id`, `product`, `project`, `name`, `scmPath`, `filePath`, `date`, `stories`, `bugs`, `builder`, `desc`, `deleted`) VALUES
@@ -278,7 +279,7 @@ INSERT INTO `tm_build` (`id`, `product`, `project`, `name`, `scmPath`, `filePath
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_burn`
+-- 表的结构 `tm_burn`
 --
 
 DROP TABLE IF EXISTS `tm_burn`;
@@ -291,7 +292,7 @@ CREATE TABLE IF NOT EXISTS `tm_burn` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tm_burn`
+-- 转存表中的数据 `tm_burn`
 --
 
 INSERT INTO `tm_burn` (`project`, `date`, `left`, `consumed`) VALUES
@@ -300,7 +301,7 @@ INSERT INTO `tm_burn` (`project`, `date`, `left`, `consumed`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_case`
+-- 表的结构 `tm_case`
 --
 
 DROP TABLE IF EXISTS `tm_case`;
@@ -340,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `tm_case` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `tm_case`
+-- 转存表中的数据 `tm_case`
 --
 
 INSERT INTO `tm_case` (`id`, `product`, `module`, `path`, `story`, `storyVersion`, `title`, `precondition`, `keywords`, `pri`, `type`, `stage`, `howRun`, `scriptedBy`, `scriptedDate`, `scriptStatus`, `scriptLocation`, `status`, `frequency`, `order`, `openedBy`, `openedDate`, `lastEditedBy`, `lastEditedDate`, `version`, `linkCase`, `fromBug`, `deleted`, `lastRunner`, `lastRunDate`, `lastRunResult`) VALUES
@@ -352,7 +353,7 @@ INSERT INTO `tm_case` (`id`, `product`, `module`, `path`, `story`, `storyVersion
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_casestep`
+-- 表的结构 `tm_casestep`
 --
 
 DROP TABLE IF EXISTS `tm_casestep`;
@@ -367,7 +368,7 @@ CREATE TABLE IF NOT EXISTS `tm_casestep` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `tm_casestep`
+-- 转存表中的数据 `tm_casestep`
 --
 
 INSERT INTO `tm_casestep` (`id`, `case`, `version`, `desc`, `expect`) VALUES
@@ -379,7 +380,7 @@ INSERT INTO `tm_casestep` (`id`, `case`, `version`, `desc`, `expect`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_company`
+-- 表的结构 `tm_company`
 --
 
 DROP TABLE IF EXISTS `tm_company`;
@@ -399,7 +400,7 @@ CREATE TABLE IF NOT EXISTS `tm_company` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `tm_company`
+-- 转存表中的数据 `tm_company`
 --
 
 INSERT INTO `tm_company` (`id`, `name`, `phone`, `fax`, `address`, `zipcode`, `website`, `backyard`, `guest`, `admins`, `deleted`) VALUES
@@ -408,7 +409,7 @@ INSERT INTO `tm_company` (`id`, `name`, `phone`, `fax`, `address`, `zipcode`, `w
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_config`
+-- 表的结构 `tm_config`
 --
 
 DROP TABLE IF EXISTS `tm_config`;
@@ -424,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `tm_config` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `tm_config`
+-- 转存表中的数据 `tm_config`
 --
 
 INSERT INTO `tm_config` (`id`, `owner`, `module`, `section`, `key`, `value`) VALUES
@@ -436,7 +437,7 @@ INSERT INTO `tm_config` (`id`, `owner`, `module`, `section`, `key`, `value`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_dept`
+-- 表的结构 `tm_dept`
 --
 
 DROP TABLE IF EXISTS `tm_dept`;
@@ -454,7 +455,7 @@ CREATE TABLE IF NOT EXISTS `tm_dept` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
--- Dumping data for table `tm_dept`
+-- 转存表中的数据 `tm_dept`
 --
 
 INSERT INTO `tm_dept` (`id`, `name`, `parent`, `path`, `grade`, `order`, `position`, `function`, `manager`) VALUES
@@ -470,7 +471,7 @@ INSERT INTO `tm_dept` (`id`, `name`, `parent`, `path`, `grade`, `order`, `positi
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_doc`
+-- 表的结构 `tm_doc`
 --
 
 DROP TABLE IF EXISTS `tm_doc`;
@@ -498,7 +499,7 @@ CREATE TABLE IF NOT EXISTS `tm_doc` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_doclib`
+-- 表的结构 `tm_doclib`
 --
 
 DROP TABLE IF EXISTS `tm_doclib`;
@@ -512,7 +513,7 @@ CREATE TABLE IF NOT EXISTS `tm_doclib` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_effort`
+-- 表的结构 `tm_effort`
 --
 
 DROP TABLE IF EXISTS `tm_effort`;
@@ -535,7 +536,7 @@ CREATE TABLE IF NOT EXISTS `tm_effort` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_extension`
+-- 表的结构 `tm_extension`
 --
 
 DROP TABLE IF EXISTS `tm_extension`;
@@ -564,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `tm_extension` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_file`
+-- 表的结构 `tm_file`
 --
 
 DROP TABLE IF EXISTS `tm_file`;
@@ -587,7 +588,7 @@ CREATE TABLE IF NOT EXISTS `tm_file` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_group`
+-- 表的结构 `tm_group`
 --
 
 DROP TABLE IF EXISTS `tm_group`;
@@ -600,7 +601,7 @@ CREATE TABLE IF NOT EXISTS `tm_group` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
--- Dumping data for table `tm_group`
+-- 转存表中的数据 `tm_group`
 --
 
 INSERT INTO `tm_group` (`id`, `name`, `role`, `desc`) VALUES
@@ -619,7 +620,7 @@ INSERT INTO `tm_group` (`id`, `name`, `role`, `desc`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_grouppriv`
+-- 表的结构 `tm_grouppriv`
 --
 
 DROP TABLE IF EXISTS `tm_grouppriv`;
@@ -631,7 +632,7 @@ CREATE TABLE IF NOT EXISTS `tm_grouppriv` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tm_grouppriv`
+-- 转存表中的数据 `tm_grouppriv`
 --
 
 INSERT INTO `tm_grouppriv` (`group`, `module`, `method`) VALUES
@@ -2551,7 +2552,7 @@ INSERT INTO `tm_grouppriv` (`group`, `module`, `method`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_history`
+-- 表的结构 `tm_history`
 --
 
 DROP TABLE IF EXISTS `tm_history`;
@@ -2566,7 +2567,7 @@ CREATE TABLE IF NOT EXISTS `tm_history` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=68 ;
 
 --
--- Dumping data for table `tm_history`
+-- 转存表中的数据 `tm_history`
 --
 
 INSERT INTO `tm_history` (`id`, `action`, `field`, `old`, `new`, `diff`) VALUES
@@ -2638,7 +2639,7 @@ INSERT INTO `tm_history` (`id`, `action`, `field`, `old`, `new`, `diff`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_lang`
+-- 表的结构 `tm_lang`
 --
 
 DROP TABLE IF EXISTS `tm_lang`;
@@ -2657,7 +2658,7 @@ CREATE TABLE IF NOT EXISTS `tm_lang` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_material`
+-- 表的结构 `tm_material`
 --
 
 DROP TABLE IF EXISTS `tm_material`;
@@ -2667,6 +2668,7 @@ CREATE TABLE IF NOT EXISTS `tm_material` (
   `name` varchar(50) NOT NULL COMMENT '材料名称',
   `type_id` int(11) NOT NULL COMMENT '类型（关联 tm_materialtype表 name字段）',
   `unit` varchar(10) DEFAULT NULL,
+  `deleted` int(2) DEFAULT '0' COMMENT '0: 未删除; 1: 已删除',
   `created_by` varchar(30) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -2674,16 +2676,16 @@ CREATE TABLE IF NOT EXISTS `tm_material` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `tm_material`
+-- 转存表中的数据 `tm_material`
 --
 
-INSERT INTO `tm_material` (`id`, `code`, `name`, `type_id`, `unit`, `created_by`, `created`, `modified`) VALUES
-(4, '1001', '白水泥', 1, '吨', '', '2015-01-21 00:19:38', '2015-01-21 00:19:38');
+INSERT INTO `tm_material` (`id`, `code`, `name`, `type_id`, `unit`, `deleted`, `created_by`, `created`, `modified`) VALUES
+(4, '1001', '白水泥', 1, '吨', 0, '', '2015-01-21 00:19:38', '2015-01-21 00:19:38');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_materialtype`
+-- 表的结构 `tm_materialtype`
 --
 
 DROP TABLE IF EXISTS `tm_materialtype`;
@@ -2697,7 +2699,7 @@ CREATE TABLE IF NOT EXISTS `tm_materialtype` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
--- Dumping data for table `tm_materialtype`
+-- 转存表中的数据 `tm_materialtype`
 --
 
 INSERT INTO `tm_materialtype` (`id`, `name`, `created_by`, `created`, `modified`) VALUES
@@ -2714,7 +2716,7 @@ INSERT INTO `tm_materialtype` (`id`, `name`, `created_by`, `created`, `modified`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_module`
+-- 表的结构 `tm_module`
 --
 
 DROP TABLE IF EXISTS `tm_module`;
@@ -2732,7 +2734,7 @@ CREATE TABLE IF NOT EXISTS `tm_module` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
--- Dumping data for table `tm_module`
+-- 转存表中的数据 `tm_module`
 --
 
 INSERT INTO `tm_module` (`id`, `root`, `name`, `parent`, `path`, `grade`, `order`, `type`, `owner`) VALUES
@@ -2754,7 +2756,7 @@ INSERT INTO `tm_module` (`id`, `root`, `name`, `parent`, `path`, `grade`, `order
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_product`
+-- 表的结构 `tm_product`
 --
 
 DROP TABLE IF EXISTS `tm_product`;
@@ -2777,7 +2779,7 @@ CREATE TABLE IF NOT EXISTS `tm_product` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `tm_product`
+-- 转存表中的数据 `tm_product`
 --
 
 INSERT INTO `tm_product` (`id`, `name`, `code`, `status`, `desc`, `PO`, `QD`, `RD`, `acl`, `whitelist`, `createdBy`, `createdDate`, `createdVersion`, `deleted`) VALUES
@@ -2787,7 +2789,7 @@ INSERT INTO `tm_product` (`id`, `name`, `code`, `status`, `desc`, `PO`, `QD`, `R
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_productplan`
+-- 表的结构 `tm_productplan`
 --
 
 DROP TABLE IF EXISTS `tm_productplan`;
@@ -2803,7 +2805,7 @@ CREATE TABLE IF NOT EXISTS `tm_productplan` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `tm_productplan`
+-- 转存表中的数据 `tm_productplan`
 --
 
 INSERT INTO `tm_productplan` (`id`, `product`, `title`, `desc`, `begin`, `end`, `deleted`) VALUES
@@ -2812,7 +2814,7 @@ INSERT INTO `tm_productplan` (`id`, `product`, `title`, `desc`, `begin`, `end`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_project`
+-- 表的结构 `tm_project`
 --
 
 DROP TABLE IF EXISTS `tm_project`;
@@ -2838,7 +2840,7 @@ CREATE TABLE IF NOT EXISTS `tm_project` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `tm_project`
+-- 转存表中的数据 `tm_project`
 --
 
 INSERT INTO `tm_project` (`id`, `code`, `name`, `client`, `address`, `type`, `pm`, `sub_pm`, `begin`, `espected_completion`, `actual_completion`, `desc`, `deleted`, `created_by`, `created`, `modified`) VALUES
@@ -2848,7 +2850,7 @@ INSERT INTO `tm_project` (`id`, `code`, `name`, `client`, `address`, `type`, `pm
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_projectproduct`
+-- 表的结构 `tm_projectproduct`
 --
 
 DROP TABLE IF EXISTS `tm_projectproduct`;
@@ -2859,7 +2861,7 @@ CREATE TABLE IF NOT EXISTS `tm_projectproduct` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tm_projectproduct`
+-- 转存表中的数据 `tm_projectproduct`
 --
 
 INSERT INTO `tm_projectproduct` (`project`, `product`) VALUES
@@ -2869,7 +2871,7 @@ INSERT INTO `tm_projectproduct` (`project`, `product`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_projectstory`
+-- 表的结构 `tm_projectstory`
 --
 
 DROP TABLE IF EXISTS `tm_projectstory`;
@@ -2882,7 +2884,7 @@ CREATE TABLE IF NOT EXISTS `tm_projectstory` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tm_projectstory`
+-- 转存表中的数据 `tm_projectstory`
 --
 
 INSERT INTO `tm_projectstory` (`project`, `product`, `story`, `version`) VALUES
@@ -2894,7 +2896,7 @@ INSERT INTO `tm_projectstory` (`project`, `product`, `story`, `version`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_release`
+-- 表的结构 `tm_release`
 --
 
 DROP TABLE IF EXISTS `tm_release`;
@@ -2915,7 +2917,7 @@ CREATE TABLE IF NOT EXISTS `tm_release` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_story`
+-- 表的结构 `tm_story`
 --
 
 DROP TABLE IF EXISTS `tm_story`;
@@ -2957,7 +2959,7 @@ CREATE TABLE IF NOT EXISTS `tm_story` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
--- Dumping data for table `tm_story`
+-- 转存表中的数据 `tm_story`
 --
 
 INSERT INTO `tm_story` (`id`, `product`, `module`, `plan`, `source`, `fromBug`, `title`, `keywords`, `type`, `pri`, `estimate`, `status`, `stage`, `mailto`, `openedBy`, `openedDate`, `assignedTo`, `assignedDate`, `lastEditedBy`, `lastEditedDate`, `reviewedBy`, `reviewedDate`, `closedBy`, `closedDate`, `closedReason`, `toBug`, `childStories`, `linkStories`, `duplicateStory`, `version`, `deleted`) VALUES
@@ -2972,7 +2974,7 @@ INSERT INTO `tm_story` (`id`, `product`, `module`, `plan`, `source`, `fromBug`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_storyspec`
+-- 表的结构 `tm_storyspec`
 --
 
 DROP TABLE IF EXISTS `tm_storyspec`;
@@ -2986,7 +2988,7 @@ CREATE TABLE IF NOT EXISTS `tm_storyspec` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tm_storyspec`
+-- 转存表中的数据 `tm_storyspec`
 --
 
 INSERT INTO `tm_storyspec` (`story`, `version`, `title`, `spec`, `verify`) VALUES
@@ -3002,7 +3004,7 @@ INSERT INTO `tm_storyspec` (`story`, `version`, `title`, `spec`, `verify`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_task`
+-- 表的结构 `tm_task`
 --
 
 DROP TABLE IF EXISTS `tm_task`;
@@ -3044,7 +3046,7 @@ CREATE TABLE IF NOT EXISTS `tm_task` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
--- Dumping data for table `tm_task`
+-- 转存表中的数据 `tm_task`
 --
 
 INSERT INTO `tm_task` (`id`, `project`, `module`, `story`, `storyVersion`, `fromBug`, `name`, `type`, `pri`, `estimate`, `consumed`, `left`, `deadline`, `status`, `mailto`, `desc`, `openedBy`, `openedDate`, `assignedTo`, `assignedDate`, `estStarted`, `realStarted`, `finishedBy`, `finishedDate`, `canceledBy`, `canceledDate`, `closedBy`, `closedDate`, `closedReason`, `lastEditedBy`, `lastEditedDate`, `deleted`) VALUES
@@ -3061,7 +3063,7 @@ INSERT INTO `tm_task` (`id`, `project`, `module`, `story`, `storyVersion`, `from
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_taskestimate`
+-- 表的结构 `tm_taskestimate`
 --
 
 DROP TABLE IF EXISTS `tm_taskestimate`;
@@ -3080,7 +3082,7 @@ CREATE TABLE IF NOT EXISTS `tm_taskestimate` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_team`
+-- 表的结构 `tm_team`
 --
 
 DROP TABLE IF EXISTS `tm_team`;
@@ -3095,7 +3097,7 @@ CREATE TABLE IF NOT EXISTS `tm_team` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tm_team`
+-- 转存表中的数据 `tm_team`
 --
 
 INSERT INTO `tm_team` (`project`, `account`, `role`, `join`, `days`, `hours`) VALUES
@@ -3118,7 +3120,7 @@ INSERT INTO `tm_team` (`project`, `account`, `role`, `join`, `days`, `hours`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_testresult`
+-- 表的结构 `tm_testresult`
 --
 
 DROP TABLE IF EXISTS `tm_testresult`;
@@ -3137,7 +3139,7 @@ CREATE TABLE IF NOT EXISTS `tm_testresult` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `tm_testresult`
+-- 转存表中的数据 `tm_testresult`
 --
 
 INSERT INTO `tm_testresult` (`id`, `run`, `case`, `version`, `caseResult`, `stepResults`, `lastRunner`, `date`) VALUES
@@ -3149,7 +3151,7 @@ INSERT INTO `tm_testresult` (`id`, `run`, `case`, `version`, `caseResult`, `step
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_testrun`
+-- 表的结构 `tm_testrun`
 --
 
 DROP TABLE IF EXISTS `tm_testrun`;
@@ -3168,7 +3170,7 @@ CREATE TABLE IF NOT EXISTS `tm_testrun` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `tm_testrun`
+-- 转存表中的数据 `tm_testrun`
 --
 
 INSERT INTO `tm_testrun` (`id`, `task`, `case`, `version`, `assignedTo`, `lastRunner`, `lastRunDate`, `lastRunResult`, `status`) VALUES
@@ -3180,7 +3182,7 @@ INSERT INTO `tm_testrun` (`id`, `task`, `case`, `version`, `assignedTo`, `lastRu
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_testtask`
+-- 表的结构 `tm_testtask`
 --
 
 DROP TABLE IF EXISTS `tm_testtask`;
@@ -3202,7 +3204,7 @@ CREATE TABLE IF NOT EXISTS `tm_testtask` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- Dumping data for table `tm_testtask`
+-- 转存表中的数据 `tm_testtask`
 --
 
 INSERT INTO `tm_testtask` (`id`, `name`, `product`, `project`, `build`, `owner`, `pri`, `begin`, `end`, `desc`, `report`, `status`, `deleted`) VALUES
@@ -3211,7 +3213,7 @@ INSERT INTO `tm_testtask` (`id`, `name`, `product`, `project`, `build`, `owner`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_todo`
+-- 表的结构 `tm_todo`
 --
 
 DROP TABLE IF EXISTS `tm_todo`;
@@ -3235,7 +3237,7 @@ CREATE TABLE IF NOT EXISTS `tm_todo` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_user`
+-- 表的结构 `tm_user`
 --
 
 DROP TABLE IF EXISTS `tm_user`;
@@ -3274,11 +3276,11 @@ CREATE TABLE IF NOT EXISTS `tm_user` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
--- Dumping data for table `tm_user`
+-- 转存表中的数据 `tm_user`
 --
 
 INSERT INTO `tm_user` (`id`, `dept`, `account`, `password`, `role`, `realname`, `nickname`, `commiter`, `avatar`, `birthday`, `gender`, `email`, `skype`, `qq`, `yahoo`, `gtalk`, `wangwang`, `mobile`, `phone`, `address`, `zipcode`, `join`, `visits`, `ip`, `last`, `fails`, `locked`, `deleted`) VALUES
-(1, 0, 'admin', '7fef6171469e80d32c0559f88b377245', '', 'admin', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 16, '192.168.1.3', 1421771242, 0, '0000-00-00 00:00:00', '0'),
+(1, 0, 'admin', '7fef6171469e80d32c0559f88b377245', '', 'admin', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 17, '192.168.1.3', 1421843174, 0, '0000-00-00 00:00:00', '0'),
 (2, 5, 'productManager', 'e10adc3949ba59abbe56e057f20f883e', 'po', '产品经理', '', '', '', '0000-00-00', 'm', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 3, '192.168.0.8', 1338866083, 0, '0000-00-00 00:00:00', '0'),
 (3, 6, 'projectManager', 'e10adc3949ba59abbe56e057f20f883e', 'pm', '项目经理', '', '', '', '0000-00-00', 'm', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 3, '192.168.0.8', 1338865876, 1, '0000-00-00 00:00:00', '0'),
 (4, 2, 'dev1', 'e10adc3949ba59abbe56e057f20f883e', 'dev', '开发甲', '', '', '', '0000-00-00', 'm', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 1, '192.168.0.8', 1338863860, 0, '0000-00-00 00:00:00', '0'),
@@ -3292,7 +3294,7 @@ INSERT INTO `tm_user` (`id`, `dept`, `account`, `password`, `role`, `realname`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_usercontact`
+-- 表的结构 `tm_usercontact`
 --
 
 DROP TABLE IF EXISTS `tm_usercontact`;
@@ -3307,7 +3309,7 @@ CREATE TABLE IF NOT EXISTS `tm_usercontact` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_usergroup`
+-- 表的结构 `tm_usergroup`
 --
 
 DROP TABLE IF EXISTS `tm_usergroup`;
@@ -3318,7 +3320,7 @@ CREATE TABLE IF NOT EXISTS `tm_usergroup` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tm_usergroup`
+-- 转存表中的数据 `tm_usergroup`
 --
 
 INSERT INTO `tm_usergroup` (`account`, `group`) VALUES
@@ -3335,7 +3337,7 @@ INSERT INTO `tm_usergroup` (`account`, `group`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_userquery`
+-- 表的结构 `tm_userquery`
 --
 
 DROP TABLE IF EXISTS `tm_userquery`;
@@ -3354,7 +3356,7 @@ CREATE TABLE IF NOT EXISTS `tm_userquery` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_usertpl`
+-- 表的结构 `tm_usertpl`
 --
 
 DROP TABLE IF EXISTS `tm_usertpl`;
