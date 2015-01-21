@@ -1,14 +1,4 @@
 <?php
-/**
- * The project module zh-tw file of ZenTaoMS.
- *
- * @copyright   Copyright 2009-2013 青島易軟天創網絡科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     project
- * @version     $Id: zh-tw.php 5094 2013-07-10 08:46:15Z chencongzhi520@gmail.com $
- * @link        http://www.zentao.net
- */
 /* 欄位列表。*/
 $lang->project->common        = '項目視圖';
 $lang->project->id            = '項目編號';

@@ -502,7 +502,6 @@ class projectModel extends model
 		/* Order by status's content whether or not done */
 		$projects = $this->dao->select('*')->from(TABLE_PROJECT)
 			->where('1')->eq(1)
-			// ->where('iscat')->eq(0)
 			->andWhere('deleted')->eq(0)
 			->orderBy($orderBy)
 			->fetchAll();

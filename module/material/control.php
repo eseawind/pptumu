@@ -14,6 +14,11 @@ class material extends control
 	 */
 	public function index()
 	{
+		$materialTypes = $this->material->getMaterialTypes();
+		$materials = $this->material->getMaterials();
+		
+		$this->view->materialTypes = $materialTypes;
+		$this->view->materials = $materials;
 		$this->display();
 	}
 

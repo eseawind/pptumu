@@ -1,5 +1,6 @@
 <?php
 $config->material = new stdclass();
+$config->material->orderBy = 'created, modified';
 
 global $lang, $app;
 

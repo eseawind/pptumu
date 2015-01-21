@@ -8,6 +8,22 @@ class materialModel extends model
 	const LINK_MEMBERS_ONE_TIME = 20;
 	
 	/**
+	 * get all materials
+	 */
+	public function getMaterials($where = array(), $orderBy = array())
+	{
+		$orderBy  = !empty($this->config->material->orderBy) ? $this->config->material->orderBy : 'modified, created';
+		
+		/* Order by status's content whether or not done */
+		$materials = $this->dao->select('*')->from(TABLE_MATERIAL)
+			->where('deleted')->eq(0)
+			->orderBy($orderBy)
+			->fetchAll();
+		
+		return $materials;
+	}
+	
+	/**
 	 * Create material. 
 	 * 
 	 * @access public
@@ -19,7 +35,8 @@ class materialModel extends model
 		$material = fixer::input('post')->get();
 		$material->created = $dt;
 		$material->modified = $dt;
-		// print_r($material); exit;
+		$material->deleted = 0;
+		
 		$this->dao->insert(TABLE_MATERIAL)->data($material)
 			->batchCheck($this->config->material->create->requiredFields, 'notempty')
 			->check('name', 'unique')
