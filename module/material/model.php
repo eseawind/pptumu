@@ -8,6 +8,32 @@ class materialModel extends model
 	const LINK_MEMBERS_ONE_TIME = 20;
 	
 	/**
+	 * Get material list.
+	 * 
+	 * @param  int $deleted  0|1
+	 * @param  int	$limit 
+	 * @access public
+	 * @return array
+	 */
+	public function getList($typeId = 0, $deleted = 0, $limit = 0)
+	{
+		if ($deleted > 1) $deleted = 1;
+
+		$this->dao->select('material.*, mtype.name AS type_name')->from(TABLE_MATERIAL)->alias('material');
+		$this->dao->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
+			->on('material.type_id = mtype.id');
+		$this->dao->where(1)->eq(1)
+			->andWhere('deleted')->eq($deleted);
+		if ($typeId) {
+			$this->dao->andWhere('material.type_id')->eq($typeId);
+		}
+		$this->dao->orderBy('material.code')
+			->beginIF($limit)->limit($limit)->fi();
+
+		return $this->dao->fetchAll('id');
+	}
+	
+	/**
 	 * Create material. 
 	 * 
 	 * @access public
