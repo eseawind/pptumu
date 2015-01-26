@@ -218,9 +218,7 @@ $lang->build->menu = $lang->project->menu;
 $lang->material = new stdclass();
 $lang->material->menu = new stdclass();
 
-$lang->material->menu->list      = '材料管理';
-$lang->material->menu->create      = array('link' => '<i class="icon-plus"></i>&nbsp;添加|material|create|', 'subModule' => 'task,tree', 'alias' => 'grouptask,importtask,burn,importbug');
-$lang->material->menu->edit     = array('link' => '修改|material|edit|', 'subModule' => 'story', 'alias' => 'linkstory');
+$lang->material->menu->list = '材料';
 
 /* QA视图菜单设置。*/
 $lang->bug = new stdclass();

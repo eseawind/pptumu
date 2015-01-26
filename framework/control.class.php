@@ -180,6 +180,8 @@ class control
         $this->loadModel();
         $this->setViewPrefix();
 
+		header('Content-Type: text/html; charset=' . ($this->config->charset ? $this->config->charset : 'UTF-8'));
+		
         /* Init the view vars.  */
         $this->view = new stdclass();
         $this->view->app    = $app;

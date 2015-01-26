@@ -39,7 +39,7 @@ class project extends control
 	 */
 	public function index($locate = 'yes', $status = 'undone', $projectID = 0, $orderBy = 'code_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
 	{
-		if($locate == 'yes') $this->locate($this->createLink('project', 'task'));
+		// if($locate == 'yes') $this->locate($this->createLink('project', 'task'));
 
 		if($this->projects) $this->commonAction($projectID);
 		$this->session->set('projectList', $this->app->getURI(true));
@@ -89,9 +89,9 @@ class project extends control
 		/* Get projects and products info. */
 		$projectID	 = $this->project->saveState($projectID, array_keys($this->projects));
 		$project	   = $this->project->getById($projectID);
-		$products	  = $this->project->getProducts($project->id);
+		// $products	  = $this->project->getProducts($project->id);
 		// $childProjects = $this->project->getChildProjects($project->id);
-		$teamMembers   = $this->project->getTeamMembers($project->id);
+		// $teamMembers   = $this->project->getTeamMembers($project->id);
 		$actions	   = $this->loadModel('action')->getList('project', $project->id);
 
 		/* Set menu. */
@@ -99,10 +99,10 @@ class project extends control
 
 		/* Assign. */
 		$this->view->projects	  = $this->projects;
-		$this->view->project	   = $project;
-		$this->view->childProjects = $childProjects;
-		$this->view->products	  = $products;
-		$this->view->teamMembers   = $teamMembers;
+		// $this->view->project	   = $project;
+		// $this->view->childProjects = $childProjects;
+		// $this->view->products	  = $products;
+		// $this->view->teamMembers   = $teamMembers;
 		$this->view->actions	   = $actions;
 
 		return $project;

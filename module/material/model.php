@@ -8,19 +8,29 @@ class materialModel extends model
 	const LINK_MEMBERS_ONE_TIME = 20;
 	
 	/**
-	 * get all materials
+	 * Get material list.
+	 * 
+	 * @param  int $deleted  0|1
+	 * @param  int	$limit 
+	 * @access public
+	 * @return array
 	 */
-	public function getMaterials($where = array(), $orderBy = array())
+	public function getList($typeId = 0, $deleted = 0, $limit = 0)
 	{
-		$orderBy  = !empty($this->config->material->orderBy) ? $this->config->material->orderBy : 'modified, created';
-		
-		/* Order by status's content whether or not done */
-		$materials = $this->dao->select('*')->from(TABLE_MATERIAL)
-			->where('deleted')->eq(0)
-			->orderBy($orderBy)
-			->fetchAll();
-		
-		return $materials;
+		if ($deleted > 1) $deleted = 1;
+
+		$this->dao->select('material.*, mtype.name AS type_name')->from(TABLE_MATERIAL)->alias('material');
+		$this->dao->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
+			->on('material.type_id = mtype.id');
+		$this->dao->where(1)->eq(1)
+			->andWhere('deleted')->eq($deleted);
+		if ($typeId) {
+			$this->dao->andWhere('material.type_id')->eq($typeId);
+		}
+		$this->dao->orderBy('material.code')
+			->beginIF($limit)->limit($limit)->fi();
+
+		return $this->dao->fetchAll('id');
 	}
 	
 	/**
@@ -59,47 +69,7 @@ class materialModel extends model
 	 */
 	public function update($projectID)
 	{
-		$oldProject = $this->getById($projectID);
-		$team = $this->getTeamMemberPairs($projectID);
-		$this->lang->project->team = $this->lang->project->teamname;
-		$projectID = (int)$projectID;
-		$project = fixer::input('post')
-			->setIF($this->post->begin == '0000-00-00', 'begin', '')
-			->setIF($this->post->end   == '0000-00-00', 'end', '')
-			->setIF($this->post->acl != 'custom', 'whitelist', '')
-			->setDefault('team', $this->post->name)
-			->join('whitelist', ',')
-			->stripTags($this->config->project->editor->create['id'], $this->config->allowedTags)
-			->remove('products')
-			->get();
-		$this->dao->update(TABLE_PROJECT)->data($project)
-			->autoCheck($skipFields = 'begin,end')
-			->batchcheck($this->config->project->edit->requiredFields, 'notempty')
-			->checkIF($project->begin != '', 'begin', 'date')
-			->checkIF($project->end != '', 'end', 'date')
-			->checkIF($project->end != '', 'end', 'gt', $project->begin)
-			->check('name', 'unique', "id!=$projectID")
-			->check('code', 'unique', "id!=$projectID")
-			->where('id')->eq($projectID)
-			->limit(1)
-			->exec();
-		foreach($project as $fieldName => $value)
-		{
-			if($fieldName == 'PO' or $fieldName == 'PM' or $fieldName == 'QD' or $fieldName == 'RD' )
-			{
-				if(!empty($value) and !isset($team[$value]))
-				{
-					$member->project = (int)$projectID;
-					$member->account = $value;
-					$member->join	= helper::today();
-					$member->role	= $this->lang->project->$fieldName;
-					$member->days	= $project->days;
-					$member->hours   = $this->config->project->defaultWorkhours;
-					$this->dao->insert(TABLE_TEAM)->data($member)->exec();
-				}
-			}
-		}
-		if(!dao::isError()) return common::createChanges($oldProject, $project);
+
 	}
 	
 	/**

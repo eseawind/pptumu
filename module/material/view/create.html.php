@@ -20,7 +20,7 @@
         <td><?php echo html::input('name', '', "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
-        <th><?php echo $lang->material->type_id;?></th>
+        <th><?php echo $lang->material->type;?></th>
         <td><?php echo html::select('type_id', $materialTypes, '', "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
