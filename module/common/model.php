@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The model file of common module of ZenTaoPMS.
  *
