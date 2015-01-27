@@ -84,6 +84,7 @@ $lang->menu->my       = '<i class="icon-home"></i><span> 我的地盘</span>|my|
 $lang->menu->product  = '产品|product|index';
 $lang->menu->project  = '项目|project|index';
 $lang->menu->material = '材料|material|index';
+$lang->menu->machine = '机械|machine|index';
 $lang->menu->qa       = '测试|qa|index';
 $lang->menu->doc      = '文档|doc|index';
 $lang->menu->report   = '统计|report|index';
@@ -209,6 +210,13 @@ $lang->material = new stdclass();
 $lang->material->menu = new stdclass();
 
 $lang->material->menu->list = '材料';
+
+/** 机械试图菜单设置 */
+$lang->machine = new stdClass();
+$lang->machine->menu = new stdClass();
+
+$lang->machine->menu->self = '自有机械';
+$lang->machine->menu->rent = '租赁';
 
 /* QA视图菜单设置。*/
 $lang->bug = new stdclass();

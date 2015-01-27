@@ -4,6 +4,7 @@ $lang->menuOrder[5]  = 'my';
 $lang->menuOrder[10] = 'product';
 $lang->menuOrder[15] = 'project';
 $lang->menuOrder[16] = 'material';
+$lang->menuOrder[17] = 'machine';
 $lang->menuOrder[20] = 'qa';
 $lang->menuOrder[25] = 'doc';
 $lang->menuOrder[30] = 'report';
