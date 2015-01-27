@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2015-01-21 23:14:18
+-- Generation Time: 2015-01-27 23:56:42
 -- 服务器版本： 5.6.21
 -- PHP Version: 5.5.19
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `tm_action` (
   `extra` varchar(255) NOT NULL,
   `read` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=134 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=135 ;
 
 --
 -- 转存表中的数据 `tm_action`
@@ -179,7 +179,8 @@ INSERT INTO `tm_action` (`id`, `objectType`, `objectID`, `product`, `project`, `
 (130, 'material', 3, ',0,', 0, 'admin', 'opened', '2015-01-21 00:17:03', '', '', '0'),
 (131, 'material', 4, ',0,', 0, 'admin', 'opened', '2015-01-21 00:19:38', '', '', '0'),
 (132, 'user', 1, ',0,', 0, 'admin', 'login', '2015-01-21 00:27:23', '', '', '0'),
-(133, 'user', 1, ',0,', 0, 'admin', 'login', '2015-01-21 20:26:15', '', '', '0');
+(133, 'user', 1, ',0,', 0, 'admin', 'login', '2015-01-21 20:26:15', '', '', '0'),
+(134, 'user', 1, ',0,', 0, 'admin', 'login', '2015-01-26 21:46:44', '', '', '0');
 
 -- --------------------------------------------------------
 
@@ -2658,6 +2659,44 @@ CREATE TABLE IF NOT EXISTS `tm_lang` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `tm_machine`
+--
+
+DROP TABLE IF EXISTS `tm_machine`;
+CREATE TABLE IF NOT EXISTS `tm_machine` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `type_id` int(11) NOT NULL COMMENT 'tm_machinetype表',
+  `owner` varchar(100) DEFAULT NULL COMMENT '负责人/租赁方',
+  `is_rend` int(2) NOT NULL DEFAULT '0' COMMENT '0: 本公司机械; 1: 租赁机械',
+  `rend_fee` float(10,2) DEFAULT '0.00' COMMENT '租赁费用',
+  `deleted` int(2) NOT NULL DEFAULT '0' COMMENT '0: 未删除; 1: 已删除',
+  `created_by` varchar(30) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `tm_machinetype`
+--
+
+DROP TABLE IF EXISTS `tm_machinetype`;
+CREATE TABLE IF NOT EXISTS `tm_machinetype` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `created_by` varchar(30) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `tm_material`
 --
 
@@ -3280,7 +3319,7 @@ CREATE TABLE IF NOT EXISTS `tm_user` (
 --
 
 INSERT INTO `tm_user` (`id`, `dept`, `account`, `password`, `role`, `realname`, `nickname`, `commiter`, `avatar`, `birthday`, `gender`, `email`, `skype`, `qq`, `yahoo`, `gtalk`, `wangwang`, `mobile`, `phone`, `address`, `zipcode`, `join`, `visits`, `ip`, `last`, `fails`, `locked`, `deleted`) VALUES
-(1, 0, 'admin', '7fef6171469e80d32c0559f88b377245', '', 'admin', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 17, '192.168.1.3', 1421843174, 0, '0000-00-00 00:00:00', '0'),
+(1, 0, 'admin', '7fef6171469e80d32c0559f88b377245', '', 'admin', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 18, '192.168.1.3', 1422280004, 0, '0000-00-00 00:00:00', '0'),
 (2, 5, 'productManager', 'e10adc3949ba59abbe56e057f20f883e', 'po', '产品经理', '', '', '', '0000-00-00', 'm', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 3, '192.168.0.8', 1338866083, 0, '0000-00-00 00:00:00', '0'),
 (3, 6, 'projectManager', 'e10adc3949ba59abbe56e057f20f883e', 'pm', '项目经理', '', '', '', '0000-00-00', 'm', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 3, '192.168.0.8', 1338865876, 1, '0000-00-00 00:00:00', '0'),
 (4, 2, 'dev1', 'e10adc3949ba59abbe56e057f20f883e', 'dev', '开发甲', '', '', '', '0000-00-00', 'm', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 1, '192.168.0.8', 1338863860, 0, '0000-00-00 00:00:00', '0'),
