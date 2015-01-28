@@ -1,37 +1,37 @@
 <?php
 /* Sort of main menu. */
 $lang->menuOrder[5]  = 'my';
-$lang->menuOrder[10] = 'product';
+// $lang->menuOrder[10] = 'product';
 $lang->menuOrder[15] = 'project';
 $lang->menuOrder[16] = 'material';
 $lang->menuOrder[17] = 'machine';
-$lang->menuOrder[20] = 'qa';
+// $lang->menuOrder[20] = 'qa';
 $lang->menuOrder[25] = 'doc';
 $lang->menuOrder[30] = 'report';
 $lang->menuOrder[35] = 'company';
 $lang->menuOrder[40] = 'admin';
 
 /* index menu order. */
-$lang->index->menuOrder[5]  = 'product';
+// $lang->index->menuOrder[5]  = 'product';
 $lang->index->menuOrder[10] = 'project';
 $lang->index->menuOrder[16] = 'material';
 
 /* my menu order. */
 $lang->my->menuOrder[5]  = 'account';
 $lang->my->menuOrder[10] = 'index';
-$lang->my->menuOrder[15] = 'todo';
-$lang->my->menuOrder[20] = 'task';
-$lang->my->menuOrder[25] = 'bug';
-$lang->my->menuOrder[30] = 'testtask';
-$lang->my->menuOrder[35] = 'story';
+// $lang->my->menuOrder[15] = 'todo';
+// $lang->my->menuOrder[20] = 'task';
+// $lang->my->menuOrder[25] = 'bug';
+// $lang->my->menuOrder[30] = 'testtask';
+// $lang->my->menuOrder[35] = 'story';
 $lang->my->menuOrder[40] = 'myProject';
-$lang->my->menuOrder[45] = 'dynamic';
+// $lang->my->menuOrder[45] = 'dynamic';
 $lang->my->menuOrder[50] = 'profile';
 $lang->my->menuOrder[55] = 'changePassword';
 $lang->todo->menuOrder   = $lang->my->menuOrder;
 
 /* product menu order. */
-$lang->product->menuOrder[5]  = 'story';
+/* $lang->product->menuOrder[5]  = 'story';
 $lang->product->menuOrder[10] = 'dynamic';
 $lang->product->menuOrder[15] = 'plan';
 $lang->product->menuOrder[20] = 'release';
@@ -45,7 +45,7 @@ $lang->product->menuOrder[55] = 'create';
 $lang->product->menuOrder[60] = 'all';
 $lang->story->menuOrder       = $lang->product->menuOrder;
 $lang->productplan->menuOrder = $lang->product->menuOrder;
-$lang->release->menuOrder     = $lang->product->menuOrder;
+$lang->release->menuOrder     = $lang->product->menuOrder; */
 
 /* project menu order. */
 $lang->project->menuOrder[5]  = 'task';
@@ -68,17 +68,17 @@ $lang->task->menuOrder        = $lang->project->menuOrder;
 $lang->build->menuOrder       = $lang->project->menuOrder;
 
 /* bug menu order. */
-$lang->bug->menuOrder[0]  = 'product';
+/*$lang->bug->menuOrder[0]  = 'product';
 $lang->bug->menuOrder[5]  = 'bug';
 $lang->bug->menuOrder[10] = 'testcase';
-$lang->bug->menuOrder[15] = 'testtask';
+$lang->bug->menuOrder[15] = 'testtask';*/
 
 /* testcase menu order. */
-$lang->testcase->menuOrder[0]  = 'product';
+/*$lang->testcase->menuOrder[0]  = 'product';
 $lang->testcase->menuOrder[5]  = 'bug';
 $lang->testcase->menuOrder[10] = 'testcase';
 $lang->testcase->menuOrder[15] = 'testtask';
-$lang->testtask->menuOrder     = $lang->testcase->menuOrder;
+$lang->testtask->menuOrder     = $lang->testcase->menuOrder;*/
 
 /* doc menu order. */
 $lang->doc->menuOrder[5]  = 'browse';
@@ -88,9 +88,9 @@ $lang->doc->menuOrder[20] = 'delete';
 $lang->doc->menuOrder[25] = 'create';
 
 /* report menu order. */
-$lang->report->menuOrder[5]  = 'product';
+// $lang->report->menuOrder[5]  = 'product';
 $lang->report->menuOrder[10] = 'prj';
-$lang->report->menuOrder[15] = 'test';
+// $lang->report->menuOrder[15] = 'test';
 $lang->report->menuOrder[20] = 'staff';
 
 /* company menu order. */
