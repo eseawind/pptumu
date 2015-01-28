@@ -1,16 +1,4 @@
 <?php
-/**
- * The config file of ZenTaoPMS.
- *
- * Don't modify this file directly, copy the item to my.php and change it.
- *
- * @copyright   Copyright 2009-2013 QingDao Nature Easy Soft Network Technology Co,LTD (www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     config
- * @version     $Id: config.php 5068 2013-07-08 02:41:22Z wyd621@gmail.com $
- * @link        http://www.zentao.net
- */
 /* Judge class config and function getWebRoot exists or not, make sure php shells can work. */
 if(!class_exists('config')){class config{}}
 if(!function_exists('getWebRoot')){function getWebRoot(){}}
@@ -133,6 +121,9 @@ define('TABLE_BUILD',         '`' . $config->db->prefix . 'build`');
 
 define('TABLE_MATERIALTYPE',  '`' . $config->db->prefix . 'materialtype`');
 define('TABLE_MATERIAL',      '`' . $config->db->prefix . 'material`');
+
+define('TABLE_MACHINETYPE',   '`' . $config->db->prefix . 'machinetype`');
+define('TABLE_MACHINE',       '`' . $config->db->prefix . 'machine`');
 
 define('TABLE_DOCLIB',        '`' . $config->db->prefix . 'doclib`');
 define('TABLE_DOC',           '`' . $config->db->prefix . 'doc`');
