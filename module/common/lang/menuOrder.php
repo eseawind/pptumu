@@ -1,4 +1,6 @@
 <?php
+global $lang;
+
 /* Sort of main menu. */
 $lang->menuOrder[5]  = 'my';
 // $lang->menuOrder[10] = 'product';

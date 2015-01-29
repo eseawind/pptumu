@@ -1,4 +1,6 @@
 <?php
+global $lang;
+
 $lang->arrow     = '&nbsp;<i class="icon-angle-right"></i>&nbsp;';
 $lang->colon     = '::';
 $lang->comma     = '，';
@@ -126,10 +128,10 @@ $lang->lang = 'Language';
 /* 风格列表。*/
 $lang->theme                 = '主题';
 $lang->themes['default']     = '默认';
-/* $lang->themes['green']       = '绿色';
-$lang->themes['red']         = '红色';
-$lang->themes['lightblue']   = '亮蓝';
-$lang->themes['blackberry']  = '黑莓';*/
+//$lang->themes['green']       = '绿色';
+//$lang->themes['red']         = '红色';
+//$lang->themes['lightblue']   = '亮蓝';
+//$lang->themes['blackberry']  = '黑莓';
 
 /* 首页菜单设置。*/
 $lang->index = new stdclass();
@@ -215,8 +217,8 @@ $lang->material->menu->list = '材料';
 $lang->machine = new stdClass();
 $lang->machine->menu = new stdClass();
 
-$lang->machine->menu->self = '自有机械';
-$lang->machine->menu->rent = '租赁';
+$lang->machine->menu->self = array('link' => '自有机械|machine|index');
+$lang->machine->menu->rent = array('link' => '租赁机械|machine|index|isRent=1');
 
 /* QA视图菜单设置。*/
 //$lang->bug = new stdclass();
@@ -369,7 +371,6 @@ $lang->zentaoSite     = "官方网站";
 $lang->chinaScrum     = "<a href='http://api.zentao.net/goto.php?item=chinascrum' target='_blank'>Scrum社区</a>&nbsp; ";
 $lang->agileTraining  = "<a href='http://api.zentao.net/goto.php?item=agiletrain' target='_blank'>培训</a> ";
 $lang->donate         = "<a href='http://api.zentao.net/goto.php?item=donate' target='_blank'>捐赠 </a>";
-$lang->proVersion     = "<a href='http://api.zentao.net/goto.php?item=proversion&from=footer' target='_blank' id='proLink' class='text-important'><i class='text-danger icon-reply icon-rotate-90'></i> 专业版！</a> &nbsp; ";
 $lang->downNotify     = "下载桌面提醒";
 
 $lang->suhosinInfo   = "警告：数据太多，请在php.ini中修改<font color=red>sohusin.post.max_vars</font>和<font color=red>sohusin.request.max_vars</font>（设置更大的数）。 保存并重新启动apache，否则会造成部分数据无法保存。";
@@ -422,6 +423,8 @@ $lang->icons['bug']       = 'bug';
 $lang->icons['task']      = 'check-sign';
 $lang->icons['tasks']     = 'tasks';
 $lang->icons['project']   = 'folder-close-alt';
+$lang->icons['material']   = 'folder-close-alt';
+$lang->icons['machine']   = 'folder-close-alt';
 $lang->icons['doc']       = 'file-text';
 $lang->icons['doclib']    = 'folder-close';
 $lang->icons['story']     = 'lightbulb';

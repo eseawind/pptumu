@@ -3,8 +3,8 @@
 <div class='container mw-1400px'>
   <div id='titlebar'>
     <div class='heading'>
-      <span class='prefix'><?php echo html::icon($lang->icons['project']);?></span>
-      <strong><small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->material->create;?></strong>
+      <span class='prefix'><?php echo html::icon($lang->icons['machine']);?></span>
+      <strong><small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->machine->create;?></strong>
     </div>
     <div class='actions'></div>
   </div>
@@ -12,20 +12,24 @@
   <form class='form-condensed' method='post' id='dataform'>
     <table class='table table-form'>
 	  <tr>
-        <th class='w-90px'><?php echo $lang->material->code;?></th>
+        <th class='w-90px'><?php echo $lang->machine->code;?></th>
         <td class='w-p25-f'><?php echo html::input('code', '', "class='form-control'");?></td><td></td>
       </tr>
       <tr>
-        <th><?php echo $lang->material->name;?></th>
+        <th><?php echo $lang->machine->name;?></th>
         <td><?php echo html::input('name', '', "class='form-control'");?></td><td></td>
       </tr>
-	  <tr>
-        <th><?php echo $lang->material->type;?></th>
-        <td><?php echo html::select('type_id', $materialTypes, '', "class='form-control'");?></td><td></td>
+      <tr>
+        <th><?php echo $isRent ? $lang->machine->ownerRent : $lang->machine->owner;?></th>
+        <td><?php echo html::input('owner', '', "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
-        <th><?php echo $lang->material->unit;?></th>
-        <td><?php echo html::select('unit', $units, '', "class='form-control'");?></td><td></td>
+        <th><?php echo $lang->machine->type;?></th>
+        <td><?php echo html::select('type_id', $machineTypes, '', "class='form-control'");?></td><td></td>
+      </tr>
+      <tr>
+        <td><?php echo $lang->machine->isRent; ?></td>
+        <td></td>
       </tr>
 	  <tr>
         <td></td>

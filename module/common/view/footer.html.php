@@ -4,7 +4,7 @@
   
   <div id='divider'></div>
   <iframe frameborder='0' name='hiddenwin' id='hiddenwin' scrolling='no' class='debugwin hidden'></iframe>
-<?php $onlybody = zget($_GET, 'onlybody', 'no');?>
+<?php $onlybody = zget($_GET, 'onlybody', 'no'); ?>
 <?php if($onlybody != 'yes'):?>
 </div><?php /* end '#wrap' in 'header.html.php'. */ ?>
 <div id='footer'>
@@ -12,13 +12,12 @@
     <?php commonModel::printBreadMenu($this->moduleName, isset($position) ? $position : ''); ?>
   </div>
   <div id="poweredby">
-  <a href='http://www.zentao.net' target='_blank' class='text-primary'><i class='icon-zentao'></i> <?php echo $lang->zentaoPMS . $config->version;?></a> &nbsp;
-    <?php echo $lang->proVersion;?>
-    <?php commonModel::printNotifyLink();?>
-    <?php commonModel::printQRCodeLink();?>
+  <a href='http://www.zentao.net' target='_blank' class='text-primary'><i class='icon-zentao'></i> <?php echo $lang->zentaoPMS; ?></a> &nbsp;
+    <?php commonModel::printNotifyLink(); ?>
+    <?php // commonModel::printQRCodeLink(); ?>
   </div>
 </div>
-<?php endif;?>
+<?php endif; ?>
 <?php 
 js::set('onlybody', $onlybody);           // set the onlybody var.
 if(isset($pageJS)) js::execute($pageJS);  // load the js for current page.

@@ -48,7 +48,6 @@ class materialModel extends model
 		$material->deleted = 0;
 		
 		$this->dao->insert(TABLE_MATERIAL)->data($material)
-			->batchCheck($this->config->material->create->requiredFields, 'notempty')
 			->check('name', 'unique')
 			->exec();
 
@@ -58,6 +57,8 @@ class materialModel extends model
 	
 			return $materialID;
 		}
+
+		return false;
 	}
 	
 	/**

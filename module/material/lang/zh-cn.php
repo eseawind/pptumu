@@ -1,7 +1,6 @@
 <?php
-/**
- *
- */
+global $lang, $app;
+
 $lang->material->common = '材料管理';
 
 $lang->material->code = '编号';
