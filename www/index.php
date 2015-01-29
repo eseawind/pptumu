@@ -1,16 +1,4 @@
 <?php
-/**
- * The router file of ZenTaoPMS.
- *
- * All request should be routed by this router.
- *
- * @copyright   Copyright 2009-2013 QingDao Nature Easy Soft Network Technology Co,LTD (www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     ZenTaoPMS
- * @version     $Id: index.php 5036 2013-07-06 05:26:44Z wyd621@gmail.com $
- * @link        http://www.zentao.net
- */
 /* Set the error reporting. */
 // error_reporting(1);
 

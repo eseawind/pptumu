@@ -47,7 +47,7 @@ class machine extends control
 			if (dao::isError()) die(js::error(dao::getError()));
 
 			$this->loadModel('action')->create('machine', $machineID, 'created');
-			
+
 			die(js::locate($this->createLink('machine', 'index', $redirectParams), 'parent'));
 		}
 
