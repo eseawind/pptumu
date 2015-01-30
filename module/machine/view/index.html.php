@@ -34,9 +34,12 @@
             <tr class='text-center'>
                 <td><?php echo html::a($this->createLink('material', 'edit', 'id=' . $machine->id), sprintf('%03d', $machine->id));?> </td>
                 <td class='text-left'><?php echo $machine->code;?></td>
-                <td class='text-left'><?php echo html::a($this->createLink('machine', 'edit', 'id=' . $machine->id), $machine->name);?></td>
+                <td class='text-left'><?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $machine->name);?></td>
                 <td class='text-left'><?php echo $machine->type_name;?></td>
-                <td class='projectline text-left'>编辑|删除</td>
+                <td class='projectline text-left'>
+                    <?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $lang->edit); ?>
+                    |&nbsp;
+                    <?php echo html::a($this->createLink('machine', 'delete', sprintf($editParams, $machine->id)), $lang->delete); ?></td>
             </tr>
         <?php } ?>
         </tbody>

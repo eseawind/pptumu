@@ -13,19 +13,19 @@
     <table class='table table-form'>
 	  <tr>
         <th class='w-90px'><?php echo $lang->material->code;?></th>
-        <td class='w-p25-f'><?php echo html::input('code', '', "class='form-control'");?></td><td></td>
+        <td class='w-p25-f'><?php echo html::input('code', $material->code, "class='form-control' readonly");?></td><td></td>
       </tr>
       <tr>
         <th><?php echo $lang->material->name;?></th>
-        <td><?php echo html::input('name', '', "class='form-control'");?></td><td></td>
+        <td><?php echo html::input('name', $material->name, "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
         <th><?php echo $lang->material->type;?></th>
-        <td><?php echo html::select('type_id', $materialTypes, '', "class='form-control'");?></td><td></td>
+        <td><?php echo html::select('type_id', $materialTypes, $material->type_id, "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
         <th><?php echo $lang->material->unit;?></th>
-        <td><?php echo html::select('unit', $units, '', "class='form-control'");?></td><td></td>
+        <td><?php echo html::select('unit', $units, $material->unit, "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
         <td></td>

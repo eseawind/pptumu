@@ -8,8 +8,7 @@
     </div>
     <div class='actions'></div>
   </div>
-  <!-- <form class='form-condensed' method='post' target='hiddenwin' id='dataform'> -->
-  <form class='form-condensed' method='post' id='dataform'>
+  <form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
     <table class='table table-form'>
 	  <tr>
         <th class='w-90px'><?php echo $lang->machine->code;?></th>
@@ -26,10 +25,6 @@
 	  <tr>
         <th><?php echo $lang->machine->type;?></th>
         <td><?php echo html::select('type_id', $machineTypes, '', "class='form-control'");?></td><td></td>
-      </tr>
-      <tr>
-        <td><?php echo $lang->machine->isRent; ?></td>
-        <td></td>
       </tr>
 	  <tr>
         <td></td>

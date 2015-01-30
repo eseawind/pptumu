@@ -63,17 +63,48 @@ class materialModel extends model
 
 		return false;
 	}
-	
-	/**
-	 * Update material.
-	 * 
-	 * @param  int	$projectID 
-	 * @access public
-	 * @return array
-	 */
-	public function update($projectID)
-	{
 
+	/**
+	 * @return int | bool
+	 */
+	public function update($materialId)
+	{
+		global $app;
+
+		$oldMaterial = $this->getById($materialId);
+
+		$dt = date('Y-m-d H:i:s');
+		$material = fixer::input('post')->get();
+		$material->code = $oldMaterial->code;
+		$material->modified = $dt;
+		$material->deleted = 0;
+		$material->created_by = $app->user->account;
+
+		$this->dao->update(TABLE_MATERIAL)->data($material)
+			->check('code', 'unique', "id != {$materialId}")
+			->where('id')->eq($materialId)
+			->limit(1)
+			->exec();
+
+		if (!dao::isError()) {
+			return $machineId;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get material by id.
+	 *
+	 * @param  int $materialId
+	 * @access public
+	 * @return void
+	 */
+	public function getById($materialId)
+	{
+		$material = $this->dao->findById((int)$materialId)->from(TABLE_MATERIAL)->fetch();
+
+		return $material;
 	}
 	
 	/**

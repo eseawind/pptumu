@@ -13,28 +13,24 @@
     <table class='table table-form'>
 	  <tr>
         <th class='w-90px'><?php echo $lang->machine->code;?></th>
-        <td class='w-p25-f'><?php echo html::input('code', '', "class='form-control'");?></td><td></td>
+        <td class='w-p25-f'><?php echo html::input('code', $machine->code, "class='form-control' readonly");?></td><td></td>
       </tr>
       <tr>
         <th><?php echo $lang->machine->name;?></th>
-        <td><?php echo html::input('name', '', "class='form-control'");?></td><td></td>
+        <td><?php echo html::input('name', $machine->name, "class='form-control'");?></td><td></td>
       </tr>
       <tr>
-        <th><?php echo $isRent ? $lang->machine->ownerRent : $lang->machine->owner;?></th>
+        <th><?php echo $machine->is_rent ? $lang->machine->ownerRent : $lang->machine->owner;?></th>
         <td><?php echo html::input('owner', $machine->owner, "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
         <th><?php echo $lang->machine->type;?></th>
-        <td><?php echo html::select('type_id', $machineTypes, '', "class='form-control'");?></td><td></td>
-      </tr>
-      <tr>
-        <td><?php echo $lang->machine->isRent; ?></td>
-        <td></td>
+        <td><?php echo html::select('type_id', $machineTypes, $machine->type_id, "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
         <td></td>
 		<td cols="2" class='text-center'>
-          <?php echo html::hidden('is_rent', $isRent); ?>
+          <?php echo html::hidden('is_rent', $machine->is_rent); ?>
 		  <?php echo html::submitButton() . html::backButton();?>
 		</td>
       </tr>

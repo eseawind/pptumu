@@ -58,18 +58,35 @@ class material extends control
 	 */
 	public function edit($materialId)
 	{
+		if(!empty($_POST))
+		{
+			$changes = $this->material->update($materialId);
+			if(dao::isError()) die(js::error(dao::getError()));
+
+			if ($changes) {
+				$actionID = $this->loadModel('action')->create('material', $materialId, 'edited');
+				$this->action->logHistory($actionID, $changes);
+			}
+			die(js::locate($this->createLink('material', 'index'), 'parent'));
+		}
+
+		$material = $this->material->getById($materialId);
+
+		$materialTypes = $this->material->getMaterialTypes();
+
+		$this->view->material = $material;
+		$this->view->materialTypes = array('' => '请选择') + $materialTypes;
+		$this->view->units = array_merge(array('' => '请选择'), $this->config->material->units);
+
 		$this->display();
 	}
 
 	/**
 	 *
 	 */
-	public function types()
+	public function delete()
 	{
-		$materialTypes = $this->material->getMaterialTypes();
-		$this->view->materialTypes = $materialTypes;
 
-		$this->display();
 	}
 
 }

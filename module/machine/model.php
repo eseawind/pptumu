@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  */
@@ -52,14 +53,56 @@ class machineModel extends model
 			->check('code', 'unique')
 			->exec();
 
-		if(!dao::isError())
-		{
-			$machineID	 = $this->dao->lastInsertId();
+		if (!dao::isError()) {
+			$machineID = $this->dao->lastInsertId();
 
 			return $machineID;
 		}
 
 		return false;
+	}
+
+	/**
+	 * @return int | bool
+	 */
+	public function update($machineId)
+	{
+		global $app;
+
+		$oldMachine = $this->getById($machineId);
+
+		$dt = date('Y-m-d H:i:s');
+		$machine = fixer::input('post')->get();
+		$machine->code = $oldMachine->code;
+		$machine->modified = $dt;
+		$machine->deleted = 0;
+		$machine->created_by = $app->user->account;
+
+		$this->dao->update(TABLE_MACHINE)->data($machine)
+			->check('code', 'unique', "id != {$machineId}")
+			->where('id')->eq($machineId)
+			->limit(1)
+			->exec();
+
+		if (!dao::isError()) {
+			return $machineId;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get machine by id.
+	 *
+	 * @param  int $projectID
+	 * @access public
+	 * @return void
+	 */
+	public function getById($machineID)
+	{
+		$machine = $this->dao->findById((int)$machineID)->from(TABLE_MACHINE)->fetch();
+
+		return $machine;
 	}
 
 	/**

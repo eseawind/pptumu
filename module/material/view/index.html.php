@@ -43,7 +43,11 @@
                 <td class='text-left'><?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), $material->name);?></td>
                 <td class='text-left'><?php echo $material->type_name;?></td>
                 <td class='text-left'><?php echo $material->unit;?></td>
-                <td class='projectline text-left'>编辑|删除</td>
+                <td class='projectline text-left'>
+                    <?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), $lang->edit);?>
+                    |&nbsp;
+                    <?php echo html::a($this->createLink('material', 'delete', 'id=' . $material->id), $lang->delete);?>
+                </td>
             </tr>
         <?php } ?>
         <?php if($canBatchEdit) { ?>

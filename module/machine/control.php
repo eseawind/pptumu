@@ -25,6 +25,7 @@ class machine extends control
 
 		$createParams = helper::genParamstr(array('isRent' => $isRent));
 		$typeParams = helper::genParamstr(array('isRent' => $isRent, 'typeId' => '%s'));
+		$editParams = helper::genParamstr(array('isRent' => $isRent, 'machineId' => '%s'));
 
 		$this->view->machines = $machines;
 		$this->view->machineTypes = $machineTypes;
@@ -33,6 +34,7 @@ class machine extends control
 		$this->view->recPerPage = $pager->recPerPage;
 		$this->view->createParams = $createParams;
 		$this->view->typeParams = $typeParams;
+		$this->view->editParams = $editParams;
 
 		$this->display();
 	}
@@ -68,9 +70,37 @@ class machine extends control
 	/**
 	 *
 	 */
-	public function edit($machineId)
+	public function edit($isRent = 0, $machineId)
 	{
+		if (!empty($_POST)) {
+			$redirectParams = helper::genParamstr(array('isRent' => $isRent));
+
+			$changes = $this->machine->update($machineId);
+			if (dao::isError()) die(js::error(dao::getError()));
+			if ($changes) {
+				$actionID = $this->loadModel('action')->create('machine', $machineId, 'edited');
+				$this->action->logHistory($actionID, $changes);
+			}
+			die(js::locate($this->createLink('machine', 'index', $redirectParams), 'parent'));
+		}
+
+		$machine = $this->machine->getById($machineId);
+
+		$machineTypes = $this->machine->getMachineTypes();
+
+		$this->view->machineTypes = array('' => '请选择') + $machineTypes;
+		$this->view->machine = $machine;
+		$this->view->isRent = $isRent;
+
 		$this->display();
+	}
+
+	/**
+	 *
+	 */
+	public function delete($isRent = 0, $machineId)
+	{
+
 	}
 
 }
