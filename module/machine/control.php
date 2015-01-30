@@ -13,9 +13,9 @@ class machine extends control
 	/**
 	 *
 	 */
-	public function index($isRent = 0, $recTotal = 0, $recPerPage = 100, $pageID = 1)
+	public function index($isRent = 0, $typeId = 0, $recTotal = 0, $recPerPage = 100, $pageID = 1)
 	{
-		$machines = $this->machine->getList($isRent);
+		$machines = $this->machine->getList($isRent, $typeId);
 
 		$machineTypes = $this->machine->getMachineTypes();
 
@@ -24,6 +24,7 @@ class machine extends control
 		$pager = new pager($recTotal, $recPerPage, $pageID);
 
 		$createParams = helper::genParamstr(array('isRent' => $isRent));
+		$typeParams = helper::genParamstr(array('isRent' => $isRent, 'typeId' => '%s'));
 
 		$this->view->machines = $machines;
 		$this->view->machineTypes = $machineTypes;
@@ -31,6 +32,7 @@ class machine extends control
 		$this->view->recTotal = $pager->recTotal;
 		$this->view->recPerPage = $pager->recPerPage;
 		$this->view->createParams = $createParams;
+		$this->view->typeParams = $typeParams;
 
 		$this->display();
 	}
@@ -53,6 +55,10 @@ class machine extends control
 
 		$machineTypes = $this->machine->getMachineTypes();
 
+		$machine = new stdClass();
+		$machine->owner = '--';
+
+		$this->view->machine = $machine;
 		$this->view->isRent = $isRent;
 		$this->view->machineTypes = array('' => '请选择') + $machineTypes;
 
@@ -62,7 +68,7 @@ class machine extends control
 	/**
 	 *
 	 */
-	public function edit()
+	public function edit($machineId)
 	{
 		$this->display();
 	}

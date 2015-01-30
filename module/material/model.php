@@ -41,11 +41,14 @@ class materialModel extends model
 	 */
 	public function create()
 	{
+		global $app;
+
 		$dt = date('Y-m-d H:i:s');
 		$material = fixer::input('post')->get();
 		$material->created = $dt;
 		$material->modified = $dt;
 		$material->deleted = 0;
+		$material->created_by = $app->user->account;
 		
 		$this->dao->insert(TABLE_MATERIAL)->data($material)
 			->check('name', 'unique')

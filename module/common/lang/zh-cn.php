@@ -217,8 +217,8 @@ $lang->material->menu->list = '材料';
 $lang->machine = new stdClass();
 $lang->machine->menu = new stdClass();
 
-$lang->machine->menu->self = array('link' => '自有机械|machine|index');
-$lang->machine->menu->rent = array('link' => '租赁机械|machine|index|isRent=1');
+$lang->machine->menu->self = array('link' => '自有机械|machine|index', 'varalias' => array('isRent' => 0));
+$lang->machine->menu->rent = array('link' => '租赁机械|machine|index|isRent=1', 'varalias' => array('isRent' => 1));
 
 /* QA视图菜单设置。*/
 //$lang->bug = new stdclass();
@@ -226,8 +226,8 @@ $lang->machine->menu->rent = array('link' => '租赁机械|machine|index|isRent=
 
 //$lang->bug->menu->product  = '%s';
 //$lang->bug->menu->bug      = array('link' => 'Bug|bug|browse|productID=%s', 'alias' => 'view,create,batchcreate,edit,resolve,close,activate,report,batchedit,confirmbug,assignto', 'subModule' => 'tree');
-//$lang->bug->menu->testcase = array('link' => '用例|testcase|browse|productID=%s');
-//$lang->bug->menu->testtask = array('link' => '版本|testtask|browse|productID=%s');
+//$lang->bug->menu->testcase = array('link' => '用例||browse|productID=%s');
+//$lang->bug->menu->testtask = array('link' => '版本|testestcasettask|browse|productID=%s');
 
 //$lang->testcase = new stdclass();
 //$lang->testcase->menu = new stdclass();

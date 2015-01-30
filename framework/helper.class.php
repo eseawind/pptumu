@@ -455,7 +455,7 @@ class helper
 		$paramstr = '';
 		foreach ($params As $pk => $pv) {
 			if (in_array($pk, $ignore)) continue;
-			if ($pv != 0 && $pv) {
+			if (is_numeric($pv) || (!is_numeric($pv) && $pv)) {
 				$paramstr .= ($paramstr ? '&' : '') . "{$pk}={$pv}";
 			}
 		}

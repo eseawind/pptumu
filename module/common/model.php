@@ -1,15 +1,9 @@
 <?php
 
 /**
- * The model file of common module of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     common
- * @version     $Id$
- * @link        http://www.zentao.net
+ * Class commonModel
  */
+
 class commonModel extends model
 {
 	/**
@@ -206,7 +200,6 @@ class commonModel extends model
 
 		if (isset($app->user)) {
 			$isGuest = $app->user->account == 'guest';
-
 
 			echo "<div class='dropdown' id='userMenu'>";
 			echo "<a href='javascript:;' data-toggle='dropdown'><i class='icon-user'></i> " . $app->user->realname . " <span class='caret'></span></a>";
@@ -410,6 +403,7 @@ class commonModel extends model
 		$submenus = $lang->$moduleName->menu;
 		$currentModule = $app->getModuleName();
 		$currentMethod = $app->getMethodName();
+		$currentParams = $app->getParams();
 
 		/* Sort the subMenu according to menuOrder. */
 		if (isset($lang->$moduleName->menuOrder)) {
@@ -442,6 +436,7 @@ class commonModel extends model
 			$link = $submenu;
 			$subModule = '';
 			$alias = '';
+			$varalias = '';
 			$float = '';
 			$active = '';
 			$target = '';
@@ -457,9 +452,25 @@ class commonModel extends model
 				$vars = isset($link[3]) ? $link[3] : '';
 				if (common::hasPriv($module, $method)) {
 					/* Is the currentModule active? */
-					$subModules = explode(',', $subModule);
-					if (in_array($currentModule, $subModules) and $float != 'right') $active = 'active';
-					if ($module == $currentModule and ($method == $currentMethod or strpos(",$alias,", ",$currentMethod,") !== false) and $float != 'right') $active = 'active';
+					if (isset($varalias) && $varalias) { // 根据参数判断当前项
+						if (!is_array($varalias)) $varalias = array($varalias);
+
+						foreach ($varalias As $vk => $var) {
+							if (isset($currentParams[$vk]) && $currentParams[$vk] == $var) {
+								$active = 'active';
+							} else {
+								$active = '';
+							}
+						}
+					} else {
+						$subModules = explode(',', $subModule);
+						if (in_array($currentModule, $subModules) and $float != 'right') {
+							$active = 'active';
+						}
+						if ($module == $currentModule and ($method == $currentMethod or strpos(",$alias,", ",$currentMethod,") !== false) and $float != 'right') {
+							$active = 'active';
+						}
+					}
 					echo "<li class='$float $active'>" . html::a(helper::createLink($module, $method, $vars), $label, $target, "id=submenu$subMenuKey") . "</li>\n";
 				}
 			}

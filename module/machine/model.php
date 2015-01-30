@@ -10,7 +10,7 @@ class machineModel extends model
 	/**
 	 *
 	 */
-	public function getList($isRent = 0, $deleted = 0, $typeId = 0, $limit = 0)
+	public function getList($isRent = 0, $typeId = 0, $deleted = 0, $limit = 0)
 	{
 		if ($deleted > 1) $deleted = 1;
 		if ($isRent > 1) {
@@ -23,7 +23,8 @@ class machineModel extends model
 		$this->dao->leftJoin(TABLE_MACHINETYPE)->alias('mtype')
 			->on('machine.type_id = mtype.id');
 		$this->dao->where(1)->eq(1)
-			->andWhere('deleted')->eq($deleted);
+			->andWhere('deleted')->eq($deleted)
+			->andWhere('is_rent')->eq($isRent);
 		if ($typeId) {
 			$this->dao->andWhere('machine.type_id')->eq($typeId);
 		}
@@ -38,21 +39,24 @@ class machineModel extends model
 	 */
 	public function create()
 	{
+		global $app;
+
 		$dt = date('Y-m-d H:i:s');
 		$machine = fixer::input('post')->get();
 		$machine->created = $dt;
 		$machine->modified = $dt;
 		$machine->deleted = 0;
+		$machine->created_by = $app->user->account;
 
 		$this->dao->insert(TABLE_MACHINE)->data($machine)
-			->check('name', 'unique')
+			->check('code', 'unique')
 			->exec();
 
 		if(!dao::isError())
 		{
-			$materialID	 = $this->dao->lastInsertId();
+			$machineID	 = $this->dao->lastInsertId();
 
-			return $materialID;
+			return $machineID;
 		}
 
 		return false;

@@ -12,9 +12,9 @@ class material extends control
 	/**
 	 *
 	 */
-	public function index($typeid = 0, $recTotal = 0, $recPerPage = 100, $pageID = 1)
+	public function index($typeId = 0, $recTotal = 0, $recPerPage = 100, $pageID = 1)
 	{
-		$materials = $this->material->getList($typeid);
+		$materials = $this->material->getList($typeId);
 
 		// pagination
 		$this->app->loadClass('pager', $static = true);
@@ -49,6 +49,15 @@ class material extends control
 		
 		$this->view->materialTypes = array('' => '请选择') + $materialTypes;
 		$this->view->units = array_merge(array('' => '请选择'), $this->config->material->units);
+
+		$this->display();
+	}
+
+	/**
+	 *
+	 */
+	public function edit($materialId)
+	{
 		$this->display();
 	}
 

@@ -12,7 +12,7 @@
     <div class='side-body'>
         <ul class="panel panel-sm">
         <?php foreach ($machineTypes As $mtid => $mtname) { ?>
-            <li><?php echo html::a($this->createLink('machine', 'index', 'mtype=' . $mtid), $mtname);?></li>
+            <li><?php echo html::a($this->createLink('machine', 'index', sprintf($typeParams, $mtid)), $mtname);?></li>
         <?php } ?>
         </ul>
     </div>
