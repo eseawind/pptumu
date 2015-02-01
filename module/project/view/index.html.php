@@ -32,7 +32,7 @@
     </tr>
   </thead>
   <?php $canBatchEdit = common::hasPriv('project', 'batchEdit'); ?>
-  <?php foreach($projectStats as $project):?>
+  <?php foreach($projectStats as $project) { ?>
   <tr class='text-center'>
     <td>
       <?php if($canBatchEdit):?>
@@ -54,7 +54,7 @@
     </td>
     <td class='projectline text-left' values='<?php echo join(',', $project->burns);?>'></td>
   </tr>
-  <?php endforeach;?>
+  <?php } ?>
   <?php if($canBatchEdit):?>
   <tfoot>
     <tr>
