@@ -504,31 +504,22 @@ class projectModel extends model
 	/**
 	 * Get project lists.
 	 *
-	 * @param  string $status all|undone|wait|running
+	 * @param  array $conditions the filter conditioins
 	 * @param  int $limit
 	 * @param  int $productID
 	 * @access public
 	 * @return array
 	 */
-	public function getList($status = 'all', $limit = 0, $productID = 0)
+	public function getList($conditions = array(), $pager = null)
 	{
-		if ($productID != 0) {
-			return $this->dao->select('t2.*')
-				->from(TABLE_PROJECTPRODUCT)->alias('t1')
-				->leftJoin(TABLE_PROJECT)->alias('t2')
-				->on('t1.project = t2.id')
-				->where('t1.product')->eq($productID)
-				->andWhere('t2.deleted')->eq(0)
-				->orderBy('code')
-				->beginIF($limit)->limit($limit)->fi()
-				->fetchAll('id');
-		} else {
-			return $this->dao->select('*')->from(TABLE_PROJECT)->where(1)->eq(1)
-				->andWhere('deleted')->eq(0)
-				->orderBy('code')
-				->beginIF($limit)->limit($limit)->fi()
-				->fetchAll('id');
+		$this->dao->select('*')->from(TABLE_PROJECT)->where(1)->eq(1)
+			->andWhere('deleted')->eq(0)
+			->orderBy('code');
+		if (is_object($pager) && is_a($pager, 'pager')) {
+			$this->dao->page($pager);
 		}
+
+		return $this->dao->fetchAll('id');
 	}
 
 	/**

@@ -1,15 +1,6 @@
 <?php
-/**
- * The report module zh-cn file of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     report
- * @version     $Id: zh-cn.php 5080 2013-07-10 00:46:59Z wyd621@gmail.com $
- * @link        http://www.zentao.net
- */
-$lang->report->common     = '统计视图';
+
+$lang->report->common     = '工程上报';
 $lang->report->index      = '统计首页';
 $lang->report->list       = '统计报表';
 $lang->report->item       = '条目';
@@ -17,6 +8,10 @@ $lang->report->value      = '值';
 $lang->report->percent    = '百分比';
 $lang->report->undefined  = '未设定';
 $lang->report->time       = '时间';
+
+$lang->report->staff = '公司员工';
+$lang->report->extternal = '外雇人员';
+$lang->report->dining_person = '用餐人员';
 
 $lang->report->colors[]   = 'AFD8F8';
 $lang->report->colors[]   = 'F6BD0F';
@@ -77,6 +72,10 @@ $lang->report->idAB     = 'ID';
 $lang->report->bugTitle = 'Bug标题';
 $lang->report->taskName = '任务名称';
 $lang->report->todoName = '待办名称';
+
+/** button */
+$lang->report->create = '添加';
+$lang->report->history = '历史记录';
 
 $lang->report->mailtitle        = new stdclass();
 $lang->report->mailtitle->begin = '提醒：您有';

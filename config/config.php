@@ -125,6 +125,10 @@ define('TABLE_MATERIAL',      '`' . $config->db->prefix . 'material`');
 define('TABLE_MACHINETYPE',   '`' . $config->db->prefix . 'machinetype`');
 define('TABLE_MACHINE',       '`' . $config->db->prefix . 'machine`');
 
+define('TABLE_REPORT',        '`' . $config->db->prefix . 'report`');
+define('TABLE_TESTATION',     '`' . $config->db->prefix . 'testation`');
+define('TABLE_PROBLEM',       '`' . $config->db->prefix . 'problem`');
+
 define('TABLE_DOCLIB',        '`' . $config->db->prefix . 'doclib`');
 define('TABLE_DOC',           '`' . $config->db->prefix . 'doc`');
 

@@ -12,11 +12,6 @@ class project extends control
 	public function __construct()
 	{
 		parent::__construct();
-		if($this->methodName != 'computeburn')
-		{
-			$this->projects = $this->project->getPairs('nocode');
-			if(!$this->projects and $this->methodName != 'create' and $this->app->getViewType() != 'mhtml') $this->locate($this->createLink('project', 'create'));
-		}
 	}
 
 	/**
@@ -28,7 +23,7 @@ class project extends control
 	 * @access public
 	 * @return void
 	 */
-	public function index($locate = 'yes', $status = 'undone', $projectID = 0, $orderBy = 'code_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
+	public function index($locate = 'yes', $status = 'undone', $projectID = 0, $orderBy = 'code_asc', $recTotal = 0, $recPerPage = 1, $pageID = 1)
 	{
 		// if($locate == 'yes') $this->locate($this->createLink('project', 'task'));
 
@@ -73,27 +68,23 @@ class project extends control
 	 * @access public
 	 * @return object current object
 	 */
-	public function commonAction($projectID = 0, $extra = '')
+	private function commonAction($projectID = 0, $extra = '')
 	{
-		$this->loadModel('product');
+		$projects = $this->project->getPairs('nocode');
+
+		if(!$projects and $this->methodName != 'create' and $this->app->getViewType() != 'mhtml') $this->locate($this->createLink('project', 'create'));
 
 		/* Get projects and products info. */
-		$projectID	 = $this->project->saveState($projectID, array_keys($this->projects));
+		$projectID	 = $this->project->saveState($projectID, array_keys($projects));
 		$project	   = $this->project->getById($projectID);
-		// $products	  = $this->project->getProducts($project->id);
-		// $childProjects = $this->project->getChildProjects($project->id);
-		// $teamMembers   = $this->project->getTeamMembers($project->id);
+
 		$actions	   = $this->loadModel('action')->getList('project', $project->id);
 
 		/* Set menu. */
-		$this->project->setMenu($this->projects, $project->id, $extra);
+		$this->project->setMenu($projects, $project->id, $extra);
 
 		/* Assign. */
-		$this->view->projects	  = $this->projects;
-		// $this->view->project	   = $project;
-		// $this->view->childProjects = $childProjects;
-		// $this->view->products	  = $products;
-		// $this->view->teamMembers   = $teamMembers;
+		$this->view->projects	  = $projects;
 		$this->view->actions	   = $actions;
 
 		return $project;
@@ -839,6 +830,8 @@ class project extends control
 	 */
 	public function create($projectID = '', $copyProjectID = '')
 	{
+		$this->projects = $this->project->getPairs('nocode');
+
 		if($projectID)
 		{
 			$this->view->tips	  = $this->fetch('project', 'tips', "projectID=$projectID");
@@ -918,6 +911,8 @@ class project extends control
 
 		/* Set menu. */
 		$this->project->setMenu($this->projects, $projectID);
+
+		$this->projects = $this->project->getPairs('nocode');
 
 		$projects = array('' => '') + $this->projects;
 		$project  = $this->project->getById($projectID);

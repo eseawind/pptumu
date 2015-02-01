@@ -18,11 +18,11 @@
 class dao
 {
 	/* Use these strang strings to avoid conflicting with these keywords in the sql body. */
-	const WHERE   = 'wHeRe';
+	const WHERE = 'wHeRe';
 	const GROUPBY = 'gRoUp bY';
-	const HAVING  = 'hAvInG';
+	const HAVING = 'hAvInG';
 	const ORDERBY = 'oRdEr bY';
-	const LIMIT   = 'lImiT';
+	const LIMIT = 'lImiT';
 
 	/**
 	 * The global app object.
@@ -147,10 +147,10 @@ class dao
 	public function __construct()
 	{
 		global $app, $config, $lang, $dbh, $slaveDBH;
-		$this->app	  = $app;
-		$this->config   = $config;
-		$this->lang	 = $lang;
-		$this->dbh	  = $dbh;
+		$this->app = $app;
+		$this->config = $config;
+		$this->lang = $lang;
+		$this->dbh = $dbh;
 		$this->slaveDBH = $slaveDBH ? $slaveDBH : false;
 
 		$this->reset();
@@ -212,7 +212,7 @@ class dao
 	/**
 	 * Set the query mode. If the method if like findByxxx, the mode is magic. Else, the mode is raw.
 	 *
-	 * @param  string $mode	 magic|raw
+	 * @param  string $mode magic|raw
 	 * @access private
 	 * @return void
 	 */
@@ -263,24 +263,21 @@ class dao
 
 		/* Remove the part after order and limit. */
 		$subLength = strlen($sql);
-		$orderPOS  = strripos($sql, DAO::ORDERBY);
-		$limitPOS  = strripos($sql , DAO::LIMIT);
-		if($limitPOS) $subLength = $limitPOS;
-		if($orderPOS) $subLength = $orderPOS;
+		$orderPOS = strripos($sql, DAO::ORDERBY);
+		$limitPOS = strripos($sql, DAO::LIMIT);
+		if ($limitPOS) $subLength = $limitPOS;
+		if ($orderPOS) $subLength = $orderPOS;
 		$sql = substr($sql, 0, $subLength);
 		self::$querys[] = $sql;
 
 		/* Get the records count. */
-		try
-		{
+		try {
 			$row = $this->dbh->query($sql)->fetch(PDO::FETCH_OBJ);
-		}
-		catch (PDOException $e)
-		{
+		} catch (PDOException $e) {
 			$this->sqlError($e);
 		}
 
-		$sql  = 'SELECT FOUND_ROWS() as recTotal;';
+		$sql = 'SELECT FOUND_ROWS() as recTotal;';
 		$row = $this->dbh->query($sql)->fetch();
 
 		return $row->recTotal;
@@ -358,7 +355,7 @@ class dao
 	public function from($table)
 	{
 		$this->setTable($table);
-		if($this->mode == 'raw') $this->sqlobj->from($table);
+		if ($this->mode == 'raw') $this->sqlobj->from($table);
 		return $this;
 	}
 
@@ -384,7 +381,7 @@ class dao
 	 */
 	public function alias($alias)
 	{
-		if(empty($this->alias)) $this->setAlias($alias);
+		if (empty($this->alias)) $this->setAlias($alias);
 		$this->sqlobj->alias($alias);
 		return $this;
 	}
@@ -392,13 +389,13 @@ class dao
 	/**
 	 * Set the data to update or insert.
 	 *
-	 * @param  object $data		 the data object or array
+	 * @param  object $data the data object or array
 	 * @access public
 	 * @return object the dao object self.
 	 */
 	public function data($data)
 	{
-		if(!is_object($data)) $data = (object)$data;
+		if (!is_object($data)) $data = (object)$data;
 		$this->sqlobj->data($data);
 		return $this;
 	}
@@ -438,10 +435,9 @@ class dao
 		$sql = $this->sqlobj->get();
 
 		/* If the mode is magic, process the $fields and $table. */
-		if($this->mode == 'magic')
-		{
-			if($this->fields == '') $this->fields = '*';
-			if($this->table == '')  $this->app->triggerError('Must set the table name', __FILE__, __LINE__, $exit = true);
+		if ($this->mode == 'magic') {
+			if ($this->fields == '') $this->fields = '*';
+			if ($this->table == '') $this->app->triggerError('Must set the table name', __FILE__, __LINE__, $exit = true);
 			$sql = sprintf($this->sqlobj->get(), $this->fields, $this->table);
 		}
 
@@ -487,27 +483,21 @@ class dao
 	 */
 	public function query($sql = '')
 	{
-		if(!empty(dao::$errors)) return new PDOStatement();   // If any error, return an empty statement object to make sure the remain method to execute.
+		if (!empty(dao::$errors)) return new PDOStatement();   // If any error, return an empty statement object to make sure the remain method to execute.
 
-		if($sql) $this->sqlobj->sql = $sql;
+		if ($sql) $this->sqlobj->sql = $sql;
 		$sql = $this->processSQL();
 
-		try
-		{
+		try {
 			$method = $this->method;
 			$this->reset();
 
-			if($this->slaveDBH and $method == 'select')
-			{
+			if ($this->slaveDBH and $method == 'select') {
 				return $this->slaveDBH->query($sql);
-			}
-			else
-			{
+			} else {
 				return $this->dbh->query($sql);
 			}
-		}
-		catch (PDOException $e)
-		{
+		} catch (PDOException $e) {
 			$this->sqlError($e);
 		}
 	}
@@ -521,41 +511,39 @@ class dao
 	 */
 	public function page($pager)
 	{
-		if(!is_object($pager)) return $this;
+		if (!is_object($pager) || !is_a($pager, 'pager')) return $this;
 
 		/* If the record total is 0, compute it. */
-		if($pager->recTotal == 0)
-		{
+		if ($pager->recTotal == 0) {
 			/* Get the SELECT, FROM position, thus get the fields, replace it by count(*). */
-			$sql	   = $this->get();
+			$sql = $this->get();
 			$selectPOS = strpos($sql, 'SELECT') + strlen('SELECT');
-			$fromPOS   = strpos($sql, 'FROM');
-			$fields	= substr($sql, $selectPOS, $fromPOS - $selectPOS );
-			$sql	   = str_replace($fields, ' COUNT(*) AS recTotal ', $sql);
+			$fromPOS = strpos($sql, 'FROM');
+			$fields = substr($sql, $selectPOS, $fromPOS - $selectPOS);
+			$sql = str_replace($fields, ' COUNT(*) AS recTotal ', $sql);
 
 			/* Remove the part after order and limit. */
 			$subLength = strlen($sql);
-			$orderPOS  = strripos($sql, 'order ');
-			$limitPOS  = strripos($sql , 'limit');
-			if($limitPOS) $subLength = $limitPOS;
-			if($orderPOS) $subLength = $orderPOS;
+			$orderPOS = strripos($sql, 'order ');
+			$limitPOS = strripos($sql, 'limit');
+			if ($limitPOS) $subLength = $limitPOS;
+			if ($orderPOS) $subLength = $orderPOS;
 			$sql = substr($sql, 0, $subLength);
 			self::$querys[] = $sql;
 
 			/* Get the records count. */
-			try
-			{
+			try {
 				$row = $this->dbh->query($sql)->fetch(PDO::FETCH_OBJ);
-			}
-			catch (PDOException $e)
-			{
+			} catch (PDOException $e) {
 				$this->sqlError($e);
 			}
 
 			$pager->setRecTotal($row->recTotal);
 			$pager->setPageTotal();
+			$pager->resetPageID();
 		}
 		$this->sqlobj->limit($pager->limit());
+
 		return $this;
 	}
 
@@ -568,18 +556,15 @@ class dao
 	 */
 	public function exec($sql = '')
 	{
-		if(!empty(dao::$errors)) return new PDOStatement();   // If any error, return an empty statement object to make sure the remain method to execute.
+		if (!empty(dao::$errors)) return new PDOStatement();   // If any error, return an empty statement object to make sure the remain method to execute.
 
-		if($sql) $this->sqlobj->sql = $sql;
+		if ($sql) $this->sqlobj->sql = $sql;
 		$sql = $this->processSQL();
 
-		try
-		{
+		try {
 			$this->reset();
 			return $this->dbh->exec($sql);
-		}
-		catch (PDOException $e)
-		{
+		} catch (PDOException $e) {
 			$this->sqlError($e);
 		}
 	}
@@ -589,39 +574,39 @@ class dao
 	/**
 	 * Fetch one record.
 	 *
-	 * @param  string $field		if the field is set, only return the value of this field, else return this record
+	 * @param  string $field if the field is set, only return the value of this field, else return this record
 	 * @access public
 	 * @return object|mixed
 	 */
 	public function fetch($field = '')
 	{
-		if(empty($field)) return $this->query()->fetch();
+		if (empty($field)) return $this->query()->fetch();
 		$this->setFields($field);
 		$result = $this->query()->fetch(PDO::FETCH_OBJ);
-		if($result) return $result->$field;
+		if ($result) return $result->$field;
 	}
 
 	/**
 	 * Fetch all records.
 	 *
-	 * @param  string $keyField	 the key field, thus the return records is keyed by this field
+	 * @param  string $keyField the key field, thus the return records is keyed by this field
 	 * @access public
 	 * @return array the records
 	 */
 	public function fetchAll($keyField = '')
 	{
 		$stmt = $this->query();
-		if(empty($keyField)) return $stmt->fetchAll();
+		if (empty($keyField)) return $stmt->fetchAll();
 		$rows = array();
-		while($row = $stmt->fetch()) $rows[$row->$keyField] = $row;
+		while ($row = $stmt->fetch()) $rows[$row->$keyField] = $row;
 		return $rows;
 	}
 
 	/**
 	 * Fetch all records and group them by one field.
 	 *
-	 * @param  string $groupField   the field to group by
-	 * @param  string $keyField	 the field of key
+	 * @param  string $groupField the field to group by
+	 * @param  string $keyField the field of key
 	 * @access public
 	 * @return array the records.
 	 */
@@ -629,9 +614,8 @@ class dao
 	{
 		$stmt = $this->query();
 		$rows = array();
-		while($row = $stmt->fetch())
-		{
-			empty($keyField) ?  $rows[$row->$groupField][] = $row : $rows[$row->$groupField][$row->$keyField] = $row;
+		while ($row = $stmt->fetch()) {
+			empty($keyField) ? $rows[$row->$groupField][] = $row : $rows[$row->$groupField][$row->$keyField] = $row;
 		}
 		return $rows;
 	}
@@ -650,14 +634,11 @@ class dao
 	{
 		$pairs = array();
 		$ready = false;
-		$stmt  = $this->query();
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-		{
-			if(!$ready)
-			{
-				if(empty($keyField)) $keyField = key($row);
-				if(empty($valueField))
-				{
+		$stmt = $this->query();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			if (!$ready) {
+				if (empty($keyField)) $keyField = key($row);
+				if (empty($valueField)) {
 					end($row);
 					$valueField = key($row);
 				}
@@ -685,8 +666,8 @@ class dao
 	/**
 	 * Use it to do some convenient queries.
 	 *
-	 * @param  string $funcName  the function name to be called
-	 * @param  array  $funcArgs  the params
+	 * @param  string $funcName the function name to be called
+	 * @param  array $funcArgs the params
 	 * @access public
 	 * @return object the dao object self.
 	 */
@@ -695,46 +676,36 @@ class dao
 		$funcName = strtolower($funcName);
 
 		/* findByxxx, xxx as will be in the where. */
-		if(strpos($funcName, 'findby') !== false)
-		{
+		if (strpos($funcName, 'findby') !== false) {
 			$this->setMode('magic');
 			$field = str_replace('findby', '', $funcName);
-			if(count($funcArgs) == 1)
-			{
+			if (count($funcArgs) == 1) {
 				$operator = '=';
-				$value	= $funcArgs[0];
-			}
-			else
-			{
+				$value = $funcArgs[0];
+			} else {
 				$operator = $funcArgs[0];
-				$value	= $funcArgs[1];
+				$value = $funcArgs[1];
 			}
 			$this->sqlobj = sql::select('%s')->from('%s')->where($field, $operator, $value);
 			return $this;
-		}
-		/* Fetch10. */
-		elseif(strpos($funcName, 'fetch') !== false)
-		{
-			$max  = str_replace('fetch', '', $funcName);
+		} /* Fetch10. */
+		elseif (strpos($funcName, 'fetch') !== false) {
+			$max = str_replace('fetch', '', $funcName);
 			$stmt = $this->query();
 
 			$rows = array();
-			$key  = isset($funcArgs[0]) ? $funcArgs[0] : '';
-			$i	= 0;
-			while($row = $stmt->fetch())
-			{
+			$key = isset($funcArgs[0]) ? $funcArgs[0] : '';
+			$i = 0;
+			while ($row = $stmt->fetch()) {
 				$key ? $rows[$row->$key] = $row : $rows[] = $row;
-				$i ++;
-				if($i == $max) break;
+				$i++;
+				if ($i == $max) break;
 			}
 			return $rows;
-		}
-		/* Others, call the method in sql class. */
-		else
-		{
+		} /* Others, call the method in sql class. */
+		else {
 			/* Create the max counts of sql class methods, and then create $arg0, $arg1... */
-			for($i = 0; $i < SQL::MAX_ARGS; $i ++)
-			{
+			for ($i = 0; $i < SQL::MAX_ARGS; $i++) {
 				${"arg$i"} = isset($funcArgs[$i]) ? $funcArgs[$i] : null;
 			}
 			$this->sqlobj->$funcName($arg0, $arg1, $arg2);
@@ -747,52 +718,44 @@ class dao
 	/**
 	 * Check a filed is satisfied with the check rule.
 	 *
-	 * @param  string $fieldName	the field to check
-	 * @param  string $funcName	 the check rule
+	 * @param  string $fieldName the field to check
+	 * @param  string $funcName the check rule
 	 * @access public
 	 * @return object the dao object self.
 	 */
 	public function check($fieldName, $funcName)
 	{
 		/* If no this field in the data, reuturn. */
-		if(!isset($this->sqlobj->data->$fieldName)) return $this;
+		if (!isset($this->sqlobj->data->$fieldName)) return $this;
 
 		/* Set the field label and value. */
 		global $lang, $config, $app;
-		$table	  = strtolower(str_replace(array($config->db->prefix, '`'), '', $this->table));
+		$table = strtolower(str_replace(array($config->db->prefix, '`'), '', $this->table));
 		$fieldLabel = isset($lang->$table->$fieldName) ? $lang->$table->$fieldName : $fieldName;
 		$value = $this->sqlobj->data->$fieldName;
 
 		/* Check unique. */
-		if($funcName == 'unique')
-		{
+		if ($funcName == 'unique') {
 			$args = func_get_args();
-			$sql  = "SELECT COUNT(*) AS count FROM {$this->table} WHERE `{$fieldName}` = " . $this->sqlobj->quote($value);
-			if(isset($args[2])) $sql .= ' AND ' . $args[2];
-			try
-			{
-				 $row = $this->dbh->query($sql)->fetch();
-				 if($row->count != 0) $this->logError($funcName, $fieldName, $fieldLabel, array($value));
-			}
-			catch (PDOException $e)
-			{
+			$sql = "SELECT COUNT(*) AS count FROM {$this->table} WHERE `{$fieldName}` = " . $this->sqlobj->quote($value);
+			if (isset($args[2])) $sql .= ' AND ' . $args[2];
+			try {
+				$row = $this->dbh->query($sql)->fetch();
+				if ($row->count != 0) $this->logError($funcName, $fieldName, $fieldLabel, array($value));
+			} catch (PDOException $e) {
 				$this->sqlError($e);
 			}
-		}
-		else
-		{
+		} else {
 			/* Create the params. */
 			$funcArgs = func_get_args();
 			unset($funcArgs[0]);
 			unset($funcArgs[1]);
 
-			for($i = 0; $i < VALIDATER::MAX_ARGS; $i ++)
-			{
+			for ($i = 0; $i < VALIDATER::MAX_ARGS; $i++) {
 				${"arg$i"} = isset($funcArgs[$i + 2]) ? $funcArgs[$i + 2] : null;
 			}
 			$checkFunc = 'check' . $funcName;
-			if(validater::$checkFunc($value, $arg0, $arg1, $arg2) === false)
-			{
+			if (validater::$checkFunc($value, $arg0, $arg1, $arg2) === false) {
 				$this->logError($funcName, $fieldName, $fieldLabel, $funcArgs);
 			}
 		}
@@ -811,10 +774,9 @@ class dao
 	 */
 	public function checkIF($condition, $fieldName, $funcName)
 	{
-		if(!$condition) return $this;
+		if (!$condition) return $this;
 		$funcArgs = func_get_args();
-		for($i = 0; $i < VALIDATER::MAX_ARGS; $i ++)
-		{
+		for ($i = 0; $i < VALIDATER::MAX_ARGS; $i++) {
 			${"arg$i"} = isset($funcArgs[$i + 3]) ? $funcArgs[$i + 3] : null;
 		}
 		$this->check($fieldName, $funcName, $arg0, $arg1, $arg2);
@@ -824,7 +786,7 @@ class dao
 	/**
 	 * Batch check some fileds.
 	 *
-	 * @param  string $fields	   the fields to check, join with ,
+	 * @param  string $fields the fields to check, join with ,
 	 * @param  string $funcName
 	 * @access public
 	 * @return object the dao object self.
@@ -833,11 +795,10 @@ class dao
 	{
 		$fields = explode(',', str_replace(' ', '', $fields));
 		$funcArgs = func_get_args();
-		for($i = 0; $i < VALIDATER::MAX_ARGS; $i ++)
-		{
+		for ($i = 0; $i < VALIDATER::MAX_ARGS; $i++) {
 			${"arg$i"} = isset($funcArgs[$i + 2]) ? $funcArgs[$i + 2] : null;
 		}
-		foreach($fields as $fieldName) $this->check($fieldName, $funcName, $arg0, $arg1, $arg2);
+		foreach ($fields as $fieldName) $this->check($fieldName, $funcName, $arg0, $arg1, $arg2);
 		return $this;
 	}
 
@@ -852,38 +813,35 @@ class dao
 	 */
 	public function batchCheckIF($condition, $fields, $funcName)
 	{
-		if(!$condition) return $this;
+		if (!$condition) return $this;
 		$fields = explode(',', str_replace(' ', '', $fields));
 		$funcArgs = func_get_args();
-		for($i = 0; $i < VALIDATER::MAX_ARGS; $i ++)
-		{
+		for ($i = 0; $i < VALIDATER::MAX_ARGS; $i++) {
 			${"arg$i"} = isset($funcArgs[$i + 2]) ? $funcArgs[$i + 2] : null;
 		}
-		foreach($fields as $fieldName) $this->check($fieldName, $funcName, $arg0, $arg1, $arg2);
+		foreach ($fields as $fieldName) $this->check($fieldName, $funcName, $arg0, $arg1, $arg2);
 		return $this;
 	}
 
 	/**
 	 * Check the fields according the the database schema.
 	 *
-	 * @param  string $skipFields   fields to skip checking
+	 * @param  string $skipFields fields to skip checking
 	 * @access public
 	 * @return object the dao object self.
 	 */
 	public function autoCheck($skipFields = '')
 	{
-		$fields	 = $this->getFieldsType();
+		$fields = $this->getFieldsType();
 		$skipFields = ",$skipFields,";
 
-		foreach($fields as $fieldName => $validater)
-		{
-			if(strpos($skipFields, $fieldName) !== false) continue; // skip it.
-			if(!isset($this->sqlobj->data->$fieldName)) continue;
-			if($validater['rule'] == 'skip') continue;
+		foreach ($fields as $fieldName => $validater) {
+			if (strpos($skipFields, $fieldName) !== false) continue; // skip it.
+			if (!isset($this->sqlobj->data->$fieldName)) continue;
+			if ($validater['rule'] == 'skip') continue;
 			$options = array();
-			if(isset($validater['options'])) $options = array_values($validater['options']);
-			for($i = 0; $i < VALIDATER::MAX_ARGS; $i ++)
-			{
+			if (isset($validater['options'])) $options = array_values($validater['options']);
+			for ($i = 0; $i < VALIDATER::MAX_ARGS; $i++) {
 				${"arg$i"} = isset($options[$i]) ? $options[$i] : null;
 			}
 			$this->check($fieldName, $validater['rule'], $arg0, $arg1, $arg2);
@@ -896,39 +854,33 @@ class dao
 	 *
 	 * For the error notice, see module/common/lang.
 	 *
-	 * @param  string $checkType	the check rule
-	 * @param  string $fieldName	the field name
-	 * @param  string $fieldLabel   the field label
-	 * @param  array  $funcArgs	 the args
+	 * @param  string $checkType the check rule
+	 * @param  string $fieldName the field name
+	 * @param  string $fieldLabel the field label
+	 * @param  array $funcArgs the args
 	 * @access public
 	 * @return void
 	 */
 	public function logError($checkType, $fieldName, $fieldLabel, $funcArgs = array())
 	{
 		global $lang;
-		$error	= $lang->error->$checkType;
-		$replaces = array_merge(array($fieldLabel), $funcArgs);	 // the replace values.
+		$error = $lang->error->$checkType;
+		$replaces = array_merge(array($fieldLabel), $funcArgs);     // the replace values.
 
 		/* Just a string, cycle the $replaces. */
-		if(!is_array($error))
-		{
-			foreach($replaces as $replace)
-			{
+		if (!is_array($error)) {
+			foreach ($replaces as $replace) {
 				$pos = strpos($error, '%s');
-				if($pos === false) break;
+				if ($pos === false) break;
 				$error = substr($error, 0, $pos) . $replace . substr($error, $pos + 2);
 			}
-		}
-		/* If the error define is an array, select the one which %s counts match the $replaces.  */
-		else
-		{
+		} /* If the error define is an array, select the one which %s counts match the $replaces.  */
+		else {
 			/* Remove the empty items. */
-			foreach($replaces as $key => $value) if(is_null($value)) unset($replaces[$key]);
+			foreach ($replaces as $key => $value) if (is_null($value)) unset($replaces[$key]);
 			$replacesCount = count($replaces);
-			foreach($error as $errorString)
-			{
-				if(substr_count($errorString, '%s') == $replacesCount)
-				{
+			foreach ($error as $errorString) {
+				if (substr_count($errorString, '%s') == $replacesCount) {
 					$error = vsprintf($errorString, $replaces);
 				}
 			}
@@ -957,15 +909,13 @@ class dao
 	public static function getError($join = false)
 	{
 		$errors = dao::$errors;
-		dao::$errors = array();	 // Must clear it.
+		dao::$errors = array();     // Must clear it.
 
-		if(!$join) return $errors;
+		if (!$join) return $errors;
 
-		if(is_array($errors))
-		{
+		if (is_array($errors)) {
 			$message = '';
-			foreach($errors as $item)
-			{
+			foreach ($errors as $item) {
 				is_array($item) ? $message .= join('\n', $item) . '\n' : $message .= $item . '\n';
 			}
 			return $message;
@@ -980,56 +930,41 @@ class dao
 	 */
 	private function getFieldsType()
 	{
-		try
-		{
+		try {
 			$this->dbh->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
 			$sql = "DESC $this->table";
 			$rawFields = $this->dbh->query($sql)->fetchAll();
 			$this->dbh->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
-		}
-		catch (PDOException $e)
-		{
+		} catch (PDOException $e) {
 			$this->sqlError($e);
 		}
 
-		foreach($rawFields as $rawField)
-		{
+		foreach ($rawFields as $rawField) {
 			$firstPOS = strpos($rawField->type, '(');
-			$type	 = substr($rawField->type, 0, $firstPOS > 0 ? $firstPOS : strlen($rawField->type));
-			$type	 = str_replace(array('big', 'small', 'medium', 'tiny', 'var'), '', $type);
-			$field	= array();
+			$type = substr($rawField->type, 0, $firstPOS > 0 ? $firstPOS : strlen($rawField->type));
+			$type = str_replace(array('big', 'small', 'medium', 'tiny', 'var'), '', $type);
+			$field = array();
 
-			if($type == 'enum' or $type == 'set')
-			{
-				$rangeBegin  = $firstPOS + 2;					   // Remove the first quote.
-				$rangeEnd	= strrpos($rawField->type, ')') - 1;   // Remove the last quote.
-				$range	   = substr($rawField->type, $rangeBegin, $rangeEnd - $rangeBegin);
+			if ($type == 'enum' or $type == 'set') {
+				$rangeBegin = $firstPOS + 2;                       // Remove the first quote.
+				$rangeEnd = strrpos($rawField->type, ')') - 1;   // Remove the last quote.
+				$range = substr($rawField->type, $rangeBegin, $rangeEnd - $rangeBegin);
 				$field['rule'] = 'reg';
-				$field['options']['reg']  = '/' . str_replace("','", '|', $range) . '/';
-			}
-			elseif($type == 'char')
-			{
-				$begin  = $firstPOS + 1;
-				$end	= strpos($rawField->type, ')', $begin);
+				$field['options']['reg'] = '/' . str_replace("','", '|', $range) . '/';
+			} elseif ($type == 'char') {
+				$begin = $firstPOS + 1;
+				$end = strpos($rawField->type, ')', $begin);
 				$length = substr($rawField->type, $begin, $end - $begin);
-				$field['rule']   = 'length';
+				$field['rule'] = 'length';
 				$field['options']['max'] = $length;
 				$field['options']['min'] = 0;
-			}
-			elseif($type == 'int')
-			{
+			} elseif ($type == 'int') {
 				$field['rule'] = 'int';
-			}
-			elseif($type == 'float' or $type == 'double')
-			{
+			} elseif ($type == 'float' or $type == 'double') {
 				$field['rule'] = 'float';
-			}
-			elseif($type == 'date')
-			{
+			} elseif ($type == 'date') {
 				$field['rule'] = 'date';
-			}
-			else
-			{
+			} else {
 				$field['rule'] = 'skip';
 			}
 			$fields[$rawField->field] = $field;
@@ -1040,7 +975,7 @@ class dao
 	/**
 	 * Process SQL error by code.
 	 *
-	 * @param  object	$exception
+	 * @param  object $exception
 	 * @access public
 	 * @return void
 	 */
@@ -1048,11 +983,10 @@ class dao
 	{
 		$errorInfo = $exception->errorInfo;
 		$errorCode = $errorInfo[1];
-		$errorMsg  = $errorInfo[2];
-		$message   = $exception->getMessage();
-		if(strpos($this->repairCode, "|$errorCode|") !== false or ($errorCode == '1016' and strpos($errorMsg, 'errno: 145') !== false))
-		{
-			$message .=  ' ' . $this->lang->repairTable;
+		$errorMsg = $errorInfo[2];
+		$message = $exception->getMessage();
+		if (strpos($this->repairCode, "|$errorCode|") !== false or ($errorCode == '1016' and strpos($errorMsg, 'errno: 145') !== false)) {
+			$message .= ' ' . $this->lang->repairTable;
 		}
 		$sql = $this->sqlobj->get();
 		$this->app->triggerError($message . "<p>The sql is: $sql</p>", __FILE__, __LINE__, $exit = true);
@@ -1126,7 +1060,7 @@ class sql
 	 * @var bool
 	 * @access public
 	 */
-	 public $magicQuote;
+	public $magicQuote;
 
 	/**
 	 * The construct function. user factory() to instance it.
@@ -1138,7 +1072,7 @@ class sql
 	private function __construct($table = '')
 	{
 		global $dbh;
-		$this->dbh		= $dbh;
+		$this->dbh = $dbh;
 		$this->magicQuote = get_magic_quotes_gpc();
 	}
 
@@ -1232,12 +1166,10 @@ class sql
 	 */
 	public function data($data)
 	{
-		$data = (object) $data;
+		$data = (object)$data;
 
-		foreach($data as $field => $value)
-		{
-			if(!preg_match('|^\w+$|', $field))
-			{
+		foreach ($data as $field => $value) {
+			if (!preg_match('|^\w+$|', $field)) {
 				unset($data->$field);
 				continue;
 			}
@@ -1245,14 +1177,14 @@ class sql
 		}
 
 		$this->data = $data;
-		$this->sql  = rtrim($this->sql, ',');	// Remove the last ','.
+		$this->sql = rtrim($this->sql, ',');    // Remove the last ','.
 		return $this;
 	}
 
 	/**
 	 * Aadd an '(' at left.
 	 *
-	 * @param  int	$count
+	 * @param  int $count
 	 * @access public
 	 * @return ojbect the sql object.
 	 */
@@ -1265,7 +1197,7 @@ class sql
 	/**
 	 * Add an ')' ad right.
 	 *
-	 * @param  int	$count
+	 * @param  int $count
 	 * @access public
 	 * @return object the sql object.
 	 */
@@ -1284,13 +1216,10 @@ class sql
 	 */
 	public function set($set)
 	{
-		if($this->isFirstSet)
-		{
+		if ($this->isFirstSet) {
 			$this->sql .= " $set ";
 			$this->isFirstSet = false;
-		}
-		else
-		{
+		} else {
 			$this->sql .= ", $set";
 		}
 		return $this;
@@ -1378,26 +1307,23 @@ class sql
 	/**
 	 * Create the where part.
 	 *
-	 * @param  string $arg1	 the field name
-	 * @param  string $arg2	 the operator
-	 * @param  string $arg3	 the value
+	 * @param  string $arg1 the field name
+	 * @param  string $arg2 the operator
+	 * @param  string $arg3 the value
 	 * @access public
 	 * @return object the sql object.
 	 */
 	public function where($arg1, $arg2 = null, $arg3 = null)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
-		if($arg3 !== null)
-		{
-			$value	 = $this->quote($arg3);
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($arg3 !== null) {
+			$value = $this->quote($arg3);
 			$condition = "`$arg1` $arg2 " . $this->quote($arg3);
-		}
-		else
-		{
+		} else {
 			$condition = $arg1;
 		}
 
-		$this->sql .= ' ' . DAO::WHERE ." $condition ";
+		$this->sql .= ' ' . DAO::WHERE . " $condition ";
 		return $this;
 	}
 
@@ -1410,7 +1336,7 @@ class sql
 	 */
 	public function andWhere($condition)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= " AND $condition ";
 		return $this;
 	}
@@ -1418,13 +1344,13 @@ class sql
 	/**
 	 * Create the OR part.
 	 *
-	 * @param  bool  $condition
+	 * @param  bool $condition
 	 * @access public
 	 * @return object the sql object.
 	 */
 	public function orWhere($condition)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= " OR $condition ";
 		return $this;
 	}
@@ -1438,7 +1364,7 @@ class sql
 	 */
 	public function eq($value)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= " = " . $this->quote($value);
 		return $this;
 	}
@@ -1452,7 +1378,7 @@ class sql
 	 */
 	public function ne($value)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= " != " . $this->quote($value);
 		return $this;
 	}
@@ -1466,7 +1392,7 @@ class sql
 	 */
 	public function gt($value)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= " > " . $this->quote($value);
 		return $this;
 	}
@@ -1480,7 +1406,7 @@ class sql
 	 */
 	public function ge($value)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= " >= " . $this->quote($value);
 		return $this;
 	}
@@ -1488,13 +1414,13 @@ class sql
 	/**
 	 * Create '<'.
 	 *
-	 * @param  mixed  $value
+	 * @param  mixed $value
 	 * @access public
 	 * @return object the sql object.
 	 */
 	public function lt($value)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= " < " . $this->quote($value);
 		return $this;
 	}
@@ -1502,13 +1428,13 @@ class sql
 	/**
 	 * Create '<='.
 	 *
-	 * @param  mixed  $value
+	 * @param  mixed $value
 	 * @access public
 	 * @return object the sql object.
 	 */
 	public function le($value)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= " <= " . $this->quote($value);
 		return $this;
 	}
@@ -1523,7 +1449,7 @@ class sql
 	 */
 	public function between($min, $max)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$min = $this->quote($min);
 		$max = $this->quote($max);
 		$this->sql .= " BETWEEN $min AND $max ";
@@ -1533,13 +1459,13 @@ class sql
 	/**
 	 * Create in part.
 	 *
-	 * @param  string|array $ids   list string by ',' or an array
+	 * @param  string|array $ids list string by ',' or an array
 	 * @access public
 	 * @return object the sql object.
 	 */
 	public function in($ids)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= helper::dbIN($ids);
 		return $this;
 	}
@@ -1547,13 +1473,13 @@ class sql
 	/**
 	 * Create not in part.
 	 *
-	 * @param  string|array $ids   list string by ',' or an array
+	 * @param  string|array $ids list string by ',' or an array
 	 * @access public
 	 * @return object the sql object.
 	 */
 	public function notin($ids)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= ' NOT ' . helper::dbIN($ids);
 		return $this;
 	}
@@ -1567,7 +1493,7 @@ class sql
 	 */
 	public function like($string)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= " LIKE " . $this->quote($string);
 		return $this;
 	}
@@ -1581,7 +1507,7 @@ class sql
 	 */
 	public function notLike($string)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= "NOT LIKE " . $this->quote($string);
 		return $this;
 	}
@@ -1589,14 +1515,14 @@ class sql
 	/**
 	 * Create the find_in_set by part.
 	 *
-	 * @param  int	$str
-	 * @param  int	$strList
+	 * @param  int $str
+	 * @param  int $strList
 	 * @access public
 	 * @return object the sql object.
 	 */
 	public function findInSet($str, $strList)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 		$this->sql .= "FIND_IN_SET(" . $str . "," . $strList . ")";
 	}
 
@@ -1609,31 +1535,29 @@ class sql
 	 */
 	public function orderBy($order)
 	{
-		if($this->inCondition and !$this->conditionIsTrue) return $this;
+		if ($this->inCondition and !$this->conditionIsTrue) return $this;
 
-		$order  = str_replace(array('|', '', '_'), ' ', $order);
+		$order = str_replace(array('|', '', '_'), ' ', $order);
 
 		/* Add "`" in order string. */
 		/* When order has limit string. */
-		$pos	= stripos($order, 'limit');
+		$pos = stripos($order, 'limit');
 		$orders = $pos ? substr($order, 0, $pos) : $order;
-		$limit  = $pos ? substr($order, $pos) : '';
+		$limit = $pos ? substr($order, $pos) : '';
 
 		$orders = explode(',', $orders);
-		foreach($orders as $i => $order)
-		{
+		foreach ($orders as $i => $order) {
 			$orderParse = explode(' ', trim($order));
-			foreach($orderParse as $key => $value)
-			{
+			foreach ($orderParse as $key => $value) {
 				$value = trim($value);
-				if(empty($value) or strtolower($value) == 'desc' or strtolower($value) == 'asc') continue;
+				if (empty($value) or strtolower($value) == 'desc' or strtolower($value) == 'asc') continue;
 				$field = trim($value, '`');
 
 				/* such as t1.id field. */
-				if(strpos($value, '.') !== false) list($table, $field) = explode('.', $field);
+				if (strpos($value, '.') !== false) list($table, $field) = explode('.', $field);
 				$field = "`$field`";
 
-				$orderParse[$key] = isset($table) ? $table . '.' . $field :  $field;
+				$orderParse[$key] = isset($table) ? $table . '.' . $field : $field;
 				unset($table);
 			}
 			$orders[$i] = join(' ', $orderParse);
@@ -1653,7 +1577,7 @@ class sql
 	 */
 	public function limit($limit)
 	{
-		if(empty($limit)) return $this;
+		if (empty($limit)) return $this;
 		stripos($limit, 'limit') !== false ? $this->sql .= " $limit " : $this->sql .= ' ' . DAO::LIMIT . " $limit ";
 		return $this;
 	}
@@ -1698,13 +1622,13 @@ class sql
 	/**
 	 * Uuote a var.
 	 *
-	 * @param  mixed  $value
+	 * @param  mixed $value
 	 * @access public
 	 * @return mixed
 	 */
 	public function quote($value)
 	{
-		if($this->magicQuote) $value = stripslashes($value);
+		if ($this->magicQuote) $value = stripslashes($value);
 		return $this->dbh->quote($value);
 	}
 }

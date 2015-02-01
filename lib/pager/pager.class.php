@@ -4,437 +4,439 @@
  *
  * The author disclaims copyright to this source code.  In place of
  * a legal notice, here is a blessing:
- * 
+ *
  *  May you do good and not evil.
  *  May you find forgiveness for yourself and forgive others.
  *  May you share freely, never taking more than you give.
  */
+
 /**
  * Pager class.
- * 
+ *
  * @package framework
  */
 class pager
 {
-    /**
-     * The default counts of per page.
-     *
-     * @public int
-     */
-    const DEFAULT_REC_PRE_PAGE = 20;
+	/**
+	 * The default counts of per page.
+	 *
+	 * @public int
+	 */
+	const DEFAULT_REC_PRE_PAGE = 20;
 
-    /**
-     * The total counts.
-     * 
-     * @var int
-     * @access public
-     */
-    public $recTotal;
+	/**
+	 * The total counts.
+	 *
+	 * @var int
+	 * @access public
+	 */
+	public $recTotal;
 
-    /**
-     * Record count per page.
-     * 
-     * @var int
-     * @access public
-     */
-    public $recPerPage;
+	/**
+	 * Record count per page.
+	 *
+	 * @var int
+	 * @access public
+	 */
+	public $recPerPage;
 
-    /**
-     * The cookie name of recPerPage.
-     * 
-     * @var string
-     * @access public
-     */
-    public $pageCookie;
+	/**
+	 * The cookie name of recPerPage.
+	 *
+	 * @var string
+	 * @access public
+	 */
+	public $pageCookie;
 
-    /**
-     * Page count.
-     * 
-     * @var string
-     * @access public
-     */
-    public $pageTotal;
+	/**
+	 * Page count.
+	 *
+	 * @var string
+	 * @access public
+	 */
+	public $pageTotal;
 
-    /**
-     * Current page id.
-     * 
-     * @var string
-     * @access public
-     */
-    public $pageID;
+	/**
+	 * Current page id.
+	 *
+	 * @var string
+	 * @access public
+	 */
+	public $pageID;
 
-    /**
-     * The global $app.
-     * 
-     * @var object
-     * @access private
-     */
-    private $app;
+	/**
+	 * The global $app.
+	 *
+	 * @var object
+	 * @access private
+	 */
+	private $app;
 
-    /**
-     * The global $lang.
-     * 
-     * @var object
-     * @access private
-     */
-    private $lang;
+	/**
+	 * The global $lang.
+	 *
+	 * @var object
+	 * @access private
+	 */
+	private $lang;
 
-    /**
-     * Current module name.
-     * 
-     * @var string
-     * @access private
-     */
-    private $moduleName;
+	/**
+	 * Current module name.
+	 *
+	 * @var string
+	 * @access private
+	 */
+	private $moduleName;
 
-    /**
-     * Current method.
-     * 
-     * @var string
-     * @access private
-     */
-    private $methodName;
+	/**
+	 * Current method.
+	 *
+	 * @var string
+	 * @access private
+	 */
+	private $methodName;
 
-    /**
-     * The params.
-     *
-     * @private array
-     */
-    private $params;
+	/**
+	 * The params.
+	 *
+	 * @private array
+	 */
+	private $params;
 
-    /**
-     * The construct function.
-     * 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
-     * @access public
-     * @return void
-     */
-    public function __construct($recTotal = 0, $recPerPage = 20, $pageID = 1)
-    {
-        $this->setApp();
-        $this->setLang();
-        $this->setModuleName();
-        $this->setMethodName();
+	/**
+	 * The construct function.
+	 *
+	 * @param  int $recTotal
+	 * @param  int $recPerPage
+	 * @param  int $pageID
+	 * @access public
+	 * @return void
+	 */
+	public function __construct($recTotal = 0, $recPerPage = 20, $pageID = 1)
+	{
+		$this->setApp();
+		$this->setLang();
+		$this->setModuleName();
+		$this->setMethodName();
 
-        $this->setRecTotal($recTotal);
-        $this->setRecPerPage($recPerPage);
-        $this->setPageTotal();
-        $this->setPageID($pageID);
-    }
+		$this->setRecTotal($recTotal);
+		$this->setRecPerPage($recPerPage);
+		$this->setPageTotal();
+		$this->setPageID($pageID);
+	}
 
-    /**
-     * The factory function.
-     * 
-     * @param  int    $recTotal 
-     * @param  int    $recPerPage 
-     * @param  int    $pageID 
-     * @access public
-     * @return object
-     */
-    public static function init($recTotal = 0, $recPerPage = 20, $pageID = 1)
-    {
-        return new pager($recTotal, $recPerPage, $pageID);
-    }
+	/**
+	 * The factory function.
+	 *
+	 * @param  int $recTotal
+	 * @param  int $recPerPage
+	 * @param  int $pageID
+	 * @access public
+	 * @return object
+	 */
+	public static function init($recTotal = 0, $recPerPage = 20, $pageID = 1)
+	{
+		return new pager($recTotal, $recPerPage, $pageID);
+	}
 
-    /**
-     * Set the recTotal property.
-     * 
-     * @param  int    $recTotal 
-     * @access public
-     * @return void
-     */
-    public function setRecTotal($recTotal = 0)
-    {
-        $this->recTotal = (int)$recTotal;
-    }
+	/**
+	 * Set the recTotal property.
+	 *
+	 * @param  int $recTotal
+	 * @access public
+	 * @return void
+	 */
+	public function setRecTotal($recTotal = 0)
+	{
+		$this->recTotal = (int)$recTotal;
+	}
 
-    /**
-     * Set the recTotal property.
-     * 
-     * @param  int    $recPerPage 
-     * @access public
-     * @return void
-     */
-    public function setRecPerPage($recPerPage)
-    {
-        /* Set the cookie name. */
-        $this->pageCookie = 'pager' . ucfirst($this->app->getModuleName()) . ucfirst($this->app->getMethodName());
+	/**
+	 * Set the recTotal property.
+	 *
+	 * @param  int $recPerPage
+	 * @access public
+	 * @return void
+	 */
+	public function setRecPerPage($recPerPage)
+	{
+		/* Set the cookie name. */
+		$this->pageCookie = 'pager' . ucfirst($this->app->getModuleName()) . ucfirst($this->app->getMethodName());
 
-        if(isset($_COOKIE[$this->pageCookie])) $recPerPage = $_COOKIE[$this->pageCookie];
-        $this->recPerPage = ($recPerPage > 0) ? $recPerPage : PAGER::DEFAULT_REC_PRE_PAGE;
-    }
+		if (isset($_COOKIE[$this->pageCookie])) $recPerPage = $_COOKIE[$this->pageCookie];
+		$this->recPerPage = ($recPerPage > 0) ? $recPerPage : PAGER::DEFAULT_REC_PRE_PAGE;
+	}
 
-    /**
-     * Set the pageTotal property.
-     * 
-     * @access public
-     * @return void
-     */
-    public function setPageTotal()
-    {
-        $this->pageTotal = ceil($this->recTotal / $this->recPerPage);
-    }
+	/**
+	 * Set the pageTotal property.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function setPageTotal()
+	{
+		$this->pageTotal = ceil($this->recTotal / $this->recPerPage);
+	}
 
-    /**
-     * Set the page id.
-     * 
-     * @param  int $pageID 
-     * @access public
-     * @return void
-     */
-    public function setPageID($pageID)
-    {
-        if($pageID > 0 and $pageID <= $this->pageTotal)
-        {
-            $this->pageID = $pageID;
-        }
-        else
-        {
-            $this->pageID = 1;
-        }
-    }
+	/**
+	 * Set the page id.
+	 *
+	 * @param  int $pageID
+	 * @access public
+	 * @return void
+	 */
+	public function setPageID($pageID)
+	{
+		if ($pageID > 0) {
+			$this->pageID = $pageID;
+		} else {
+			$this->pageID = 1;
+		}
+	}
 
-    /**
-     * Set the $app property;
-     * 
-     * @access private
-     * @return void
-     */
-    private function setApp()
-    {
-        global $app;
-        $this->app = $app;
-    }
+	/**
+	 * confirm validity of pageID
+	 * @return bool
+	 */
+	public function resetPageID()
+	{
+		if (!$this->pageTotal) return false;
 
-    /**
-     * Set the $lang property.
-     * 
-     * @access private
-     * @return void
-     */
-    private function setLang()
-    {
-        global $lang;
-        $this->lang = $lang;
-    }
+		if(!$this->pageID || ($this->pageID and $this->pageID > $this->pageTotal)) {
+			$this->pageID = 1;
+		}
 
-    /**
-     * Set the $moduleName property.
-     * 
-     * @access private
-     * @return void
-     */
-    private function setModuleName()
-    {
-        $this->moduleName = $this->app->getModuleName();
-    }
+		return true;
+	}
 
-    /**
-     * Set the $methodName property.
-     * 
-     * @access private
-     * @return void
-     */
-    private function setMethodName()
-    {
-        $this->methodName = $this->app->getMethodName();
-    }
+	/**
+	 * Set the $app property;
+	 *
+	 * @access private
+	 * @return void
+	 */
+	private function setApp()
+	{
+		global $app;
+		$this->app = $app;
+	}
 
-    /**
-     * Get recTotal, recPerpage, pageID from the request params, and add them to params.
-     * 
-     * @access private
-     * @return void
-     */
-    private function setParams()
-    {
-        $this->params = $this->app->getParams();
-        foreach($this->params as $key => $value)
-        {
-            if(strtolower($key) == 'rectotal')   $this->params[$key] = $this->recTotal;
-            if(strtolower($key) == 'recperpage') $this->params[$key] = $this->recPerPage;
-            if(strtolower($key) == 'pageID')     $this->params[$key] = $this->pageID;
-        }
-    }
+	/**
+	 * Set the $lang property.
+	 *
+	 * @access private
+	 * @return void
+	 */
+	private function setLang()
+	{
+		global $lang;
+		$this->lang = $lang;
+	}
 
-    /**
-     * Create the limit string.
-     * 
-     * @access public
-     * @return string
-     */
-    public function limit()
-    {
-        $limit = '';
-        if($this->pageTotal > 1) $limit = ' limit ' . ($this->pageID - 1) * $this->recPerPage . ", $this->recPerPage";
-        return $limit;
-    }
-   
-    /**
-     * Print the pager's html.
-     * 
-     * @param  string $align 
-     * @param  string $type 
-     * @access public
-     * @return void
-     */
-    public function show($align = 'right', $type = 'full')
-    {
-        echo $this->get($align, $type);
-    }
+	/**
+	 * Set the $moduleName property.
+	 *
+	 * @access private
+	 * @return void
+	 */
+	private function setModuleName()
+	{
+		$this->moduleName = $this->app->getModuleName();
+	}
 
-    /**
-     * Get the pager html string.
-     * 
-     * @param  string $align 
-     * @param  string $type     the pager type, full|short|shortest
-     * @access public
-     * @return string
-     */
-    public function get($align = 'right', $type = 'full')
-    {
-        /* If the RecTotal is zero, return with no record. */
-        if($this->recTotal == 0) { return $type == 'mobile' ? '' : "<div style='float:$align; clear:none;' class='pager'>{$this->lang->pager->noRecord}</div>"; }
+	/**
+	 * Set the $methodName property.
+	 *
+	 * @access private
+	 * @return void
+	 */
+	private function setMethodName()
+	{
+		$this->methodName = $this->app->getMethodName();
+	}
 
-        /* Set the params. */
-        $this->setParams();
-        
-        /* Create the prePage and nextpage, all types have them. */
-        $pager  = $this->createPrePage($type);
-        $pager .= $this->createNextPage($type);
+	/**
+	 * Get recTotal, recPerpage, pageID from the request params, and add them to params.
+	 *
+	 * @access private
+	 * @return void
+	 */
+	private function setParams()
+	{
+		$this->params = $this->app->getParams();
+		foreach ($this->params as $key => $value) {
+			if (strtolower($key) == 'rectotal') $this->params[$key] = $this->recTotal;
+			if (strtolower($key) == 'recperpage') $this->params[$key] = $this->recPerPage;
+			if (strtolower($key) == 'pageID') $this->params[$key] = $this->pageID;
+		}
+	}
 
-        /* The short and full type. */
-        if($type !== 'shortest' and $type !== 'mobile')
-        {
-            $pager  = $this->createFirstPage() . $pager;
-            $pager .= $this->createLastPage();
-        }
+	/**
+	 * Create the limit string.
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public function limit()
+	{
+		$limit = '';
+		if ($this->pageTotal > 1) $limit = ' limit ' . ($this->pageID - 1) * $this->recPerPage . ", $this->recPerPage";
+		return $limit;
+	}
 
-        if($type == 'mobile')
-        {
-            $position = $this->pageTotal == 1 ? '' : $this->pageID . '/' . $this->pageTotal;
-            $pager    = $pager . ' ' . $position;
-        }
-        else if($type != 'full') 
-        {
-            $pager = $this->pageID . '/' . $this->pageTotal . ' ' . $pager;
-        }
+	/**
+	 * Print the pager's html.
+	 *
+	 * @param  string $align
+	 * @param  string $type
+	 * @access public
+	 * @return void
+	 */
+	public function show($align = 'right', $type = 'full')
+	{
+		echo $this->get($align, $type);
+	}
 
-        /* Only the full type . */
-        if($type == 'full')
-        {
-            $pager  = $this->createDigest() . $pager;
-            $pager .= $this->createGoTo();
-            $pager .= $this->createRecPerPageJS();
-        }
+	/**
+	 * Get the pager html string.
+	 *
+	 * @param  string $align
+	 * @param  string $type the pager type, full|short|shortest
+	 * @access public
+	 * @return string
+	 */
+	public function get($align = 'right', $type = 'full')
+	{
+		/* If the RecTotal is zero, return with no record. */
+		if ($this->recTotal == 0) {
+			return $type == 'mobile' ? '' : "<div style='float:$align; clear:none;' class='pager'>{$this->lang->pager->noRecord}</div>";
+		}
 
-        return "<div style='float:$align; clear:none;' class='pager'>$pager</div>";
-    }
+		/* Set the params. */
+		$this->setParams();
 
-    /**
-     * Create the digest code.
-     * 
-     * @access private
-     * @return string
-     */
-    private function createDigest()
-    {
-        return sprintf($this->lang->pager->digest, $this->recTotal, $this->createRecPerPageList(), $this->pageID, $this->pageTotal);
-    }
+		/* Create the prePage and nextpage, all types have them. */
+		$pager = $this->createPrePage($type);
+		$pager .= $this->createNextPage($type);
 
-    /**
-     * Create the first page.
-     * 
-     * @access private
-     * @return string
-     */
-    private function createFirstPage()
-    {
-        if($this->pageID == 1) return $this->lang->pager->first . ' ';
-        $this->params['pageID'] = 1;
-        return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->first);
-    }
+		/* The short and full type. */
+		if ($type !== 'shortest' and $type !== 'mobile') {
+			$pager = $this->createFirstPage() . $pager;
+			$pager .= $this->createLastPage();
+		}
 
-    /**
-     * Create the pre page html.
-     * 
-     * @access private
-     * @return string
-     */
-    private function createPrePage($type = 'full')
-    {
-        if($type == 'mobile')
-        {
-            if($this->pageID == 1) return '';
-            $this->params['pageID'] = $this->pageID - 1;
-            return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->pre, '', 'data-role="button" data-icon="arrow-l" data-iconpos="left" data-inline="true"');
-        }
-        else
-        {
-            if($this->pageID == 1) return $this->lang->pager->pre . ' ';
-            $this->params['pageID'] = $this->pageID - 1;
-            return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->pre);
-        }
-    }    
+		if ($type == 'mobile') {
+			$position = $this->pageTotal == 1 ? '' : $this->pageID . '/' . $this->pageTotal;
+			$pager = $pager . ' ' . $position;
+		} else if ($type != 'full') {
+			$pager = $this->pageID . '/' . $this->pageTotal . ' ' . $pager;
+		}
 
-    /**
-     * Create the next page html.
-     * 
-     * @access private
-     * @return string
-     */
-    private function createNextPage($type = 'full')
-    {
-        if($type == 'mobile')
-        {
-            if($this->pageID == $this->pageTotal) return '';
-            $this->params['pageID'] = $this->pageID + 1;
-            return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->next, '', 'data-role="button" data-icon="arrow-r" data-iconpos="right" data-inline="true"');
-        }
-        else
-        {
-            if($this->pageID == $this->pageTotal) return $this->lang->pager->next . ' ';
-            $this->params['pageID'] = $this->pageID + 1;
-            return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->next);
-        }
-    }
+		/* Only the full type . */
+		if ($type == 'full') {
+			$pager = $this->createDigest() . $pager;
+			$pager .= $this->createGoTo();
+			$pager .= $this->createRecPerPageJS();
+		}
 
-    /**
-     * Create the last page 
-     * 
-     * @access private
-     * @return string
-     */
-    private function createLastPage()
-    {
-        if($this->pageID == $this->pageTotal) return $this->lang->pager->last . ' ';
-        $this->params['pageID'] = $this->pageTotal;
-        return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->last);
-    }    
+		return "<div style='float:$align; clear:none;' class='pager'>$pager</div>";
+	}
 
-    /**
-     * Create the select object of record perpage.
-     * 
-     * @access private
-     * @return string
-     */
-    private function createRecPerPageJS()
-    {
-        /* Replace the recTotal, recPerPage, pageID to special string, and then replace them with values by JS. */
-        $params = $this->params;
-        foreach($params as $key => $value)
-        {
-            if(strtolower($key) == 'rectotal')   $params[$key] = '_recTotal_';
-            if(strtolower($key) == 'recperpage') $params[$key] = '_recPerPage_';
-            if(strtolower($key) == 'pageid')     $params[$key] = '_pageID_';
-        }
-        $vars = '';
-        foreach($params as $key => $value) $vars .= "$key=$value&";
-        $vars = rtrim($vars, '&');
+	/**
+	 * Create the digest code.
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function createDigest()
+	{
+		return sprintf($this->lang->pager->digest, $this->recTotal, $this->createRecPerPageList(), $this->pageID, $this->pageTotal);
+	}
 
-        $js  = <<<EOT
+	/**
+	 * Create the first page.
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function createFirstPage()
+	{
+		if ($this->pageID == 1) return $this->lang->pager->first . ' ';
+		$this->params['pageID'] = 1;
+		return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->first);
+	}
+
+	/**
+	 * Create the pre page html.
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function createPrePage($type = 'full')
+	{
+		if ($type == 'mobile') {
+			if ($this->pageID == 1) return '';
+			$this->params['pageID'] = $this->pageID - 1;
+			return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->pre, '', 'data-role="button" data-icon="arrow-l" data-iconpos="left" data-inline="true"');
+		} else {
+			if ($this->pageID == 1) return $this->lang->pager->pre . ' ';
+			$this->params['pageID'] = $this->pageID - 1;
+			return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->pre);
+		}
+	}
+
+	/**
+	 * Create the next page html.
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function createNextPage($type = 'full')
+	{
+		if ($type == 'mobile') {
+			if ($this->pageID == $this->pageTotal) return '';
+			$this->params['pageID'] = $this->pageID + 1;
+			return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->next, '', 'data-role="button" data-icon="arrow-r" data-iconpos="right" data-inline="true"');
+		} else {
+			if ($this->pageID == $this->pageTotal) return $this->lang->pager->next . ' ';
+			$this->params['pageID'] = $this->pageID + 1;
+			return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->next);
+		}
+	}
+
+	/**
+	 * Create the last page
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function createLastPage()
+	{
+		if ($this->pageID == $this->pageTotal) return $this->lang->pager->last . ' ';
+		$this->params['pageID'] = $this->pageTotal;
+		return html::a(helper::createLink($this->moduleName, $this->methodName, $this->params), $this->lang->pager->last);
+	}
+
+	/**
+	 * Create the select object of record perpage.
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function createRecPerPageJS()
+	{
+		/* Replace the recTotal, recPerPage, pageID to special string, and then replace them with values by JS. */
+		$params = $this->params;
+		foreach ($params as $key => $value) {
+			if (strtolower($key) == 'rectotal') $params[$key] = '_recTotal_';
+			if (strtolower($key) == 'recperpage') $params[$key] = '_recPerPage_';
+			if (strtolower($key) == 'pageid') $params[$key] = '_pageID_';
+		}
+		$vars = '';
+		foreach ($params as $key => $value) $vars .= "$key=$value&";
+		$vars = rtrim($vars, '&');
+
+		$js = <<<EOT
         <script>
         vars = '$vars';
         pageCookie = '$this->pageCookie';
@@ -463,43 +465,42 @@ class pager
         }
         </script>
 EOT;
-        return $js;
-    }
+		return $js;
+	}
 
-    /**
-     * Create the select list of RecPerPage. 
-     * 
-     * @access private
-     * @return string
-     */
-    private function createRecPerPageList()
-    {
-        for($i = 5; $i <= 50; $i += 5) $range[$i] = $i;
-        $range[100]  = 100;
-        $range[200]  = 200;
-        $range[500]  = 500;
-        $range[1000] = 1000;
-        $html = "<div class='dropdown dropup'><a href='javascript:;' data-toggle='dropdown' id='_recPerPage' data-value='{$this->recPerPage}'>" . (sprintf($this->lang->pager->recPerPage, $this->recPerPage)) . "<span class='caret'></span></a><ul class='dropdown-menu'>";
-        foreach ($range as $key => $value)
-        {
-            $html .= '<li' . ($this->recPerPage == $value ? " class='active'" : '') .'>' . "<a href='javascript:submitPage(\"changeRecPerPage\", $value)'>{$value}</a>" . '</li>';
-        }
-        $html .= '</ul></div>';
-        return $html;
-    }
+	/**
+	 * Create the select list of RecPerPage.
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function createRecPerPageList()
+	{
+		for ($i = 5; $i <= 50; $i += 5) $range[$i] = $i;
+		$range[100] = 100;
+		$range[200] = 200;
+		$range[500] = 500;
+		$range[1000] = 1000;
+		$html = "<div class='dropdown dropup'><a href='javascript:;' data-toggle='dropdown' id='_recPerPage' data-value='{$this->recPerPage}'>" . (sprintf($this->lang->pager->recPerPage, $this->recPerPage)) . "<span class='caret'></span></a><ul class='dropdown-menu'>";
+		foreach ($range as $key => $value) {
+			$html .= '<li' . ($this->recPerPage == $value ? " class='active'" : '') . '>' . "<a href='javascript:submitPage(\"changeRecPerPage\", $value)'>{$value}</a>" . '</li>';
+		}
+		$html .= '</ul></div>';
+		return $html;
+	}
 
-    /**
-     * Create the goto part html.
-     * 
-     * @access private
-     * @return string
-     */
-    private function createGoTo()
-    {
-        $goToHtml  = "<input type='hidden' id='_recTotal'  value='$this->recTotal' />\n";
-        $goToHtml .= "<input type='hidden' id='_pageTotal' value='$this->pageTotal' />\n";
-        $goToHtml .= "<input type='text'   id='_pageID' value='$this->pageID' style='text-align:center;width:30px;' class='form-control' /> \n";
-        $goToHtml .= "<input type='button' id='goto' value='{$this->lang->pager->locate}' onclick='submitPage(\"changePageID\");' class='btn'/>";
-        return $goToHtml;
-    }    
+	/**
+	 * Create the goto part html.
+	 *
+	 * @access private
+	 * @return string
+	 */
+	private function createGoTo()
+	{
+		$goToHtml = "<input type='hidden' id='_recTotal'  value='$this->recTotal' />\n";
+		$goToHtml .= "<input type='hidden' id='_pageTotal' value='$this->pageTotal' />\n";
+		$goToHtml .= "<input type='text'   id='_pageID' value='$this->pageID' style='text-align:center;width:30px;' class='form-control' /> \n";
+		$goToHtml .= "<input type='button' id='goto' value='{$this->lang->pager->locate}' onclick='submitPage(\"changePageID\");' class='btn'/>";
+		return $goToHtml;
+	}
 }

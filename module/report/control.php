@@ -2,15 +2,90 @@
 
 class report extends control
 {
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->loadModel('project');
+	}
+
 	/**
 	 * The index of report, goto project deviation.
 	 *
 	 * @access public
 	 * @return void
 	 */
-	public function index()
+	public function index($pageID = 1)
 	{
-		$this->locate(inlink('productinfo'));
+		$this->view->title = $this->lang->report->productInfo;
+
+		/* Load and initial pager. */
+		$this->app->loadClass('pager', $static = true);
+		$recPerPage = 5;
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$projects = $this->project->getList(array(), $pager);
+
+		$this->view->projects = $projects;
+		$this->view->pager = $pager;
+		$this->display();
+	}
+
+	/**
+	 * 添加日报
+	 */
+	public function create($reportType = 'today', $projectID = 0)
+	{
+		$project = $this->project->getById($projectID);
+
+		$report = new stdClass();
+		$report->report_date = date('Y-m-d');
+
+		$this->view->project = $project;
+		$this->view->report = $report;
+		$this->view->reportType = $reportType;
+		$this->display();
+	}
+
+	/**
+	 * 项目日报历史记录
+	 */
+	public function history($reportType = 'today', $projectID = 0)
+	{
+		$this->display();
+	}
+
+	/**
+	 * 添加项目签证
+	 */
+	public function createtestation($projectID = 0)
+	{
+		$this->display();
+	}
+
+	/**
+	 * 项目签证历史记录
+	 */
+	public function historytestation($projectID = 0)
+	{
+		$this->display();
+	}
+
+	/**
+	 * 添加项目问题
+	 */
+	public function createproblem($projectID = 0)
+	{
+		$this->display();
+	}
+
+	/**
+	 * 项目问题历史记录
+	 */
+	public function historyproblem($projectID = 0)
+	{
+		$this->display();
 	}
 
 	/**
