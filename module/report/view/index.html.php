@@ -27,11 +27,11 @@
 				<?php echo html::a($this->createLink('report', 'history', "reportType=tomorrow&projectID={$project->id}"), $lang->report->history, '', 'class="btn"');?>
 				<br />
 				填写签证:
-				<?php echo html::a($this->createLink('report', 'createTestatioin', "projectID={$project->id}"), $lang->report->create, '',  'class="btn"');?>
-				<?php echo html::a($this->createLink('report', 'historyTestation', "projectID={$project->id}"), $lang->report->history, '', 'class="btn"');?>
+				<?php echo html::a($this->createLink('report', 'createtestation', "projectID={$project->id}"), $lang->report->create, '',  'class="btn"');?>
+				<?php echo html::a($this->createLink('report', 'historytestation', "projectID={$project->id}"), $lang->report->history, '', 'class="btn"');?>
 				存在问题:
-				<?php echo html::a($this->createLink('report', 'createProblem', "projectID={$project->id}"), $lang->report->create, '',  'class="btn"');?>
-				<?php echo html::a($this->createLink('report', 'historyProblem', "projectID={$project->id}"), $lang->report->history, '', 'class="btn"');?>
+				<?php echo html::a($this->createLink('report', 'createproblem', "projectID={$project->id}"), $lang->report->create, '',  'class="btn"');?>
+				<?php echo html::a($this->createLink('report', 'historyproblem', "projectID={$project->id}"), $lang->report->history, '', 'class="btn"');?>
 			</td>
 		</tr>
 	</tbody>

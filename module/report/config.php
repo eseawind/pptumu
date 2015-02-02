@@ -9,4 +9,6 @@ $config->report->dailyreminder->todo = true;
 $config->report->editor = new stdclass();
 $config->report->editor->create  = array('id' => 'planned_qty,actual_qty', 'tools' => 'simpleTools');
 $config->report->editor->edit    = array('id' => 'planned_qty,actual_qty',    'tools' => 'simpleTools');
+$config->report->editor->createtestation = array('id' => 'content', 'tools' => 'simpleTools');
+$config->report->editor->createproblem = array('id' => 'content', 'tools' => 'simpleTools');
 
