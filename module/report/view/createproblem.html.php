@@ -18,8 +18,25 @@
 	<form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
 		<table class='table table-form'>
 			<tr>
-				<th class='w-90px'><?php echo $lang->project->code;?></th>
-				<td class='w-p25-f'><?php echo html::input('code', $code, "class='form-control'");?></td><td></td>
+				<th class='w-90px'>存在问题:</th>
+				<td><?php echo html::input('content', '', "rows='6' class='form-control'");?></td>
+			</tr>
+			<td class='col-xs-2'>
+				<div class="input-group date form-date" data-link-format="yyyy-mm-dd" data-link-field="report_date" data-date-format="dd MM yyyy" data-date="">
+					<?php echo html::input('report_date', $report->report_date, "readonly='readonly' class='form-control' onchange='computeWorkDays()' placeholder='报告日期'"); ?>
+					<span class="input-group-addon">
+						<span class="icon-remove"></span>
+						</span>
+						<span class="input-group-addon">
+						<span class="icon-calendar"></span>
+						</span>
+				</div>
+			</td>
+			<tr>
+				<td></td>
+				<td class='text-center'>
+					<?php echo html::submitButton() . html::backButton(); ?>
+				</td>
 			</tr>
 		</table>
 	</form>

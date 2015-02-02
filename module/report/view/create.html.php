@@ -65,7 +65,17 @@
 			</tr>
 			<tr>
 				<th>日期:</th>
-				<td class='w-p25-f'><?php echo html::input('report_date', $report->report_date, "rows='6' class='form-control form-date' onchange='computeWorkDays()' placeholder='报告日期'");?></td>
+				<td class='col-xs-2'>
+					<div class="input-group date form-date" data-link-format="yyyy-mm-dd" data-link-field="report_date" data-date-format="dd MM yyyy" data-date="">
+						<?php echo html::input('report_date', $report->report_date, "readonly='readonly' class='form-control' onchange='computeWorkDays()' placeholder='报告日期'"); ?>
+						<span class="input-group-addon">
+						<span class="icon-remove"></span>
+						</span>
+						<span class="input-group-addon">
+						<span class="icon-calendar"></span>
+						</span>
+					</div>
+				</td>
 				<td></td>
 			</tr>
 			<tr>
