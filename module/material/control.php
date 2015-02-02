@@ -89,4 +89,37 @@ class material extends control
 
 	}
 
+	/**
+	 * 材料分配
+	 */
+	public function apply($step = 'project', $applicationID = 0)
+	{
+		if ($step == 'project') {
+			if (!empty($_POST)) {
+				$applicationID = $this->material->createApplication();
+				if(dao::isError()) die(js::error(dao::getError()));
+
+				$this->loadModel('action')->create('material application', $applicationID, 'created');
+				die(js::locate($this->createLink('material', 'apply', "step=material&applicationID={$applicationID}"), 'parent'));
+			}
+
+			$this->loadModel('project');
+			$projects = $this->project->getPairs();
+
+			$this->view->projects = array('' => '请选择') + $projects;
+		} else if ($step == 'material') {
+			if (!empty($_POST)) {
+
+			}
+			$materials = $this->material->getPeirsByType();
+
+			$this->view->materials = $materials;
+		} else if ($step == 'qty') {
+
+		}
+
+		$this->view->step = $step;
+
+		$this->display();
+	}
 }

@@ -211,7 +211,8 @@ $lang->project->menu->all       = array('link' => '<i class="icon-th-large"></i>
 $lang->material = new stdclass();
 $lang->material->menu = new stdclass();
 
-$lang->material->menu->list = '材料';
+$lang->material->menu->list = array('link' => '全部材料|material|index');
+$lang->material->menu->apply = array('link' => '分配|material|apply');
 
 /** 机械试图菜单设置 */
 $lang->machine = new stdClass();

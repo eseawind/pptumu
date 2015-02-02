@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  */
@@ -6,12 +7,12 @@ class materialModel extends model
 {
 	/* The members every linking. */
 	const LINK_MEMBERS_ONE_TIME = 20;
-	
+
 	/**
 	 * Get material list.
-	 * 
-	 * @param  int $deleted  0|1
-	 * @param  int	$limit 
+	 *
+	 * @param  int $deleted 0|1
+	 * @param  int $limit
 	 * @access public
 	 * @return array
 	 */
@@ -23,7 +24,7 @@ class materialModel extends model
 		$this->dao->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
 			->on('material.type_id = mtype.id');
 		$this->dao->where(1)->eq(1)
-			->andWhere('deleted')->eq($deleted);
+			->andWhere('material.deleted')->eq($deleted);
 		if ($typeId) {
 			$this->dao->andWhere('material.type_id')->eq($typeId);
 		}
@@ -32,10 +33,36 @@ class materialModel extends model
 
 		return $this->dao->fetchAll('id');
 	}
-	
+
 	/**
-	 * Create material. 
-	 * 
+	 * get materials that sorted by type
+	 */
+	public function getPeirsByType($typeId = 0, $deleted = 0)
+	{
+		$materials = $this->dao->select('material.id, material.name, material.type_id, mtype.name AS type_name')
+			->from(TABLE_MATERIAL)->alias('material')
+			->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
+			->on('material.type_id = mtype.id')
+			->where(1)->eq(1)
+			->andWhere('material.deleted')->eq($deleted)
+			->orderBy('mtype.name ASC')
+			->fi()
+			->fetchAll();
+
+		$materialsByType = array();
+		foreach ($materials As $material) {
+			if (!isset($materialByType[$material->type_id])) {
+				$materialsByType[$material->type_id]['name'] = $material->type_name;
+			}
+			$materialsByType[$material->type_id]['materials'][$material->id] = $material->name;
+		}
+
+		return $materialsByType;
+	}
+
+	/**
+	 * Create material.
+	 *
 	 * @access public
 	 * @return void
 	 */
@@ -49,15 +76,14 @@ class materialModel extends model
 		$material->modified = $dt;
 		$material->deleted = 0;
 		$material->created_by = $app->user->account;
-		
+
 		$this->dao->insert(TABLE_MATERIAL)->data($material)
 			->check('name', 'unique')
 			->exec();
 
-		if(!dao::isError())
-		{
-			$materialID	 = $this->dao->lastInsertId();
-	
+		if (!dao::isError()) {
+			$materialID = $this->dao->lastInsertId();
+
 			return $materialID;
 		}
 
@@ -106,10 +132,10 @@ class materialModel extends model
 
 		return $material;
 	}
-	
+
 	/**
 	 * Get material type.
-	 * 
+	 *
 	 * @access public
 	 * @return array
 	 */
@@ -119,5 +145,32 @@ class materialModel extends model
 			->from(TABLE_MATERIALTYPE)->alias('materialtype')
 			->where(1)->eq(1)
 			->fetchPairs();
+	}
+
+	/**
+	 * Create material application
+	 */
+	public function createApplication()
+	{
+		global $app;
+
+		$dt = date('Y-m-d H:i:s');
+		$application = fixer::input('post')->get();
+		$application->created = $dt;
+		$application->modified = $dt;
+		$application->deleted = 0;
+		$application->verified = 0;
+		$application->created_by = $app->user->account;
+
+		$this->dao->insert(TABLE_MATERIALAPPLICATION)->data($application)
+			->exec();
+
+		if (!dao::isError()) {
+			$applicationID = $this->dao->lastInsertId();
+
+			return $applicationID;
+		}
+
+		return false;
 	}
 }

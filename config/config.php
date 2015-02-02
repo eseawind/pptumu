@@ -121,6 +121,8 @@ define('TABLE_BUILD',         '`' . $config->db->prefix . 'build`');
 
 define('TABLE_MATERIALTYPE',  '`' . $config->db->prefix . 'materialtype`');
 define('TABLE_MATERIAL',      '`' . $config->db->prefix . 'material`');
+define('TABLE_MATERIALAPPLICATION', '`' . $config->db->prefix . 'materialapplication`');
+define('TABLE_MATERIALAPPLICATIONDETAIL', '`' . $config->db->prefix . 'materialapplicationdetail`');
 
 define('TABLE_MACHINETYPE',   '`' . $config->db->prefix . 'machinetype`');
 define('TABLE_MACHINE',       '`' . $config->db->prefix . 'machine`');
