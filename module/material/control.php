@@ -109,13 +109,47 @@ class material extends control
 			$this->view->projects = array('' => '请选择') + $projects;
 		} else if ($step == 'material') {
 			if (!empty($_POST)) {
+				$details = fixer::input('post')->get();
+				foreach ($details->material_id As $materialID) {
+					$detail = new stdClass();
+					$detail->application_id = $applicationID;
+					$detail->material_id = $materialID;
 
+					$detailID = $this->material->createApplicationDetail($detail);
+					if(dao::isError()) die(js::error(dao::getError()));
+
+					$this->loadModel('action')->create('material application detail', $detailID, 'created');
+					unset($detail);
+				}
+				die(js::locate($this->createLink('material', 'apply', "step=qty&applicationID={$applicationID}"), 'parent'));
 			}
 			$materials = $this->material->getPeirsByType();
 
 			$this->view->materials = $materials;
 		} else if ($step == 'qty') {
+			if (!empty($_POST)) {
+				$details = fixer::input('post')->get();
 
+				foreach ($details->id As $index => $id) {
+					$detail = new stdClass();
+					$detail->qty = $details->qty[$index];
+
+					$changes = $this->material->updateApplicationDetail($id, $detail);
+					if(dao::isError()) die(js::error(dao::getError()));
+
+					if ($changes) {
+						$actionID = $this->loadModel('action')->create('material application detail', $id, 'edited');
+						$this->action->logHistory($actionID, $changes);
+					}
+					unset($detail);
+				}
+
+				die(js::locate($this->createLink('material', 'index'), 'parent'));
+			}
+
+			$details = $this->material->getApplicationDetails($applicationID);
+
+			$this->view->details = $details;
 		}
 
 		$this->view->step = $step;

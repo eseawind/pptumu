@@ -19,39 +19,41 @@
 </div>
 <div class='main'>
 <form class='form-condensed' method='post' action='<?php echo inLink('batchEdit', "projectID=$projectID");?>'>
-    <table class='table table-fixed tablesorter'>
-        <thead>
+    <table class='table table-condensed table-hover table-striped tablesorter'>
+    <thead>
         <tr>
             <th class='w-id'><?php common::printOrderLink('id', $orderBy, '', $lang->idAB);?></th>
             <th><?php common::printOrderLink('code', $orderBy, '', $lang->material->code);?></th>
-            <th class='w-200px'><?php common::printOrderLink('name', $orderBy, '', $lang->material->name);?></th>
+            <th><?php common::printOrderLink('name', $orderBy, '', $lang->material->name);?></th>
             <th><?php echo $lang->material->type; ?></th>
             <th><?php echo $lang->material->unit; ?></th>
-            <th class='w-100px'><?php echo $lang->actions; ?></th>
+            <th class='w-150px'><?php echo $lang->actions; ?></th>
         </tr>
-        </thead>
-        <?php $canBatchEdit = common::hasPriv('material', 'batchEdit'); ?>
-        <?php foreach($materials as $material) { ?>
-            <tr class='text-center'>
-                <td>
-                    <?php if($canBatchEdit):?>
-                        <input type='checkbox' name='materialIDList[<?php echo $material->id;?>]' value='<?php echo $material->id;?>' />
-                    <?php endif;?>
-                    <?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), sprintf('%03d', $material->id));?>
-                </td>
-                <td class='text-left'><?php echo $material->code;?></td>
-                <td class='text-left'><?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), $material->name);?></td>
-                <td class='text-left'><?php echo $material->type_name;?></td>
-                <td class='text-left'><?php echo $material->unit;?></td>
-                <td class='projectline text-left'>
-                    <?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), $lang->edit);?>
-                    |&nbsp;
-                    <?php echo html::a($this->createLink('material', 'delete', 'id=' . $material->id), $lang->delete);?>
-                </td>
-            </tr>
-        <?php } ?>
-        <?php if($canBatchEdit) { ?>
-        <tfoot>
+    </thead>
+    <tbody>
+    <?php $canBatchEdit = common::hasPriv('material', 'batchEdit'); ?>
+    <?php foreach($materials as $material) { ?>
+        <tr class='text-center'>
+            <td>
+                <?php if($canBatchEdit):?>
+                    <input type='checkbox' name='materialIDList[<?php echo $material->id;?>]' value='<?php echo $material->id;?>' />
+                <?php endif;?>
+                <?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), sprintf('%03d', $material->id));?>
+            </td>
+            <td class='text-center'><?php echo $material->code;?></td>
+            <td class='text-center'><?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), $material->name);?></td>
+            <td class='text-center'><?php echo $material->type_name;?></td>
+            <td class='text-center'><?php echo $material->unit;?></td>
+            <td class='text-center'>
+                <?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), $lang->edit);?>
+                |&nbsp;
+                <?php echo html::a($this->createLink('material', 'delete', 'id=' . $material->id), $lang->delete);?>
+            </td>
+        </tr>
+    <?php } ?>
+    </tbody>
+    <?php if($canBatchEdit) { ?>
+    <tfoot>
         <tr>
             <td colspan='11'>
                 <div class='table-actions clearfix'>
@@ -61,8 +63,8 @@
                 <div class='text-right'><?php $pager->show();?></div>
             </td>
         </tr>
-        </tfoot>
-        <?php } ?>
+    </tfoot>
+    <?php } ?>
     </table>
 </form>
 </div>

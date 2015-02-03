@@ -28,7 +28,7 @@
 	<?php foreach ($materials As $mtid => $mt) { ?>
 		<tr>
 			<th class='w-90px'><?php echo $mt['name'];?></th>
-			<td><?php echo html::checkbox('material[]', $mt['materials']); ?></td>
+			<td><?php echo html::checkbox('material_id', $mt['materials']); ?></td>
 		</tr>
 	<?php } ?>
 	</tbody>
@@ -42,7 +42,35 @@
 	</tfoot>
 	</table>
 <?php } else if ($step == 'qty') { ?>
-
+	<table class='table table-form'>
+	<thead>
+		<tr>
+			<td colspan="3">申请数量</td>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($details As $did => $detail) { ?>
+		<tr>
+			<th class='w-90px'>
+				<?php echo $detail->material_name; ?>
+				<?php echo html::hidden('id[]', $did); ?>
+			</th>
+			<td class="row col-xs-1">
+				<?php echo html::input('qty[]', '', 'class="form-control"'); ?>
+			</td>
+			<td><?php echo $detail->material_unit; ?></td>
+		</tr>
+		<?php } ?>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td></td>
+			<td colspan="2" class='text-center'>
+				<?php echo html::submitButton() . html::backButton(); ?>
+			</td>
+		</tr>
+	</tfoot>
+	</table>
 <?php } ?>
 </form>
 </div>

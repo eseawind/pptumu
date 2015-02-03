@@ -173,4 +173,53 @@ class materialModel extends model
 
 		return false;
 	}
+
+	/**
+	 * Create material application detail
+	 */
+	public function createApplicationDetail($detail)
+	{
+		$this->dao->insert(TABLE_MATERIALAPPLICATIONDETAIL)->data($detail)
+			->exec();
+		if (!dao::isError()) {
+			$detailID = $this->dao->lastInsertId();
+
+			return $detailID;
+		}
+
+		return false;
+	}
+
+	/**
+	 *
+	 */
+	public function updateApplicationDetail($id, $detail)
+	{
+		$this->dao->update(TABLE_MATERIALAPPLICATIONDETAIL)->data($detail)
+			->where('id')->eq($id)
+			->exec();
+
+		if (!dao::isError()) {
+			return $id;
+		}
+
+		return false;
+	}
+
+	/**
+	 *
+	 */
+	public function getApplicationDetails($applicationID)
+	{
+		$details = $this->dao->select('detail.id, detail.material_id, material.name AS material_name, material.unit AS material_unit')
+			->from(TABLE_MATERIALAPPLICATIONDETAIL)->alias('detail')
+			->leftJoin(TABLE_MATERIAL)->alias('material')
+			->on('detail.material_id = material.id')
+			->where('detail.application_id')->eq($applicationID)
+			->orderBy('id ASC')
+			->fetchAll('id');
+
+		return $details;
+	}
+
 }

@@ -103,4 +103,16 @@ class machine extends control
 
 	}
 
+	/**
+	 *
+	 */
+	public function distribute($machineID)
+	{
+		$this->loadModel('project');
+		$projects = $this->project->getPairs();
+
+		$this->view->projects = array('' => '选择项目') + $projects;
+		$this->display();
+	}
+
 }

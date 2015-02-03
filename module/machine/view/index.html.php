@@ -19,40 +19,40 @@
 </div>
 
 <div class='main'>
-    <table class='table table-fixed tablesorter'>
-        <thead>
+    <table class='table table-condensed table-hover table-striped tablesorter table-fixed'>
+    <thead>
         <tr>
             <th class='w-id'><?php common::printOrderLink('id', $orderBy, '', $lang->idAB);?></th>
             <th><?php common::printOrderLink('code', $orderBy, '', $lang->machine->code);?></th>
             <th class='w-200px'><?php common::printOrderLink('name', $orderBy, '', $lang->machine->name);?></th>
             <th><?php echo $lang->machine->type; ?></th>
-            <th class='w-100px'><?php echo $lang->actions; ?></th>
+            <th class='w-150px'><?php echo $lang->actions; ?></th>
         </tr>
-        </thead>
-        <tbody>
-        <?php foreach($machines as $machine) { ?>
-            <tr class='text-center'>
-                <td><?php echo html::a($this->createLink('material', 'edit', 'id=' . $machine->id), sprintf('%03d', $machine->id));?> </td>
-                <td class='text-left'><?php echo $machine->code;?></td>
-                <td class='text-left'><?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $machine->name);?></td>
-                <td class='text-left'><?php echo $machine->type_name;?></td>
-                <td class='projectline text-left'>
-                    <?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $lang->edit); ?>
-                    |&nbsp;
-                    <?php echo html::a($this->createLink('machine', 'delete', sprintf($editParams, $machine->id)), $lang->delete); ?></td>
-            </tr>
-        <?php } ?>
-        </tbody>
-        <tfoot>
+    </thead>
+    <tbody>
+    <?php foreach($machines as $machine) { ?>
         <tr>
-            <td colspan='11'>
-                <div class='table-actions clearfix'>
-
-                </div>
+            <td class='text-center'><?php echo html::a($this->createLink('material', 'edit', 'id=' . $machine->id), sprintf('%03d', $machine->id));?> </td>
+            <td class='text-center'><?php echo $machine->code;?></td>
+            <td class='text-center'><?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $machine->name);?></td>
+            <td class='text-center'><?php echo $machine->type_name;?></td>
+            <td class='text-center'>
+                <?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $lang->edit); ?>
+                |&nbsp;
+                <?php echo html::a($this->createLink('machine', 'distribute', $machine->id), '分配'); ?>
+                |&nbsp;
+                <?php echo html::a($this->createLink('machine', 'delete', sprintf($editParams, $machine->id)), $lang->delete); ?>
+            </td>
+        </tr>
+    <?php } ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan='5'>
                 <div class='text-right'><?php $pager->show();?></div>
             </td>
         </tr>
-        </tfoot>
+    </tfoot>
     </table>
 </div>
 

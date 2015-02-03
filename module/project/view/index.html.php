@@ -14,7 +14,7 @@
   </ul>
 </div>
 <form class='form-condensed' method='post' action='<?php echo inLink('batchEdit', "projectID=$projectID");?>'>
-<table class='table table-fixed tablesorter'>
+<table class='table tablesorter'>
   <?php $vars = "locate=no&status=$status&projectID=$projectID&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}";?>
   <thead>
     <tr>
