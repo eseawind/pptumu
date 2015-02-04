@@ -118,4 +118,32 @@ class machineModel extends model
 			->where(1)->eq(1)
 			->fetchPairs();
 	}
+
+	/**
+	 *
+	 */
+	public function distribute()
+	{
+		global $app;
+
+		$dt = date('Y-m-d H:i:s');
+		$distribution = fixer::input('post')->get();
+		$distribution->verified = 0;
+		$distribution->verified_by = $app->user->account;
+		$distribution->created_by = $app->user->account;
+		$distribution->deleted = 0;
+		$distribution->created = $dt;
+		$distribution->modified = $dt;
+
+		$this->dao->insert(TABLE_MACHINEDISTRIBUTIION)->data($distribution)
+			->exec();
+
+		if (!dao::isError()) {
+			$distributionID = $this->dao->lastInsertId();
+
+			return $distributionID;
+		}
+
+		return false;
+	}
 }

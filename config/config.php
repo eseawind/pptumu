@@ -126,6 +126,7 @@ define('TABLE_MATERIALAPPLICATIONDETAIL', '`' . $config->db->prefix . 'materiala
 
 define('TABLE_MACHINETYPE',   '`' . $config->db->prefix . 'machinetype`');
 define('TABLE_MACHINE',       '`' . $config->db->prefix . 'machine`');
+define('TABLE_MACHINEDISTRIBUTIION', '`' . $config->db->prefix . 'machinedistribution`');
 
 define('TABLE_REPORT',        '`' . $config->db->prefix . 'report`');
 define('TABLE_TESTATION',     '`' . $config->db->prefix . 'testation`');

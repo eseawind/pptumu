@@ -39,7 +39,7 @@
             <td class='text-center'>
                 <?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $lang->edit); ?>
                 |&nbsp;
-                <?php echo html::a($this->createLink('machine', 'distribute', $machine->id), '分配'); ?>
+                <?php echo html::a($this->createLink('machine', 'distribute', "machineID={$machine->id}"), '分配'); ?>
                 |&nbsp;
                 <?php echo html::a($this->createLink('machine', 'delete', sprintf($editParams, $machine->id)), $lang->delete); ?>
             </td>

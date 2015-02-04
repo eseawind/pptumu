@@ -108,10 +108,20 @@ class machine extends control
 	 */
 	public function distribute($machineID)
 	{
+		if (!empty($_POST)) {
+			$distributionID = $this->machine->distribute();
+			if (dao::isError()) die(js::error(dao::getError()));
+
+			$this->loadModel('action')->create('machine distributiion', $distributionID, 'created');
+
+			die(js::locate($this->createLink('machine', 'index'), 'parent'));
+		}
 		$this->loadModel('project');
 		$projects = $this->project->getPairs();
 
 		$this->view->projects = array('' => '选择项目') + $projects;
+		$this->view->machineID = $machineID;
+
 		$this->display();
 	}
 
