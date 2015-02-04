@@ -1,5 +1,8 @@
 <?php include '../../common/view/header.html.php';?>
 
+<?php include '../../common/view/datepicker.html.php';?>
+<?php js::import($jsRoot . 'misc/date.js');?>
+<?php js::set('holders', $lang->project->placeholder);?>
 <div class='container mw-1400px'>
 <form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
 	<table class='table table-form'>
@@ -10,12 +13,28 @@
 		</tr>
 		<tr>
 			<th>开始时间</th>
-			<td><?php echo html::input('begin', '', "class='form-control form-date' onchange='computeWorkDays()' placeholder='开始时间'");?></td>
+			<td><div class="input-group date form-datetime" data-link-field="begin" data-date-format="yyyy-MM-dd HH:ii" data-date="">
+				<?php echo html::input('begin', '', 'class="form-control" readonly="readonly"');?>
+				<span class="input-group-addon">
+					<span class="icon-remove"></span>
+				</span>
+				<span class="input-group-addon">
+					<span class="icon-th"></span>
+				</span>
+			</div></td>
 			<td></td>
 		</tr>
 		<tr>
 			<th>结束时间</th>
-			<td><?php echo html::input('end', '', "class='form-control form-date' onchange='computeWorkDays()' placeholder='结束时间'");?></td>
+			<td><div class="input-group date form-datetime" data-link-field="end" data-date-format="yyyy-MM-dd HH:ii" data-date="">
+				<?php echo html::input('end', '', 'class="form-control" readonly="readonly"'); ?>
+				<span class="input-group-addon">
+					<span class="icon-remove"></span>
+				</span>
+				<span class="input-group-addon">
+					<span class="icon-th"></span>
+				</span>
+			</div></td>
 			<td></td>
 		</tr>
 		<tr>
