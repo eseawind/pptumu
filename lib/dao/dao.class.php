@@ -1265,6 +1265,32 @@ class sql
 	}
 
 	/**
+	 * Create the right join part.
+	 *
+	 * @param  string $table
+	 * @access public
+	 * @return object the sql object.
+	 */
+	public function rightJoin($table)
+	{
+		$this->sql .= " RIGHT JOIN $table";
+		return $this;
+	}
+
+	/**
+	 * Create the inner join part.
+	 *
+	 * @param  string $table
+	 * @access public
+	 * @return object the sql object.
+	 */
+	public function innerJoin($table)
+	{
+		$this->sql .= " INNER JOIN $table";
+		return $this;
+	}
+
+	/**
 	 * Create the on part.
 	 *
 	 * @param  string $condition

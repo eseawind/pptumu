@@ -146,4 +146,31 @@ class machineModel extends model
 
 		return false;
 	}
+
+	/**
+	 * machine distributions for a project
+	 * @param $projectID
+	 * @param array $mConds conditions for machine
+	 * @return mixed
+	 */
+	public function getProjectDistribution($projectID, $mconds = array())
+	{
+		$dt = date('Y-m-d H:i:s');
+
+		$distributions = $this->dao->select('distribution.id, distribution.machine_id, machine.code AS machine_code, machine.name AS machine_name, machine.type_id, mtype.name AS type_name')
+			->from(TABLE_MACHINEDISTRIBUTIION)->alias('distribution')
+			->leftJoin(TABLE_MACHINE)->alias('machine')
+			->on('machine.id = distribution.machine_id')
+			->leftJoin(TABLE_MACHINETYPE)->alias('mtype')
+			->on('machine.type_id = mtype.id')
+			->where('distribution.verified')->eq(1)
+			->andWhere('distribution.deleted')->eq(0)
+			->andWhere('distribution.begin')->lt($dt)
+			->andWhere('distribution.end')->gt($dt)
+			->orderBy('distribution.id DESC')
+			->fetchAll();
+
+		return $distributions;
+	}
+
 }

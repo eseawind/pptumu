@@ -8,6 +8,8 @@ class report extends control
 		parent::__construct();
 
 		$this->loadModel('project');
+		$this->loadModel('material');
+		$this->loadModel('machine');
 	}
 
 	/**
@@ -42,9 +44,16 @@ class report extends control
 		$report = new stdClass();
 		$report->report_date = date('Y-m-d');
 
+		$materialApps = $this->material->getProjectApplications($projectID);
+
+		$machineDists = $this->machine->getProjectDistribution($projectID);
+
 		$this->view->project = $project;
 		$this->view->report = $report;
+		$this->view->materialApps = $materialApps;
+		$this->view->machineDists = $machineDists;
 		$this->view->reportType = $reportType;
+
 		$this->display();
 	}
 

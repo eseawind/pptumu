@@ -222,4 +222,33 @@ class materialModel extends model
 		return $details;
 	}
 
+	/**
+	 *
+	 */
+	public function getProjectApplications($projectID)
+	{
+		$proApps = $this->dao->select('application.id AS application_id, detail.id AS detail_id, detail.material_id, detail.qty, material.code AS material_code, material.name AS material_name, material.unit AS material_unit')
+			->from(TABLE_MATERIALAPPLICATION)->alias('application')
+			->rightJoin(TABLE_MATERIALAPPLICATIONDETAIL)->alias('detail')
+			->on('detail.application_id = application.id')
+			->leftJoin(TABLE_MATERIAL)->alias('material')
+			->on('detail.material_id = material.id')
+			->where('application.project_id')->eq($projectID)
+			->andWhere('application.verified')->eq(1)
+			->andWhere('application.deleted')->eq(0)
+			->orderBy('application.id ASC')
+			->fetchAll();
+
+		$proAppQtys = array();
+		foreach ($proApps As $app) {
+			if (!isset($proAppQtys[$app->material_id])) {
+				$proAppQtys[$app->material_id] = $app;
+			} else {
+				$proAppQtys[$app->material_id]->qty += floatval($app->qty);
+			}
+		}
+
+		return $proAppQtys;
+	}
+
 }
