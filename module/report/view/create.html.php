@@ -26,18 +26,18 @@
 				<td>人</td>
 			</tr>
 			<tr>
-				<th class='w-90px'>外雇人员:</th>
-				<td class='w-p25-f'><?php echo html::input('extternal_qty', $report->extternal_qty, "class='form-control'");?></td>
+				<th>外雇人员:</th>
+				<td><?php echo html::input('extternal_qty', $report->extternal_qty, "class='form-control'");?></td>
 				<td>人</td>
 			</tr>
 			<tr>
-				<th class='w-90px'>午饭人员:</th>
-				<td class='w-p25-f'><?php echo html::input('lunch_qty', $report->lunch_qty, "class='form-control'");?></td>
+				<th>午饭人员:</th>
+				<td><?php echo html::input('lunch_qty', $report->lunch_qty, "class='form-control'");?></td>
 				<td>人</td>
 			</tr>
 			<tr>
-				<th class='w-90px'>晚饭人员:</th>
-				<td class='w-p25-f'><?php echo html::input('supper_qty', $report->supper_qty, "class='form-control'");?></td>
+				<th>晚饭人员:</th>
+				<td><?php echo html::input('supper_qty', $report->supper_qty, "class='form-control'");?></td>
 				<td>人</td>
 			</tr>
 		</tbody>
