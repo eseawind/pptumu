@@ -13,15 +13,16 @@ class machine extends control
 	/**
 	 *
 	 */
-	public function index($isRent = 0, $typeId = 0, $recTotal = 0, $recPerPage = 100, $pageID = 1)
+	public function index($isRent = 0, $typeId = 0, $pageID = 1)
 	{
-		$machines = $this->machine->getList($isRent, $typeId);
+		// pagination
+		$recPerPage = 20;
+		$this->app->loadClass('pager', $static = true);
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$machines = $this->machine->getList($isRent, $typeId, 0, $pager);
 
 		$machineTypes = $this->machine->getMachineTypes();
-
-		// pagination
-		$this->app->loadClass('pager', $static = true);
-		$pager = new pager($recTotal, $recPerPage, $pageID);
 
 		$createParams = helper::genParamstr(array('isRent' => $isRent));
 		$typeParams = helper::genParamstr(array('isRent' => $isRent, 'typeId' => '%s'));

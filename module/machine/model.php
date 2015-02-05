@@ -11,7 +11,7 @@ class machineModel extends model
 	/**
 	 *
 	 */
-	public function getList($isRent = 0, $typeId = 0, $deleted = 0, $limit = 0)
+	public function getList($isRent = 0, $typeId = 0, $deleted = 0, $pager = null)
 	{
 		if ($deleted > 1) $deleted = 1;
 		if ($isRent > 1) {
@@ -29,8 +29,8 @@ class machineModel extends model
 		if ($typeId) {
 			$this->dao->andWhere('machine.type_id')->eq($typeId);
 		}
-		$this->dao->orderBy('machine.code')
-			->beginIF($limit)->limit($limit)->fi();
+		$this->dao->orderBy('machine.code');
+		$this->dao->page($pager);
 
 		return $this->dao->fetchAll('id');
 	}

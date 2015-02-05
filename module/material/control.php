@@ -12,21 +12,20 @@ class material extends control
 	/**
 	 *
 	 */
-	public function index($typeId = 0, $recTotal = 0, $recPerPage = 100, $pageID = 1)
+	public function index($typeId = 0, $pageID = 1)
 	{
-		$materials = $this->material->getList($typeId);
-
 		// pagination
 		$this->app->loadClass('pager', $static = true);
-		$pager = new pager($recTotal, $recPerPage, $pageID);
+		$recPerPage = 20;
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$materials = $this->material->getList($typeId, 0, $pager);
 
 		$materialTypes = $this->material->getMaterialTypes();
 
 		$this->view->materialTypes = $materialTypes;
 		$this->view->materials = $materials;
 		$this->view->pager	   = $pager;
-		$this->view->recTotal	= $pager->recTotal;
-		$this->view->recPerPage  = $pager->recPerPage;
 
 		$this->display();
 	}
@@ -36,8 +35,7 @@ class material extends control
 	 */
 	public function create()
 	{
-		if(!empty($_POST))
-		{
+		if(!empty($_POST)) {
 			$materialID = $this->material->create();
 			if(dao::isError()) die(js::error(dao::getError()));
 
@@ -58,8 +56,7 @@ class material extends control
 	 */
 	public function edit($materialId)
 	{
-		if(!empty($_POST))
-		{
+		if(!empty($_POST)) {
 			$changes = $this->material->update($materialId);
 			if(dao::isError()) die(js::error(dao::getError()));
 

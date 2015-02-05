@@ -31,13 +31,9 @@
         </tr>
     </thead>
     <tbody>
-    <?php $canBatchEdit = common::hasPriv('material', 'batchEdit'); ?>
     <?php foreach($materials as $material) { ?>
         <tr class='text-center'>
             <td>
-                <?php if($canBatchEdit):?>
-                    <input type='checkbox' name='materialIDList[<?php echo $material->id;?>]' value='<?php echo $material->id;?>' />
-                <?php endif;?>
                 <?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), sprintf('%03d', $material->id));?>
             </td>
             <td class='text-center'><?php echo $material->code;?></td>
@@ -52,19 +48,13 @@
         </tr>
     <?php } ?>
     </tbody>
-    <?php if($canBatchEdit) { ?>
     <tfoot>
         <tr>
             <td colspan='11'>
-                <div class='table-actions clearfix'>
-                    <?php echo "<div class='btn-group'>" . html::selectButton() . '</div>';?>
-                    <?php echo html::submitButton($lang->project->batchEdit);?>
-                </div>
                 <div class='text-right'><?php $pager->show();?></div>
             </td>
         </tr>
     </tfoot>
-    <?php } ?>
     </table>
 </form>
 </div>

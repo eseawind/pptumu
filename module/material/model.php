@@ -16,7 +16,7 @@ class materialModel extends model
 	 * @access public
 	 * @return array
 	 */
-	public function getList($typeId = 0, $deleted = 0, $limit = 0)
+	public function getList($typeId = 0, $deleted = 0, $pager = null)
 	{
 		if ($deleted > 1) $deleted = 1;
 
@@ -28,8 +28,9 @@ class materialModel extends model
 		if ($typeId) {
 			$this->dao->andWhere('material.type_id')->eq($typeId);
 		}
-		$this->dao->orderBy('material.code')
-			->beginIF($limit)->limit($limit)->fi();
+
+		$this->dao->orderBy('material.code');
+		$this->dao->page($pager);
 
 		return $this->dao->fetchAll('id');
 	}
