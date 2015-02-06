@@ -30,7 +30,7 @@
 				<th>日期:</th>
 				<td>
 					<div class="input-group date form-date" data-link-format="yyyy-mm-dd" data-link-field="report_date" data-date-format="dd MM yyyy" data-date="">
-						<?php echo html::input('report_date', $report->report_date, "readonly='readonly' class='form-control' placeholder='报告日期'"); ?>
+						<?php echo html::input('report_date', $testation->report_date, "readonly='readonly' class='form-control' placeholder='报告日期'"); ?>
 						<span class="input-group-addon">
 							<span class="icon-remove"></span>
 						</span>
@@ -44,6 +44,7 @@
 			<tr>
 				<td></td>
 				<td colspan="2" class='text-center'>
+					<?php echo html::hidden('project_id', $projectID); ?>
 					<?php echo html::submitButton() . html::backButton(); ?>
 				</td>
 			</tr>

@@ -132,6 +132,9 @@ define('TABLE_REPORT',        '`' . $config->db->prefix . 'report`');
 define('TABLE_TESTATION',     '`' . $config->db->prefix . 'testation`');
 define('TABLE_PROBLEM',       '`' . $config->db->prefix . 'problem`');
 
+define('TABLE_MATERIALUSEDHISTORY', '`' . $config->db->prefix . 'materialusedhistory`');
+define('TABLE_MACHINEUSEDHISTORY', '`' . $config->db->prefix . 'machineusedhistory`');
+
 define('TABLE_DOCLIB',        '`' . $config->db->prefix . 'doclib`');
 define('TABLE_DOC',           '`' . $config->db->prefix . 'doc`');
 

@@ -15,8 +15,8 @@
 			<button class='btn' id='cpmBtn'><?php echo html::icon($lang->icons['copy']) . ' ' . $lang->project->copy;?></button>
 		</div>
 	</div>
-
-	<form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
+	<!-- target='hiddenwin' -->
+	<form class='form-condensed' method='post' id='dataform'>
 		<h4>人工</h4>
 		<table class='table table-form'>
 		<tbody>
@@ -57,22 +57,23 @@
 				<td><?php foreach ($materialApps As $app) { ?>
 					<div class="input-group">
 						<span class="input-group-addon w-100px"><?php echo $app->material_name; ?>: </span>
-						<?php echo html::input('', $app->qty, 'class="form-control"'); ?>
-						<span class="input-group-addon fix-border fix-padding"><?php echo $app->material_unit; ?></span>
+						<?php echo html::hidden('material[ids][]', $app->material_id);
+						echo html::input('material[existing_qty][]', $app->qty, 'class="form-control"'); ?>
+						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
 					</div>
 				<?php } ?></td>
 				<td><?php foreach ($materialApps As $app) { ?>
 					<div class="input-group">
 						<span class="input-group-addon w-100px"><?php echo $app->material_name; ?>: </span>
-						<?php echo html::input('', '', 'class="form-control"'); ?>
-						<span class="input-group-addon fix-border fix-padding"><?php echo $app->material_unit; ?></span>
+						<?php echo html::input('material[used_qty][]', '', 'class="form-control"'); ?>
+						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
 					</div>
 				<?php } ?></td>
 				<td><?php foreach ($materialApps As $app) { ?>
 					<div class="input-group">
 						<span class="input-group-addon w-100px"><?php echo $app->material_name; ?>: </span>
-						<?php echo html::input('', '', 'class="form-control"'); ?>
-						<span class="input-group-addon fix-border fix-padding"><?php echo $app->material_unit; ?></span>
+						<?php echo html::input('material[remaining_qty][]', '', 'class="form-control"'); ?>
+						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
 					</div>
 				<?php } ?></td>
 			</tr>
@@ -92,15 +93,17 @@
 				<td><?php foreach ($machineDists As $dist) { ?>
 					<div class="input-group">
 						<span class="input-group-addon w-180px"><?php echo $dist->type_name . '/' . $dist->machine_name; ?>: </span>
-						<?php echo html::input('', '', 'class="form-control"'); ?>
-						<span class="input-group-addon fix-border fix-padding">时</span>
+						<?php echo html::hidden('machine[ids][]', $dist->machine_id);
+						echo html::input('machine[used_hours][]', '', 'class="form-control"'); ?>
+						<span class="input-group-addon w-50px">时</span>
 					</div>
 				<?php } ?></td>
 				<td><?php foreach ($machineDists As $dist) { ?>
 					<div class="input-group">
 						<span class="input-group-addon w-180px"><?php echo $dist->type_name . '/' . $dist->machine_name; ?>: </span>
-						<?php echo html::input('', '', 'class="form-control"'); ?>
-						<span class="input-group-addon fix-border fix-padding">时</span>
+						<?php  echo html::hidden('machine[ids][]', $dist->machine_id);
+						echo html::input('machine[used_hours][]', '', 'class="form-control"'); ?>
+						<span class="input-group-addon w-50px">时</span>
 					</div>
 				<?php } ?></td>
 			</tr>
@@ -137,6 +140,7 @@
 				<td></td>
 				<td colspan='2' class='text-center'>
 					<?php echo html::hidden('type', $reportType);  ?>
+					<?php echo html::hidden('project_id', $projectID); ?>
 					<?php echo html::submitButton() . html::backButton(); ?>
 				</td>
 			</tr>

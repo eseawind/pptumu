@@ -31,6 +31,7 @@ class report extends control
 
 		$this->view->projects = $projects;
 		$this->view->pager = $pager;
+
 		$this->display();
 	}
 
@@ -39,6 +40,13 @@ class report extends control
 	 */
 	public function create($reportType = 'today', $projectID = 0)
 	{
+		if (!empty($_POST)) {
+			$reportID = $this->report->create();
+			if(dao::isError()) die(js::error(dao::getError()));
+
+			$this->loadModel('action')->create('report', $reportID, 'created');
+			die(js::locate($this->createLink('report', 'index'), 'parent'));
+		}
 		$project = $this->project->getById($projectID);
 
 		$report = new stdClass();
@@ -53,6 +61,7 @@ class report extends control
 		$this->view->materialApps = $materialApps;
 		$this->view->machineDists = $machineDists;
 		$this->view->reportType = $reportType;
+		$this->view->projectID = $projectID;
 
 		$this->display();
 	}
@@ -70,6 +79,20 @@ class report extends control
 	 */
 	public function createtestation($projectID = 0)
 	{
+		if(!empty($_POST)) {
+			$testationID = $this->report->createTestation();
+			if(dao::isError()) die(js::error(dao::getError()));
+
+			$this->loadModel('action')->create('report testation', $testationID, 'created');
+			die(js::locate($this->createLink('report', 'index'), 'parent'));
+		}
+
+		$testation = new stdClass();
+		$testation->report_date = date('Y-m-d');
+
+		$this->view->testation = $testation;
+		$this->view->projectID = $projectID;
+
 		$this->display();
 	}
 
@@ -86,6 +109,20 @@ class report extends control
 	 */
 	public function createproblem($projectID = 0)
 	{
+		if(!empty($_POST)) {
+			$problemID = $this->report->createProblem();
+			if(dao::isError()) die(js::error(dao::getError()));
+
+			$this->loadModel('action')->create('report problem', $problemID, 'created');
+			die(js::locate($this->createLink('report', 'index'), 'parent'));
+		}
+
+		$problem = new stdClass();
+		$problem->report_date = date('Y-m-d');
+
+		$this->view->problem = $problem;
+		$this->view->projectID = $projectID;
+
 		$this->display();
 	}
 
@@ -109,6 +146,7 @@ class report extends control
 		$this->view->position[] = $this->lang->report->projectDeviation;
 		$this->view->projects = $this->report->getProjects();
 		$this->view->submenu = 'project';
+
 		$this->display();
 	}
 
@@ -175,6 +213,7 @@ class report extends control
 		$this->view->submenu = 'test';
 		$this->view->assigns = $this->report->getBugAssign();
 		$this->view->users = $this->loadModel('user')->getPairs('noletter|noclosed|nodeleted');
+
 		$this->display();
 	}
 
@@ -191,6 +230,7 @@ class report extends control
 		$this->view->workload = $this->report->getWorkload();
 		$this->view->users = $this->loadModel('user')->getPairs('noletter|noclosed|nodeleted');
 		$this->view->submenu = 'staff';
+
 		$this->display();
 	}
 
