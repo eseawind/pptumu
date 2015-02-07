@@ -1,10 +1,39 @@
 <?php
-
 /**
  * the model of reprot module
  */
+
 class reportModel extends model
 {
+
+	/**
+	 *
+	 */
+	public function getProjectReports($conds = array(), $pager = null)
+	{
+		$projects = $this->dao->select('project.id, project.code, project.name')
+			->from(TABLE_PROJECT)->alias('project')
+			->where('deleted')->eq(0)
+			->page($pager)
+			->fetchAll('id');
+		foreach ($projects As $pid => $project) {
+			$appDetails = $this->dao->select('application.id, applicationdetail.id AS applicationdetail_id, applicationdetail.material_id, applicationdetail.qty, material.code AS material_code, material.name AS material_name, mtype.name AS material_type_name')
+				->from(TABLE_MATERIALAPPLICATION)->alias('application')
+				->rightJoin(TABLE_MATERIALAPPLICATIONDETAIL)->alias('applicationdetail')
+				->on('applicationdetail.application_id = application.id')
+				->leftJoin(TABLE_MATERIAL)->alias('material')
+				->on('applicationdetail.material_id = material.id')
+				->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
+				->on('material.type_id = mtype.id')
+				->where('application.project_id')->eq($pid)
+				->fetchAll();
+
+			$projects[$pid]->appdetails = $appDetails;
+			unset($appDetails);
+		}
+
+		return $projects;
+	}
 
 	/**
 	 *

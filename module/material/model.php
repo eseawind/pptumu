@@ -252,4 +252,21 @@ class materialModel extends model
 		return $proAppQtys;
 	}
 
+	public function getApplicationdetailById($applicationID, $applicationdetailID)
+	{
+		$detail = $this->dao->select('detail.id, detail.qty, detail.material_id, application.id AS applicatioin_id, material.name AS material_name, material.unit AS material_unit, material.type_id AS material_type_id, mtype.name AS material_type_name')
+			->from(TABLE_MATERIALAPPLICATIONDETAIL)->alias('detail')
+			->leftJoin(TABLE_MATERIALAPPLICATION)->alias('application')
+			->on('detail.application_id = application.id')
+			->leftJoin(TABLE_MATERIAL)->alias('material')
+			->on('detail.material_id = material.id')
+			->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
+			->on('material.type_id = mtype.id')
+			->where('detail.id')->eq($applicationdetailID)
+			->andWhere('detail.application_id')->eq($applicationID)
+			->fetch();
+
+		return $detail;
+	}
+
 }

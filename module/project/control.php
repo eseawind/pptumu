@@ -23,7 +23,7 @@ class project extends control
 	 * @access public
 	 * @return void
 	 */
-	public function index($locate = 'yes', $status = 'undone', $projectID = 0, $orderBy = 'code_asc', $recTotal = 0, $recPerPage = 1, $pageID = 1)
+	public function index($locate = 'yes', $status = 'undone', $projectID = 0, $orderBy = 'code_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
 	{
 		// if($locate == 'yes') $this->locate($this->createLink('project', 'task'));
 

@@ -1,9 +1,9 @@
-<?php include '../../common/view/header.html.php';?>
-<?php include '../../common/view/datepicker.html.php';?>
-<?php include '../../common/view/kindeditor.html.php';?>
+<?php include '../../common/view/header.html.php'; ?>
+<?php include '../../common/view/datepicker.html.php'; ?>
+<?php include '../../common/view/kindeditor.html.php'; ?>
 
-<?php js::import($jsRoot . 'misc/date.js');?>
-<?php js::set('holders', $lang->project->placeholder);?>
+<?php js::import($jsRoot . 'misc/date.js'); ?>
+<?php js::set('holders', $lang->project->placeholder); ?>
 
 <div class='container mw-1400px'>
 	<div id='titlebar'>
