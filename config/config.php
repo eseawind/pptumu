@@ -137,7 +137,7 @@ define('TABLE_PROBLEM',       '`' . $config->db->prefix . 'problem`');
 define('TABLE_MATERIALUSEDHISTORY', '`' . $config->db->prefix . 'materialusedhistory`');
 define('TABLE_MACHINEUSEDHISTORY', '`' . $config->db->prefix . 'machineusedhistory`');
 
-define('TABLE_PARCHASE', '`' . $config->db->prefix . 'parchase`');
+define('TABLE_FINANCIAL', '`' . $config->db->prefix . 'financial`');
 
 // *********************************************************************************************
 define('TABLE_DOCLIB',        '`' . $config->db->prefix . 'doclib`');

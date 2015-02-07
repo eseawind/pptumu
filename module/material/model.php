@@ -163,6 +163,15 @@ class materialModel extends model
 		$application->verified = 0;
 		$application->created_by = $app->user->account;
 
+		// application code
+		$codeExist = false;
+		do {
+			$code = helper::genRandCode();
+			$checkRes = $this->dao->select('COUNT(code) AS count')->from(TABLE_MATERIALAPPLICATION)
+				->where('code')->eq($code)->fetch();
+		} while ($codeExist);
+		$application->code = $code;
+
 		$this->dao->insert(TABLE_MATERIALAPPLICATION)->data($application)
 			->exec();
 
@@ -210,9 +219,48 @@ class materialModel extends model
 	/**
 	 *
 	 */
+	public function getApplicationList($conds = array(), $pager = null)
+	{
+		$fields = 'application.*, project.code AS project_code, project.name AS project_name';
+		$this->dao->select($fields)
+			->from(TABLE_MATERIALAPPLICATION)->alias('application')
+			->leftJoin(TABLE_PROJECT)->alias('project')
+			->on('application.project_id = project.id');
+
+		$applications = $this->dao->page($pager)->fetchAll();
+
+		foreach ($applications As $i => $application) {
+			$applications[$i]->details = $this->getApplicationDetails($application->id);
+		}
+
+		return $applications;
+	}
+
+	/**
+	 * @param $applicationID
+	 */
+	public function getApplicationById($applicationID)
+	{
+		$fields = 'application.*, project.code AS project_code, project.name AS project_name';
+		$this->dao->select($fields)
+			->from(TABLE_MATERIALAPPLICATION)->alias('application')
+			->leftJoin(TABLE_PROJECT)->alias('project')
+			->on('application.project_id = project.id')
+			->where('application.id')->eq($applicationID);
+
+		$application = $this->dao->fetch();
+
+		$application->details = $this->getApplicationDetails($application->id);
+
+		return $application;
+	}
+
+	/**
+	 *
+	 */
 	public function getApplicationDetails($applicationID)
 	{
-		$details = $this->dao->select('detail.id, detail.material_id, material.name AS material_name, material.unit AS material_unit')
+		$details = $this->dao->select('detail.id, detail.qty, detail.material_id, material.name AS material_name, material.unit AS material_unit')
 			->from(TABLE_MATERIALAPPLICATIONDETAIL)->alias('detail')
 			->leftJoin(TABLE_MATERIAL)->alias('material')
 			->on('detail.material_id = material.id')

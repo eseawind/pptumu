@@ -462,6 +462,17 @@ class helper
 
 		return $paramstr;
 	}
+
+	/**
+	 *
+	 */
+	public static function genRandCode()
+	{
+		$code = date('ymd');
+		$code .= '-' . mt_rand(10000, 99999);
+
+		return $code;
+	}
 }
 
 /**

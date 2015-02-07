@@ -2,7 +2,7 @@
 /**
  * 财务管理
  */
-class parchase extends control
+class financial extends control
 {
 
 	/**
@@ -27,9 +27,9 @@ class parchase extends control
 		$recPerPage = 5;
 		$pager = new pager(0, $recPerPage, $pageID);
 
-		$projects = $this->report->getProjectReports(array(), $pager);
+		$applications = $this->material->getApplicationList(array(), $pager);
 
-		$this->view->projects = $projects;
+		$this->view->applications = $applications;
 		$this->view->pager = $pager;
 
 		$this->display();
@@ -38,25 +38,7 @@ class parchase extends control
 	/**
 	 *
 	 */
-	public function history($pageID = 1)
-	{
-		/* Load and initial pager. */
-		$this->app->loadClass('pager', $static = true);
-		$recPerPage = 5;
-		$pager = new pager(0, $recPerPage, $pageID);
-
-		$parchases = $this->parchase->getList(array(), $pager);
-// print_r($parchases); exit;
-		$this->view->parchases = $parchases;
-		$this->view->pager = $pager;
-
-		$this->display();
-	}
-
-	/**
-	 *
-	 */
-	public function create($projectID, $applicationID, $applicationdetailID)
+	public function verify($applicationID)
 	{
 		if (!empty($_POST)) {
 			$parchaseID = $this->parchase->create();
@@ -66,14 +48,12 @@ class parchase extends control
 			die(js::locate($this->createLink('parchase', 'index'), 'parent'));
 		}
 
-		$project = $this->project->getById($projectID);
-		$appdetail = $this->material->getApplicationdetailById($applicationID, $applicationdetailID);
+		$application = $this->material->getApplicationById($applicationID);
+		// $project = $this->project->getById($projectID);
+		// $appdetail = $this->material->getApplicationdetailById($applicationID, $applicationdetailID);
 
-		$this->view->project = $project;
-		$this->view->appdetail = $appdetail;
-		$this->view->projectID = $projectID;
+		$this->view->application = $application;
 		$this->view->applicationID = $applicationID;
-		$this->view->applicationdetailID = $applicationdetailID;
 
 		$this->display();
 	}

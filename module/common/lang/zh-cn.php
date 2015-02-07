@@ -90,7 +90,7 @@ $lang->menu->machine = '机械管理|machine|index';
 //$lang->menu->qa       = '测试|qa|index';
 $lang->menu->doc      = '文档|doc|index';
 $lang->menu->report   = '日报管理|report|index';
-$lang->menu->parchase   = '财务管理|parchase|index';
+$lang->menu->financial   = '财务管理|financial|index';
 $lang->menu->company  = '组织|company|index';
 $lang->menu->admin    = '后台|admin|index';
 

@@ -6,22 +6,12 @@
 	<table class='table table-form'>
 		<tr>
 			<th class='w-90px'><?php echo '所属项目'; ?></th>
-			<td class='w-p25-f'><?php echo $project->name;?></td>
+			<td class='w-p25-f'><?php echo $application->project_name;?></td>
 			<td></td>
 		</tr>
 		<tr>
 			<th><?php echo '材料名称'; ?></th>
-			<td><?php echo $appdetail->material_name; ?></td>
-			<td></td>
-		</tr>
-		<tr>
-			<th><?php echo '所属分类'; ?></th>
-			<td><?php echo $appdetail->material_type_name; ?></td>
-			<td></td>
-		</tr>
-		<tr>
-			<th><?php echo '申请数量'; ?></th>
-			<td><?php echo $appdetail->qty, '&nbsp;', $appdetail->material_unit; ?></td>
+			<td><?php echo ''; ?></td>
 			<td></td>
 		</tr>
 		<tr>
