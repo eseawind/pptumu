@@ -47,6 +47,7 @@ class report extends control
 			$this->loadModel('action')->create('report', $reportID, 'created');
 			die(js::locate($this->createLink('report', 'index'), 'parent'));
 		}
+
 		$project = $this->project->getById($projectID);
 
 		$report = new stdClass();
@@ -71,7 +72,37 @@ class report extends control
 	 */
 	public function history($reportType = 'today', $projectID = 0)
 	{
+		$project = $this->project->getById($projectID);
+
+		$reports = $this->report->getList($projectID, $reportType, array());
+
+		$this->view->project = $project;
+		$this->view->reports = $reports;
+
 		$this->display();
+	}
+
+	/**
+	 * show report detail
+	 */
+	public function show($reportID)
+	{
+		$report = $this->report->getReportById($reportID);
+
+		$project = $this->project->getById($report->project_id);
+
+		$this->view->report = $report;
+		$this->view->project = $project;
+
+		$this->display();
+	}
+
+	/**
+	 *
+	 */
+	public function modificationrequest($reportID)
+	{
+
 	}
 
 	/**

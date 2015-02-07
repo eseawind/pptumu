@@ -7,6 +7,49 @@ class reportModel extends model
 {
 
 	/**
+	 *
+	 */
+	public function getList($projectID, $type = 'today', $conds = array())
+	{
+		$reports = $this->dao->select('report.*')->from(TABLE_REPORT)->alias('report')
+			->where('deleted')->eq(0)
+			->andWhere('type')->eq($type)
+			->andWhere('project_id')->eq($projectID)
+			->fetchAll('id');
+
+		return $reports;
+	}
+
+	/**
+	 *
+	 */
+	public function getReportById($reportID)
+	{
+		$report = $this->dao->findById((int)$reportID)->from(TABLE_REPORT)->fetch();
+
+		$materialUsed = $this->dao->select('used.id, used.project_id, used.material_id, used.qty, material.code AS material_code, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')->from(TABLE_MATERIALUSEDHISTORY)->alias('used')
+			->leftJoin(TABLE_MATERIAL)->alias('material')
+			->on('used.material_id = material.id')
+			->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
+			->on('material.type_id = mtype.id')
+			->where('used.report_id')->eq($reportID)
+			->fetchAll('id');
+		$machineUsed = $this->dao->select('used.id, used.project_id, used.machine_id, used.hours,
+          machine.code AS machine_code, machine.name AS machine_name, mtype.name AS machiine_type_name')->from(TABLE_MACHINEUSEDHISTORY)->alias('used')
+			->leftJoin(TABLE_MACHINE)->alias('machine')
+			->on('used.machine_id = machine.id')
+			->leftJoin(TABLE_MACHINETYPE)->alias('mtype')
+			->on('machine.type_id = mtype.id')
+			->where('used.report_id')->eq($reportID)
+			->fetchAll('id');
+
+		$report->material_used_history = $materialUsed;
+		$report->machine_used_history = $machineUsed;
+
+		return $report;
+	}
+
+	/**
 	 * Create report for a project
 	 */
 	public function create()
@@ -15,25 +58,63 @@ class reportModel extends model
 
 		$dt = date('Y-m-d H:i:s');
 		$report = fixer::input('post')->get();
-		print_r($report); exit;
 		$report->created = $dt;
 		$report->modified = $dt;
 		$report->deleted = 0;
 		$report->created_by = $app->user->account;
 
+		// material used data
+		$materialsUsed = array();
+		foreach ($report->material['ids'] As $i => $materialID) {
+			$materialsUsed[$i] = new stdClass();
+			$materialsUsed[$i]->material_id = $materialID;
+			$materialsUsed[$i]->qty = $report->material['used_qty'][$i];
+
+			$materialsUsed[$i]->project_id = $report->project_id;
+			$materialsUsed[$i]->created = $dt;
+			$materialsUsed[$i]->modified = $dt;
+			$materialsUsed[$i]->deleted = 0;
+			$materialsUsed[$i]->created_by = $app->user->account;
+		}
+		unset($report->material);
+
+		// machine used data
+		$machinesUsed = array();
+		foreach ($report->machine['ids'] As $i => $machineID) {
+			$machinesUsed[$i] = new stdClass();
+			$machinesUsed[$i]->machine_id = $machineID;
+			$machinesUsed[$i]->hours = $report->machine['used_hours'][$i];
+
+			$machinesUsed[$i]->project_id = $report->project_id;
+			$machinesUsed[$i]->created = $dt;
+			$machinesUsed[$i]->modified = $dt;
+			$machinesUsed[$i]->deleted = 0;
+			$machinesUsed[$i]->created_by = $app->user->account;
+		}
+		unset($report->machine);
+
 		$this->dao->insert(TABLE_REPORT)->data($report)
 			->check('content', 'NotEmpty')
 			->check('reprot_date', 'date')
 			->exec();
-
 		if (!dao::isError()) {
-			$testationID = $this->dao->lastInsertId();
-
-			return $testationID;
+			$reportID = $this->dao->lastInsertId();
 		}
 
+		foreach ($materialsUsed As $usedData) {
+			$usedData->report_id = $reportID;
 
-		return false;
+			$this->dao->insert(TABLE_MATERIALUSEDHISTORY)->data($usedData)
+				->exec();
+		}
+		foreach ($machinesUsed As $hourData) {
+			$hourData->report_id = $reportID;
+
+			$this->dao->insert(TABLE_MACHINEUSEDHISTORY)->data($hourData)
+				->exec();
+		}
+
+		return $reportID;
 	}
 
 	/**

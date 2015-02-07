@@ -22,22 +22,22 @@
 		<tbody>
 			<tr>
 				<th class='w-90px'>公司员工:</th>
-				<td class='w-p25-f'><?php echo html::input('staff_qty', $report->staff_qty, "class='form-control'");?></td>
+				<td class='w-p25-f'><?php echo html::input('staff_qty', $report->staff_qty, 'class="form-control"');?></td>
 				<td>人</td>
 			</tr>
 			<tr>
 				<th>外雇人员:</th>
-				<td><?php echo html::input('extternal_qty', $report->extternal_qty, "class='form-control'");?></td>
+				<td><?php echo html::input('extternal_qty', $report->extternal_qty, 'class="form-control"');?></td>
 				<td>人</td>
 			</tr>
 			<tr>
 				<th>午饭人员:</th>
-				<td><?php echo html::input('lunch_qty', $report->lunch_qty, "class='form-control'");?></td>
+				<td><?php echo html::input('lunch_qty', $report->lunch_qty, 'class="form-control"');?></td>
 				<td>人</td>
 			</tr>
 			<tr>
 				<th>晚饭人员:</th>
-				<td><?php echo html::input('supper_qty', $report->supper_qty, "class='form-control'");?></td>
+				<td><?php echo html::input('supper_qty', $report->supper_qty, 'class="form-control"');?></td>
 				<td>人</td>
 			</tr>
 		</tbody>
@@ -58,7 +58,7 @@
 					<div class="input-group">
 						<span class="input-group-addon w-100px"><?php echo $app->material_name; ?>: </span>
 						<?php echo html::hidden('material[ids][]', $app->material_id);
-						echo html::input('material[existing_qty][]', $app->qty, 'class="form-control"'); ?>
+						echo html::input('material[existing_qty][]', $app->qty, 'class="form-control" readonly="readonly"'); ?>
 						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
 					</div>
 				<?php } ?></td>
@@ -72,7 +72,7 @@
 				<td><?php foreach ($materialApps As $app) { ?>
 					<div class="input-group">
 						<span class="input-group-addon w-100px"><?php echo $app->material_name; ?>: </span>
-						<?php echo html::input('material[remaining_qty][]', '', 'class="form-control"'); ?>
+						<?php echo html::input('material[remaining_qty][]', '0', 'class="form-control"'); ?>
 						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
 					</div>
 				<?php } ?></td>
