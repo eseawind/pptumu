@@ -89,7 +89,7 @@ $lang->menu->material = '材料|material|index';
 $lang->menu->machine = '机械|machine|index';
 //$lang->menu->qa       = '测试|qa|index';
 $lang->menu->doc      = '文档|doc|index';
-$lang->menu->report   = '工程上报|report|index';
+$lang->menu->report   = '日报管理|report|index';
 $lang->menu->company  = '组织|company|index';
 $lang->menu->admin    = '后台|admin|index';
 
@@ -256,10 +256,12 @@ $lang->doc->menu->create  = array('link' => '<i class="icon-plus"></i>&nbsp;添�
 $lang->report = new stdclass();
 $lang->report->menu = new stdclass();
 
-//$lang->report->menu->product = array('link' => '产品|report|productinfo');
-$lang->report->menu->prj     = array('link' => '项目|report|projectdeviation');
-//$lang->report->menu->test    = array('link' => '测试|report|bugsummary', 'alias' => 'bugassign');
-$lang->report->menu->staff   = array('link' => '组织|report|workload');
+//$lang->report->menu->product      = array('link' => '产品|report|productinfo');
+$lang->report->menu->prj            = array('link' => '工程上报|report|index', 'alias' => '');
+$lang->report->menu->verify         = array('link' => '日报审核|report|verifyindex', 'alias' => '');
+$lang->report->menu->statistics     = array('link' => '日报统计|report|statistics', 'alias' => '');
+//$lang->report->menu->test         = array('link' => '测试|report|bugsummary', 'alias' => 'bugassign');
+// $lang->report->menu->staff       = array('link' => '组织|report|workload');
 
 /* 组织结构视图菜单设置。*/
 $lang->company = new stdclass();

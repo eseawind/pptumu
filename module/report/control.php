@@ -98,11 +98,59 @@ class report extends control
 	}
 
 	/**
-	 *
+	 * 修改申请
 	 */
 	public function modificationrequest($reportID)
 	{
 
+	}
+
+	/**
+	 * 修改申请审查
+	 */
+	public function modificationcheck($reportID)
+	{
+
+	}
+
+	/**
+	 * 日报审核列表
+	 */
+	public function verifyindex($pageID = 1)
+	{
+		/* Load and initial pager. */
+		$this->app->loadClass('pager', $static = true);
+		$recPerPage = 5;
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$projects = $this->project->getList(array(), $pager);
+
+		$this->display();
+	}
+
+	/**
+	 * 日报审核操作
+	 */
+	public function verify($reportID)
+	{
+
+	}
+
+	/**
+	 *
+	 */
+	public function statistics($pageID = 1)
+	{
+		/* Load and initial pager. */
+		$this->app->loadClass('pager', $static = true);
+		$recPerPage = 5;
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$projects = $this->project->getList(array(), $pager);
+
+		$this->view->projects = $projects;
+
+		$this->display();
 	}
 
 	/**
