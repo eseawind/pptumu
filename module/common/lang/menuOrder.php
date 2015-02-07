@@ -10,6 +10,7 @@ $lang->menuOrder[17] = 'machine';
 // $lang->menuOrder[20] = 'qa';
 $lang->menuOrder[25] = 'doc';
 $lang->menuOrder[30] = 'report';
+$lang->menuOrder[31] = 'parchase';
 $lang->menuOrder[35] = 'company';
 $lang->menuOrder[40] = 'admin';
 

@@ -109,7 +109,6 @@ define('TABLE_STORYSPEC',     '`' . $config->db->prefix . 'storyspec`');
 define('TABLE_PRODUCTPLAN',   '`' . $config->db->prefix . 'productplan`');
 define('TABLE_RELEASE',       '`' . $config->db->prefix . 'release`');
 
-define('TABLE_PROJECT',       '`' . $config->db->prefix . 'project`');
 define('TABLE_TASK',          '`' . $config->db->prefix . 'task`');
 define('TABLE_TEAM',          '`' . $config->db->prefix . 'team`');
 define('TABLE_PROJECTPRODUCT','`' . $config->db->prefix . 'projectproduct`');
@@ -118,6 +117,9 @@ define('TABLE_TASKESTIMATE',  '`' . $config->db->prefix . 'taskestimate`');
 define('TABLE_EFFORT',        '`' . $config->db->prefix . 'effort`');
 define('TABLE_BURN',          '`' . $config->db->prefix . 'burn`');
 define('TABLE_BUILD',         '`' . $config->db->prefix . 'build`');
+
+// *********************************************************************************************
+define('TABLE_PROJECT',       '`' . $config->db->prefix . 'project`');
 
 define('TABLE_MATERIALTYPE',  '`' . $config->db->prefix . 'materialtype`');
 define('TABLE_MATERIAL',      '`' . $config->db->prefix . 'material`');
@@ -135,6 +137,9 @@ define('TABLE_PROBLEM',       '`' . $config->db->prefix . 'problem`');
 define('TABLE_MATERIALUSEDHISTORY', '`' . $config->db->prefix . 'materialusedhistory`');
 define('TABLE_MACHINEUSEDHISTORY', '`' . $config->db->prefix . 'machineusedhistory`');
 
+define('TABLE_PARCHASE', '`' . $config->db->prefix . 'parchase`');
+
+// *********************************************************************************************
 define('TABLE_DOCLIB',        '`' . $config->db->prefix . 'doclib`');
 define('TABLE_DOC',           '`' . $config->db->prefix . 'doc`');
 

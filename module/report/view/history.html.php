@@ -10,9 +10,12 @@
 <div class='main'>
 <ul>
 	<?php foreach ($reports As $id => $report) { ?>
-	<li><?php echo $report->report_date; ?> 日报:
+	<li>
+		<?php echo $report->report_date; ?> 日报:
 		<?php echo html::a($this->createLink('report', 'show', "reportID={$report->id}"), '点击查看', '', 'class="btn"'); ?>
+		<?php echo html::a($this->createLink('report', 'verify', "reportID={$report->id}"), '审核', '', 'class="btn"'); ?>
 		<?php echo html::a($this->createLink('report', 'modificationrequest', "reportID={$report->id}"), '申请修改', '', 'class="btn"'); ?>
+	</li>
 	<?php } ?>
 </ul>
 </div>

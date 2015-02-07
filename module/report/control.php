@@ -114,21 +114,6 @@ class report extends control
 	}
 
 	/**
-	 * 日报审核列表
-	 */
-	public function verifyindex($pageID = 1)
-	{
-		/* Load and initial pager. */
-		$this->app->loadClass('pager', $static = true);
-		$recPerPage = 5;
-		$pager = new pager(0, $recPerPage, $pageID);
-
-		$projects = $this->project->getList(array(), $pager);
-
-		$this->display();
-	}
-
-	/**
 	 * 日报审核操作
 	 */
 	public function verify($reportID)

@@ -90,6 +90,7 @@ $lang->menu->machine = '机械|machine|index';
 //$lang->menu->qa       = '测试|qa|index';
 $lang->menu->doc      = '文档|doc|index';
 $lang->menu->report   = '日报管理|report|index';
+$lang->menu->parchase   = '财务管理|parchase|index';
 $lang->menu->company  = '组织|company|index';
 $lang->menu->admin    = '后台|admin|index';
 
@@ -258,10 +259,15 @@ $lang->report->menu = new stdclass();
 
 //$lang->report->menu->product      = array('link' => '产品|report|productinfo');
 $lang->report->menu->prj            = array('link' => '工程上报|report|index', 'alias' => '');
-$lang->report->menu->verify         = array('link' => '日报审核|report|verifyindex', 'alias' => '');
 $lang->report->menu->statistics     = array('link' => '日报统计|report|statistics', 'alias' => '');
 //$lang->report->menu->test         = array('link' => '测试|report|bugsummary', 'alias' => 'bugassign');
 // $lang->report->menu->staff       = array('link' => '组织|report|workload');
+
+/** 财务管理菜单 */
+$lang->parchase = new stdClass();
+$lang->parchase->menu = new stdClass();
+$lang->parchase->menu->prj          = array('link' => '工程列表|parchase|index', 'alias' => '');
+$lang->parchase->menu->history      = array('link' => '采购记录|parchase|history', 'alias' => '');
 
 /* 组织结构视图菜单设置。*/
 $lang->company = new stdclass();
