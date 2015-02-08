@@ -6,9 +6,9 @@ $lang->menuOrder[5]  = 'my';
 $lang->menuOrder[10] = 'project';
 $lang->menuOrder[15] = 'material';
 $lang->menuOrder[20] = 'machine';
-$lang->menuOrder[25] = 'doc';
-$lang->menuOrder[30] = 'report';
-$lang->menuOrder[35] = 'financial';
+$lang->menuOrder[25] = 'report';
+$lang->menuOrder[30] = 'financial';
+$lang->menuOrder[35] = 'statistics';
 $lang->menuOrder[40] = 'company';
 
 /* index menu order. */
@@ -79,6 +79,7 @@ $lang->admin->menuOrder[30] = 'custom';
 $lang->admin->menuOrder[40] = 'convert';
 $lang->admin->menuOrder[45] = 'backup';
 $lang->admin->menuOrder[50] = 'trashes';
+
 $lang->convert->menuOrder   = $lang->admin->menuOrder;
 $lang->upgrade->menuOrder   = $lang->admin->menuOrder;
 $lang->action->menuOrder    = $lang->admin->menuOrder;

@@ -114,7 +114,7 @@ class materialModel extends model
 			->exec();
 
 		if (!dao::isError()) {
-			return $machineId;
+			return $materialId;
 		}
 
 		return false;

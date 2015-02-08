@@ -86,7 +86,9 @@ class reportModel extends model
 		global $app;
 
 		$dt = date('Y-m-d H:i:s');
-		$report = fixer::input('post')->get();
+		$report = fixer::input('post')
+			->stripTags($this->config->report->editor->create['id'], $this->config->allowedTags)
+			->get();
 		$report->created = $dt;
 		$report->modified = $dt;
 		$report->deleted = 0;
@@ -154,7 +156,9 @@ class reportModel extends model
 		global $app;
 
 		$dt = date('Y-m-d H:i:s');
-		$testation = fixer::input('post')->get();
+		$testation = fixer::input('post')
+			->stripTags($this->config->report->editor->createtestation['id'], $this->config->allowedTags)
+			->get();
 		$testation->created = $dt;
 		$testation->modified = $dt;
 		$testation->deleted = 0;
@@ -182,7 +186,9 @@ class reportModel extends model
 		global $app;
 
 		$dt = date('Y-m-d H:i:s');
-		$problem = fixer::input('post')->get();
+		$problem = fixer::input('post')
+			->stripTags($this->config->report->editor->createproblem['id'], $this->config->allowedTags)
+			->get();
 		$problem->created = $dt;
 		$problem->modified = $dt;
 		$problem->deleted = 0;

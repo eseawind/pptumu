@@ -153,4 +153,39 @@ class material extends control
 
 		$this->display();
 	}
+
+	/**
+	 * 材料申请列表
+	 * @param int $pageID
+	 */
+	public function applicationindex($projectID = 0, $pageID = 1)
+	{
+		$this->loadModel('financial');
+		// $verifiedVal = $this->financial->getVerifyStatusVal($verified);
+
+		if (!empty($_POST)) {
+			$search = fixer::input('post')->get();
+			$projectID = $search->search['project_id'];
+		}
+
+		/* Load and initial pager. */
+		$this->app->loadClass('pager', $static = true);
+		$recPerPage = 5;
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$conds = array('project_id' => $projectID);
+		$applications = $this->material->getApplicationList($conds, $pager);
+
+		//
+		$this->loadModel('project');
+		$projects = $this->project->getPairs();
+
+		$this->view->applications = $applications;
+		$this->view->projects = array('' => '选择项目') + $projects;
+		$this->view->projectID = $projectID;
+		$this->view->pager = $pager;
+
+		$this->display();
+	}
+
 }

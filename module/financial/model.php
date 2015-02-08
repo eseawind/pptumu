@@ -14,7 +14,9 @@ class financialModel extends model
 		global $app;
 
 		$dt = date('Y-m-d H:i:s');
-		$application = fixer::input('post')->get();
+		$application = fixer::input('post')
+			->stripTags($this->config->financial->editor->verify['id'], $this->config->allowedTags)
+			->get();
 
 		$application->modified = $dt;
 		$application->verified_by = $app->user->account;

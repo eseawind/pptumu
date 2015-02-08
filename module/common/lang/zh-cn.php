@@ -83,16 +83,13 @@ $lang->common->common = '公有模块';
 /* 主导航菜单。*/
 $lang->menu = new stdclass();
 $lang->menu->my       = '<i class="icon-home"></i><span> 首页</span>|my|index';
-//$lang->menu->product  = '产品|product|index';
 $lang->menu->project  = '工程管理|project|index';
 $lang->menu->material = '材料管理|material|index';
 $lang->menu->machine = '机械管理|machine|index';
-//$lang->menu->qa       = '测试|qa|index';
-$lang->menu->doc      = '文档|doc|index';
-$lang->menu->report   = '日报管理|report|index';
-$lang->menu->financial   = '财务管理|financial|index';
-$lang->menu->company  = '用户管理|company|index';
-// $lang->menu->admin    = '后台|admin|index';
+$lang->menu->report = '日报管理|report|index';
+$lang->menu->financial = '财务管理|financial|index';
+$lang->menu->statistics = '统计管理|statistics|index';
+$lang->menu->company  = '权限管理|company|index';
 
 /* 查询条中可以选择的对象列表。*/
 $lang->searchObjects['bug']         = 'Bug';
@@ -163,7 +160,8 @@ $lang->material = new stdclass();
 $lang->material->menu = new stdclass();
 
 $lang->material->menu->list = array('link' => '全部材料|material|index');
-$lang->material->menu->apply = array('link' => '分配|material|apply');
+$lang->material->menu->apply = array('link' => '申请材料|material|apply');
+$lang->material->menu->applicationindex = array('link' => '申请记录|material|applicationindex');
 
 /** 机械试图菜单设置 */
 $lang->machine = new stdClass();
@@ -176,16 +174,18 @@ $lang->machine->menu->rent = array('link' => '租赁机械|machine|index|isRent=
 $lang->report = new stdclass();
 $lang->report->menu = new stdclass();
 
-//$lang->report->menu->product      = array('link' => '产品|report|productinfo');
-$lang->report->menu->prj            = array('link' => '工程上报|report|index', 'alias' => '');
-$lang->report->menu->statistics     = array('link' => '日报统计|report|statistics', 'alias' => '');
-//$lang->report->menu->test         = array('link' => '测试|report|bugsummary', 'alias' => 'bugassign');
-// $lang->report->menu->staff       = array('link' => '组织|report|workload');
+$lang->report->menu->index            = array('link' => '工程上报|report|index', 'alias' => '');
 
 /** 财务管理菜单 */
 $lang->financial = new stdClass();
 $lang->financial->menu = new stdClass();
 $lang->financial->menu->index          = '财务管理';
+
+/** 统计管理菜单 */
+$lang->statistics = new stdClass();
+$lang->statistics->menu = new stdClass();
+$lang->statistics->menu->index          = '统计管理';
+
 
 /* 组织结构视图菜单设置。*/
 $lang->company = new stdclass();
@@ -208,18 +208,6 @@ $lang->dept->menu  = $lang->company->menu;
 $lang->group->menu = $lang->company->menu;
 $lang->user->menu  = $lang->company->menu;
 
-/* 后台管理菜单设置。*/
-/**
-$lang->admin = new stdclass();
-$lang->admin->menu = new stdclass();
-$lang->admin->menu->index     = array('link' => '首页|admin|index');
-$lang->admin->menu->extension = array('link' => '扩展|extension|browse', 'subModule' => 'extension,editor');
-$lang->admin->menu->custom    = array('link' => '自定义|custom|index', 'subModule' => 'custom');
-$lang->admin->menu->mail      = array('link' => '发信|mail|index', 'subModule' => 'mail');
-$lang->admin->menu->convert   = array('link' => '导入|convert|index', 'subModule' => 'convert');
-$lang->admin->menu->backup    = array('link' => '备份|backup|index', 'subModule' => 'backup');
-$lang->admin->menu->trashes   = array('link' => '回收站|action|trash', 'subModule' => 'action');
-*/
 $lang->convert   = new stdclass();
 $lang->upgrade   = new stdclass();
 $lang->action    = new stdclass();
