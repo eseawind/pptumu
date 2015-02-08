@@ -15,7 +15,7 @@
 			<td><?php echo $project->name; ?></td>
 			<td>项目编号: <?php echo $project->code; ?></td>
 			<td>项目进行中</td>
-			<td>了解项目情况</td>
+			<td><?php echo html::a(helper::createLink('project', 'view', "projectrID={$project->id}") . '?onlybody=yes', '了解项目情况', '', "class='about iframe' data-width='900' data-headerless='true' data-class='modal-about'"); ?></td>
 		</tr>
 		<tr>
 			<td colspan="4">
@@ -38,7 +38,13 @@
 	</table>
 	<?php } ?>
 
-	<div class='text-right'><?php $pager->show();?></div>
+	<table class='table table-condensed table-striped table-bordered tablesorter table-fixed active-disabled' id='bugAssign'>
+		<tfoot>
+		<tr>
+			<td><div class='text-right'><?php $pager->show();?></div></td>
+		</tr>
+		</tfoot>
+	</table>
 </div>
 
 <?php include '../../common/view/footer.html.php';?>

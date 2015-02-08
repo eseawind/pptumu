@@ -10,7 +10,7 @@ $lang->downArrow = '↓';
 $lang->null      = '空';
 $lang->ellipsis  = '…';
 
-$lang->zentaoPMS      = '土木工程';
+$lang->zentaoPMS      = '土木工程管理系统';
 $lang->welcome        = "%s土木工程管理系统";
 $lang->myControl      = "我的地盘";
 $lang->currentPos     = '当前位置：';
@@ -34,7 +34,7 @@ $lang->export       = '导出';
 $lang->setFileName  = '文件名：';
 $lang->activate     = '激活';
 $lang->submitting   = '稍候...';
-$lang->save         = '保存';
+$lang->save         = '提交';
 $lang->confirm      = '确认';
 $lang->preview      = '查看';
 $lang->goback       = '返回';
@@ -82,7 +82,7 @@ $lang->common->common = '公有模块';
 
 /* 主导航菜单。*/
 $lang->menu = new stdclass();
-$lang->menu->my       = '<i class="icon-home"></i><span> 我的地盘</span>|my|index';
+$lang->menu->my       = '<i class="icon-home"></i><span> 首页</span>|my|index';
 //$lang->menu->product  = '产品|product|index';
 $lang->menu->project  = '工程管理|project|index';
 $lang->menu->material = '材料管理|material|index';
@@ -91,8 +91,8 @@ $lang->menu->machine = '机械管理|machine|index';
 $lang->menu->doc      = '文档|doc|index';
 $lang->menu->report   = '日报管理|report|index';
 $lang->menu->financial   = '财务管理|financial|index';
-$lang->menu->company  = '组织|company|index';
-$lang->menu->admin    = '后台|admin|index';
+$lang->menu->company  = '用户管理|company|index';
+// $lang->menu->admin    = '后台|admin|index';
 
 /* 查询条中可以选择的对象列表。*/
 $lang->searchObjects['bug']         = 'Bug';
@@ -129,10 +129,6 @@ $lang->lang = 'Language';
 /* 风格列表。*/
 $lang->theme                 = '主题';
 $lang->themes['default']     = '默认';
-//$lang->themes['green']       = '绿色';
-//$lang->themes['red']         = '红色';
-//$lang->themes['lightblue']   = '亮蓝';
-//$lang->themes['blackberry']  = '黑莓';
 
 /* 首页菜单设置。*/
 $lang->index = new stdclass();
@@ -147,66 +143,20 @@ $lang->my->menu = new stdclass();
 
 $lang->my->menu->account        = '<span id="myname"><i class="icon-user"></i> %s' . $lang->arrow . '</span>';
 $lang->my->menu->index          = '首页|my|index';
-// $lang->my->menu->todo           = array('link' => '待办|my|todo|', 'subModule' => 'todo');
-// $lang->my->menu->task           = array('link' => '任务|my|task|', 'subModule' => 'task');
-// $lang->my->menu->bug            = array('link' => 'Bug|my|bug|',   'subModule' => 'bug');
-// $lang->my->menu->testtask       = array('link' => '测试|my|testtask|', 'subModule' => 'testcase,testtask', 'alias' => 'testcase');
-// $lang->my->menu->story          = array('link' => '需求|my|story|',   'subModule' => 'story');
 $lang->my->menu->myProject      = '项目|my|project|';
-$lang->my->menu->dynamic        = '动态|my|dynamic|';
 $lang->my->menu->profile        = array('link' => '档案|my|profile', 'alias' => 'editprofile');
 $lang->my->menu->changePassword = '密码|my|changepassword';
 
 $lang->todo = new stdclass();
 $lang->todo->menu = $lang->my->menu;
 
-/* 产品视图设置。*/
-// $lang->product = new stdclass();
-// $lang->product->menu = new stdclass();
-
-// $lang->product->menu->list    = '%s';
-// $lang->product->menu->story   = array('link' => '需求|product|browse|productID=%s', 'alias' => 'batchedit', 'subModule' => 'story');
-// $lang->product->menu->dynamic = '动态|product|dynamic|productID=%s';
-// $lang->product->menu->plan    = array('link' => '计划|productplan|browse|productID=%s', 'subModule' => 'productplan');
-// $lang->product->menu->release = array('link' => '发布|release|browse|productID=%s',     'subModule' => 'release');
-// $lang->product->menu->roadmap = '路线图|product|roadmap|productID=%s';
-// $lang->product->menu->doc     = array('link' => '文档|product|doc|productID=%s', 'subModule' => 'doc');
-// $lang->product->menu->module  = '模块|tree|browse|productID=%s&view=story';
-// $lang->product->menu->view    = array('link' => '概况|product|view|productID=%s', 'alias' => 'edit');
-// $lang->product->menu->project = '项目|product|project|status=all&productID=%s';
-// $lang->product->menu->create  = array('link' => '<i class="icon-plus"></i>&nbsp;添加产品|product|create', 'float' => 'right');
-// $lang->product->menu->all     = array('link' => '<i class="icon-th"></i>&nbsp;所有产品|product|index|locate=no&productID=%s', 'float' => 'right');
-
-// $lang->story       = new stdclass();
-// $lang->productplan = new stdclass();
-// $lang->release     = new stdclass();
-
-// $lang->story->menu       = $lang->product->menu;
-// $lang->productplan->menu = $lang->product->menu;
-// $lang->release->menu     = $lang->product->menu;
-
 /* 项目视图菜单设置。*/
 $lang->project = new stdclass();
 $lang->project->menu = new stdclass();
 
-$lang->project->menu->list      = '%s';
-// $lang->project->menu->task      = array('link' => '任务|project|task|projectID=%s', 'subModule' => 'task,tree', 'alias' => 'grouptask,importtask,burn,importbug');
-// $lang->project->menu->story     = array('link' => '需求|project|story|projectID=%s', 'subModule' => 'story', 'alias' => 'linkstory');
-// $lang->project->menu->bug       = 'Bug|project|bug|projectID=%s';
-$lang->project->menu->dynamic   = '动态|project|dynamic|projectID=%s';
-// $lang->project->menu->build     = array('link' => '版本|project|build|projectID=%s', 'subModule' => 'build');
-// $lang->project->menu->testtask  = '测试|project|testtask|projectID=%s';
-// $lang->project->menu->team      = array('link' => '团队|project|team|projectID=%s', 'alias' => 'managemembers');
-$lang->project->menu->doc       = array('link' => '文档|project|doc|porjectID=%s', 'subModule' => 'doc');
-// $lang->project->menu->product   = '产品|project|manageproducts|projectID=%s';
-$lang->project->menu->view      = array('link' => '概况|project|view|projectID=%s', 'alias' => 'edit,start,suspend,putoff,close');
+$lang->project->menu->list      = '所有项目';
 $lang->project->menu->create    = array('link' => '<i class="icon-plus"></i>&nbsp;添加项目|project|create', 'float' => 'right');
 $lang->project->menu->all       = array('link' => '<i class="icon-th-large"></i>&nbsp;所有项目|project|index|locate=no&status=undone&projectID=%s', 'float' => 'right');
-
-// $lang->task  = new stdclass();
-//$lang->build = new stdclass();
-//$lang->task->menu  = $lang->project->menu;
-//$lang->build->menu = $lang->project->menu;
 
 /* 材料视图菜单设置。*/
 $lang->material = new stdclass();
@@ -221,37 +171,6 @@ $lang->machine->menu = new stdClass();
 
 $lang->machine->menu->self = array('link' => '自有机械|machine|index', 'varalias' => array('isRent' => 0));
 $lang->machine->menu->rent = array('link' => '租赁机械|machine|index|isRent=1', 'varalias' => array('isRent' => 1));
-
-/* QA视图菜单设置。*/
-//$lang->bug = new stdclass();
-//$lang->bug->menu = new stdclass();
-
-//$lang->bug->menu->product  = '%s';
-//$lang->bug->menu->bug      = array('link' => 'Bug|bug|browse|productID=%s', 'alias' => 'view,create,batchcreate,edit,resolve,close,activate,report,batchedit,confirmbug,assignto', 'subModule' => 'tree');
-//$lang->bug->menu->testcase = array('link' => '用例||browse|productID=%s');
-//$lang->bug->menu->testtask = array('link' => '版本|testestcasettask|browse|productID=%s');
-
-//$lang->testcase = new stdclass();
-//$lang->testcase->menu = new stdclass();
-//
-//$lang->testcase->menu->product  = '%s';
-//$lang->testcase->menu->bug      = array('link' => 'Bug|bug|browse|productID=%s');
-//$lang->testcase->menu->testcase = array('link' => '用例|testcase|browse|productID=%s', 'alias' => 'view,create,batchcreate,edit,batchedit,showimport,groupcase', 'subModule' => 'tree');
-//$lang->testcase->menu->testtask = array('link' => '版本|testtask|browse|productID=%s', 'alias' => 'view,create,edit,linkcase,cases,start,close,batchrun,groupcase');
-
-//$lang->testtask = new stdclass();
-//$lang->testtask->menu = $lang->testcase->menu;
-
-/* 文档视图菜单设置。*/
-$lang->doc = new stdclass();
-$lang->doc->menu = new stdclass();
-
-$lang->doc->menu->list    = '%s';
-$lang->doc->menu->browse  = array('link' => '文档|doc|browse|libID=%s', 'alias' => 'view,create,edit');
-$lang->doc->menu->edit    = '编辑|doc|editLib|libID=%s';
-$lang->doc->menu->module  = '分类|tree|browse|libID=%s&viewType=doc';
-$lang->doc->menu->delete  = array('link' => '删除|doc|deleteLib|libID=%s', 'target' => 'hiddenwin');
-$lang->doc->menu->create  = array('link' => '<i class="icon-plus"></i>&nbsp;添加文档库|doc|createLib', 'float' => 'right');
 
 /* 统计视图菜单设置。*/
 $lang->report = new stdclass();
@@ -290,6 +209,7 @@ $lang->group->menu = $lang->company->menu;
 $lang->user->menu  = $lang->company->menu;
 
 /* 后台管理菜单设置。*/
+/**
 $lang->admin = new stdclass();
 $lang->admin->menu = new stdclass();
 $lang->admin->menu->index     = array('link' => '首页|admin|index');
@@ -299,7 +219,7 @@ $lang->admin->menu->mail      = array('link' => '发信|mail|index', 'subModule'
 $lang->admin->menu->convert   = array('link' => '导入|convert|index', 'subModule' => 'convert');
 $lang->admin->menu->backup    = array('link' => '备份|backup|index', 'subModule' => 'backup');
 $lang->admin->menu->trashes   = array('link' => '回收站|action|trash', 'subModule' => 'action');
-
+*/
 $lang->convert   = new stdclass();
 $lang->upgrade   = new stdclass();
 $lang->action    = new stdclass();

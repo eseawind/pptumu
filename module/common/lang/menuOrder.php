@@ -3,19 +3,15 @@ global $lang;
 
 /* Sort of main menu. */
 $lang->menuOrder[5]  = 'my';
-// $lang->menuOrder[10] = 'product';
-$lang->menuOrder[15] = 'project';
-$lang->menuOrder[16] = 'material';
-$lang->menuOrder[17] = 'machine';
-// $lang->menuOrder[20] = 'qa';
+$lang->menuOrder[10] = 'project';
+$lang->menuOrder[15] = 'material';
+$lang->menuOrder[20] = 'machine';
 $lang->menuOrder[25] = 'doc';
 $lang->menuOrder[30] = 'report';
-$lang->menuOrder[31] = 'financial';
-$lang->menuOrder[35] = 'company';
-$lang->menuOrder[40] = 'admin';
+$lang->menuOrder[35] = 'financial';
+$lang->menuOrder[40] = 'company';
 
 /* index menu order. */
-// $lang->index->menuOrder[5]  = 'product';
 $lang->index->menuOrder[10] = 'project';
 $lang->index->menuOrder[16] = 'material';
 
@@ -32,23 +28,6 @@ $lang->my->menuOrder[40] = 'myProject';
 $lang->my->menuOrder[50] = 'profile';
 $lang->my->menuOrder[55] = 'changePassword';
 $lang->todo->menuOrder   = $lang->my->menuOrder;
-
-/* product menu order. */
-/* $lang->product->menuOrder[5]  = 'story';
-$lang->product->menuOrder[10] = 'dynamic';
-$lang->product->menuOrder[15] = 'plan';
-$lang->product->menuOrder[20] = 'release';
-$lang->product->menuOrder[25] = 'roadmap';
-$lang->product->menuOrder[30] = 'doc';
-$lang->product->menuOrder[35] = 'project';
-$lang->product->menuOrder[40] = 'module';
-$lang->product->menuOrder[45] = 'view';
-$lang->product->menuOrder[50] = 'order';
-$lang->product->menuOrder[55] = 'create';
-$lang->product->menuOrder[60] = 'all';
-$lang->story->menuOrder       = $lang->product->menuOrder;
-$lang->productplan->menuOrder = $lang->product->menuOrder;
-$lang->release->menuOrder     = $lang->product->menuOrder; */
 
 /* project menu order. */
 $lang->project->menuOrder[5]  = 'task';
@@ -69,26 +48,6 @@ $lang->project->menuOrder[75] = 'copy';
 $lang->project->menuOrder[80] = 'all';
 $lang->task->menuOrder        = $lang->project->menuOrder;
 $lang->build->menuOrder       = $lang->project->menuOrder;
-
-/* bug menu order. */
-/*$lang->bug->menuOrder[0]  = 'product';
-$lang->bug->menuOrder[5]  = 'bug';
-$lang->bug->menuOrder[10] = 'testcase';
-$lang->bug->menuOrder[15] = 'testtask';*/
-
-/* testcase menu order. */
-/*$lang->testcase->menuOrder[0]  = 'product';
-$lang->testcase->menuOrder[5]  = 'bug';
-$lang->testcase->menuOrder[10] = 'testcase';
-$lang->testcase->menuOrder[15] = 'testtask';
-$lang->testtask->menuOrder     = $lang->testcase->menuOrder;*/
-
-/* doc menu order. */
-$lang->doc->menuOrder[5]  = 'browse';
-$lang->doc->menuOrder[10] = 'edit';
-$lang->doc->menuOrder[15] = 'module';
-$lang->doc->menuOrder[20] = 'delete';
-$lang->doc->menuOrder[25] = 'create';
 
 /* report menu order. */
 // $lang->report->menuOrder[5]  = 'product';

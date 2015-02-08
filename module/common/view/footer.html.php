@@ -17,9 +17,9 @@
   </div>
   <div id="poweredby">
   <a href='/' target='_blank' class='text-primary'><i class='icon-zentao'></i><?php echo $lang->zentaoPMS; ?></a>
-  &nbsp;
+    &nbsp;
     <?php commonModel::printNotifyLink(); ?>
-  <?php // commonModel::printQRCodeLink(); ?>
+    <?php // commonModel::printQRCodeLink(); ?>
   </div>
 </div>
 <?php } ?>

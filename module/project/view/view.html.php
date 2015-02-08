@@ -1,6 +1,8 @@
 <?php include '../../common/view/header.html.php'; ?>
 <div id='titlebar'>
-
+	<div id="crumbs">
+		<?php commonModel::printBreadMenu($this->moduleName, isset($position) ? $position : ''); ?>
+	</div>
 </div>
 
 <div class='row-table'>
