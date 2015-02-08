@@ -778,7 +778,7 @@ class project extends control
      * @access public
      * @return void
      */
-    public function create($projectID = '', $copyProjectID = '')
+    public function create()
     {
         $this->projects = $this->project->getPairs('nocode');
 

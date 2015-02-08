@@ -5,7 +5,6 @@ $config->project->orderBy          = 'created, modified';
 $config->project->maxBurnDay       = '31';
 
 global $lang, $app;
-$app->loadLang('task');
 $config->project->create = new stdclass();
 $config->project->edit   = new stdclass();
 $config->project->create->requiredFields = 'code, name';

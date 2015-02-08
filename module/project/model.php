@@ -184,10 +184,12 @@ class projectModel extends model
 	 * @access public
 	 * @return void
 	 */
-	public function create($copyProjectID = '')
+	public function create()
 	{
 		$project = fixer::input('post')
 			->stripTags($this->config->project->editor->create['id'], $this->config->allowedTags)
+			->remove('files, labels')
+			->remove('delta')
 			->get();
 		$this->dao->insert(TABLE_PROJECT)->data($project)
 			->autoCheck($skipFields = 'begin,espected_completion')
@@ -197,12 +199,16 @@ class projectModel extends model
 			->checkIF($project->espected_completion != '', 'espected_completion', 'gt', $project->begin)
 			->checkIF($project->actual_completion != '', 'actual_completion', 'date')
 			->checkIF($project->actual_completion != '', 'actual_completion', 'gt', $project->begin)
-			->check('name', 'unique')
 			->check('code', 'unique')
+			->check('name', 'unique')
 			->exec();
 
-		/* Add the creater to the team. */
 		if (!dao::isError()) {
+			$projectID = $this->dao->lastInsertID();
+
+			// update project document
+			$this->loadModel('file')->saveUpload('project', $projectID);
+
 			return $projectID;
 		}
 
@@ -225,6 +231,8 @@ class projectModel extends model
 			->setIF($this->post->begin == '0000-00-00', 'begin', '')
 			->setIF($this->post->espected_completion == '0000-00-00', 'end', '')
 			->stripTags($this->config->project->editor->edit['id'], $this->config->allowedTags)
+			->remove('files, labels')
+			->remove('delta')
 			->get();
 		$this->dao->update(TABLE_PROJECT)->data($project)
 			->autoCheck($skipFields = 'begin,end')
@@ -239,6 +247,13 @@ class projectModel extends model
 			->where('id')->eq($projectID)
 			->limit(1)
 			->exec();
+
+		if (!dao::isError()) {
+			// update project document
+			$this->loadModel('file')->saveUpload('project', $projectID);
+
+			return $projectID;
+		}
 
 		if (!dao::isError()) return common::createChanges($oldProject, $project);
 	}
@@ -613,22 +628,7 @@ class projectModel extends model
 		$project = $this->dao->findById((int)$projectID)->from(TABLE_PROJECT)->fetch();
 		if (!$project) return false;
 
-		$total = $this->dao->select('
-			SUM(estimate) AS totalEstimate, 
-			SUM(consumed) AS totalConsumed, 
-			SUM(`left`) AS totalLeft')
-			->from(TABLE_TASK)
-			->where('project')->eq((int)$projectID)
-			->andWhere('status')->ne('cancel')
-			->andWhere('deleted')->eq(0)
-			->fetch();
-		$project->days = $project->days ? $project->days : '';
-		$project->totalHours = $this->dao->select('sum(days * hours) AS totalHours')->from(TABLE_TEAM)->where('project')->eq($project->id)->fetch('totalHours');
-		$project->totalEstimate = round($total->totalEstimate, 1);
-		$project->totalConsumed = round($total->totalConsumed, 1);
-		$project->totalLeft = round($total->totalLeft, 1);
-
-		if ($setImgSize) $project->desc = $this->loadModel('file')->setImgSize($project->desc);
+		$project->files = $this->loadModel('file')->getByObject('project', $projectID);
 
 		return $project;
 	}

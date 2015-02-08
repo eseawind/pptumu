@@ -38,6 +38,9 @@
 			<legend><?php echo $lang->project->desc; ?></legend>
 			<div class='content'><?php echo $project->desc; ?></div>
 		</fieldset>
+		<?php if (!empty($project->files)) { ?>
+			<?php echo $this->fetch('file', 'printFiles', array('files' => $project->files, 'fieldset' => 'true'));?>
+		<?php } ?>
 		<?php // include '../../common/view/action.html.php'; ?>
 		<div class='actions'> <?php if (!$project->deleted) echo $actionLinks; ?></div>
 	</div>

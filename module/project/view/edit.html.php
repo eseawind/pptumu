@@ -13,7 +13,7 @@
 		</div>
 	</div>
 
-	<form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
+	<form class='form-condensed' method='post' target='hiddenwin' id='dataform' enctype='multipart/form-data'>
 	<table class='table table-form'>
 		<tr>
 			<th class='w-100px'><?php echo $lang->project->code; ?></th>
@@ -57,6 +57,10 @@
 			<td>
 				<?php echo html::select('pm', $poUsers, $project->pm, "class='form-control'"); ?>
 			</td>
+		</tr>
+		<tr>
+			<th><?php echo '上传项目文件'; ?></th>
+			<td colspan='2'><?php echo $this->fetch('file', 'buildform', 'fileCount=1');?></td>
 		</tr>
 		<tr>
 			<th><?php echo $lang->project->desc; ?></th>

@@ -30,8 +30,8 @@
 			</strong>
 		</div>
 	</div>
-	<!-- target='hiddenwin'-->
-	<form class='form-condensed' method='post' id='dataform'>
+	<!-- -->
+	<form class='form-condensed' method='post' target='hiddenwin' id='dataform' enctype='multipart/form-data'>
 	<table class='table table-form'>
 		<tr>
 			<th class='w-100px'><?php echo $lang->project->code; ?></th>
@@ -83,13 +83,12 @@
 			<td></td>
 		</tr>
 		<tr>
+			<th><?php echo '上传项目文件'; ?></th>
+			<td colspan='2'><?php echo $this->fetch('file', 'buildform', 'fileCount=1');?></td>
+		</tr>
+		<tr>
 			<th><?php echo $lang->project->desc; ?></th>
 			<td colspan='2'><?php echo html::textarea('desc', '', "rows='6' class='form-control'"); ?></td>
-			<td></td>
-		</tr>
-		<tr id='whitelistBox' <?php if ($acl != 'custom') echo "class='hidden'"; ?>>
-			<th><?php echo $lang->project->whitelist; ?></th>
-			<td colspan='2'><?php echo html::checkbox('whitelist', $groups, $whitelist); ?></td>
 			<td></td>
 		</tr>
 		<tr>
