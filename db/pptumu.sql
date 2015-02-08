@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2015-02-07 01:10:49
+-- Generation Time: 2015-02-08 10:39:20
 -- 服务器版本： 5.6.21
 -- PHP Version: 5.5.19
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `tm_action` (
   `extra` varchar(255) NOT NULL,
   `read` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=196 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=272 ;
 
 --
 -- 转存表中的数据 `tm_action`
@@ -241,7 +241,83 @@ INSERT INTO `tm_action` (`id`, `objectType`, `objectID`, `product`, `project`, `
 (192, 'user', 1, ',0,', 0, 'admin', 'login', '2015-02-05 21:18:20', '', '', '0'),
 (193, 'user', 1, ',0,', 0, 'admin', 'login', '2015-02-06 20:16:30', '', '', '0'),
 (194, 'report testation', 1, ',0,', 0, 'admin', 'created', '2015-02-06 21:54:32', '', '', '0'),
-(195, 'user', 1, ',0,', 0, 'admin', 'login', '2015-02-06 22:53:37', '', '', '0');
+(195, 'user', 1, ',0,', 0, 'admin', 'login', '2015-02-06 22:53:37', '', '', '0'),
+(196, 'user', 1, ',0,', 0, 'admin', 'login', '2015-02-07 09:23:58', '', '', '0'),
+(197, 'report', 3, ',0,', 0, 'admin', 'created', '2015-02-07 10:04:26', '', '', '0'),
+(198, 'user', 1, ',0,', 0, 'admin', 'login', '2015-02-07 15:14:03', '', '', '0'),
+(199, 'parchase', 1, ',0,', 0, 'admin', 'created', '2015-02-07 19:02:23', '', '', '0'),
+(200, 'project', 3, ',,', 3, 'admin', 'opened', '2015-02-07 19:51:20', '', '', '0'),
+(201, 'material application', 4, ',0,', 0, 'admin', 'created', '2015-02-07 20:03:58', '', '', '0'),
+(202, 'material application detail', 5, ',0,', 0, 'admin', 'created', '2015-02-07 20:04:22', '', '', '0'),
+(203, 'material application detail', 6, ',0,', 0, 'admin', 'created', '2015-02-07 20:04:22', '', '', '0'),
+(204, 'material application detail', 7, ',0,', 0, 'admin', 'created', '2015-02-07 20:04:22', '', '', '0'),
+(205, 'material application detail', 8, ',0,', 0, 'admin', 'created', '2015-02-07 20:04:22', '', '', '0'),
+(206, 'material application detail', 9, ',0,', 0, 'admin', 'created', '2015-02-07 20:04:22', '', '', '0'),
+(207, 'material application detail', 10, ',0,', 0, 'admin', 'created', '2015-02-07 20:04:22', '', '', '0'),
+(208, 'material application detail', 5, ',0,', 0, 'admin', 'edited', '2015-02-07 20:04:42', '', '', '0'),
+(209, 'material application detail', 6, ',0,', 0, 'admin', 'edited', '2015-02-07 20:04:42', '', '', '0'),
+(210, 'material application detail', 7, ',0,', 0, 'admin', 'edited', '2015-02-07 20:04:42', '', '', '0'),
+(211, 'material application detail', 8, ',0,', 0, 'admin', 'edited', '2015-02-07 20:04:42', '', '', '0'),
+(212, 'material application detail', 9, ',0,', 0, 'admin', 'edited', '2015-02-07 20:04:42', '', '', '0'),
+(213, 'material application detail', 10, ',0,', 0, 'admin', 'edited', '2015-02-07 20:04:42', '', '', '0'),
+(214, 'material application', 5, ',0,', 0, 'admin', 'created', '2015-02-07 20:07:18', '', '', '0'),
+(215, 'material application detail', 11, ',0,', 0, 'admin', 'created', '2015-02-07 20:07:30', '', '', '0'),
+(216, 'material application detail', 12, ',0,', 0, 'admin', 'created', '2015-02-07 20:07:30', '', '', '0'),
+(217, 'material application detail', 13, ',0,', 0, 'admin', 'created', '2015-02-07 20:07:30', '', '', '0'),
+(218, 'material application detail', 11, ',0,', 0, 'admin', 'edited', '2015-02-07 20:07:37', '', '', '0'),
+(219, 'material application detail', 12, ',0,', 0, 'admin', 'edited', '2015-02-07 20:07:37', '', '', '0'),
+(220, 'material application detail', 13, ',0,', 0, 'admin', 'edited', '2015-02-07 20:07:37', '', '', '0'),
+(221, 'parchase', 2, ',0,', 0, 'admin', 'created', '2015-02-07 20:10:38', '', '', '0'),
+(222, 'machine distributiion', 6, ',0,', 0, 'admin', 'created', '2015-02-07 20:11:15', '', '', '0'),
+(223, 'machine distributiion', 7, ',0,', 0, 'admin', 'created', '2015-02-07 20:18:02', '', '', '0'),
+(224, 'material application', 6, ',0,', 0, 'admin', 'created', '2015-02-07 20:20:00', '', '', '0'),
+(225, 'material application detail', 14, ',0,', 0, 'admin', 'created', '2015-02-07 20:20:12', '', '', '0'),
+(226, 'material application detail', 15, ',0,', 0, 'admin', 'created', '2015-02-07 20:20:12', '', '', '0'),
+(227, 'material application detail', 16, ',0,', 0, 'admin', 'created', '2015-02-07 20:20:12', '', '', '0'),
+(228, 'material application detail', 17, ',0,', 0, 'admin', 'created', '2015-02-07 20:20:12', '', '', '0'),
+(229, 'material application detail', 18, ',0,', 0, 'admin', 'created', '2015-02-07 20:20:12', '', '', '0'),
+(230, 'material application detail', 14, ',0,', 0, 'admin', 'edited', '2015-02-07 20:20:25', '', '', '0'),
+(231, 'material application detail', 15, ',0,', 0, 'admin', 'edited', '2015-02-07 20:20:25', '', '', '0'),
+(232, 'material application detail', 16, ',0,', 0, 'admin', 'edited', '2015-02-07 20:20:25', '', '', '0'),
+(233, 'material application detail', 17, ',0,', 0, 'admin', 'edited', '2015-02-07 20:20:25', '', '', '0'),
+(234, 'material application detail', 18, ',0,', 0, 'admin', 'edited', '2015-02-07 20:20:25', '', '', '0'),
+(235, 'user', 1, ',0,', 0, 'admin', 'login', '2015-02-07 21:52:47', '', '', '0'),
+(236, 'material application', 7, ',0,', 0, 'admin', 'created', '2015-02-08 00:09:20', '', '', '0'),
+(237, 'material application detail', 19, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:11', '', '', '0'),
+(238, 'material application detail', 20, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:11', '', '', '0'),
+(239, 'material application detail', 21, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:11', '', '', '0'),
+(240, 'material application detail', 22, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:11', '', '', '0'),
+(241, 'material application detail', 23, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:11', '', '', '0'),
+(242, 'material application detail', 24, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(243, 'material application detail', 25, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(244, 'material application detail', 26, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(245, 'material application detail', 27, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(246, 'material application detail', 28, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(247, 'material application detail', 29, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(248, 'material application detail', 30, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(249, 'material application detail', 31, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(250, 'material application detail', 32, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(251, 'material application detail', 33, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(252, 'material application detail', 34, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(253, 'material application detail', 35, ',0,', 0, 'admin', 'created', '2015-02-08 00:11:12', '', '', '0'),
+(254, 'material application detail', 19, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:15', '', '', '0'),
+(255, 'material application detail', 20, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:15', '', '', '0'),
+(256, 'material application detail', 21, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:15', '', '', '0'),
+(257, 'material application detail', 22, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(258, 'material application detail', 23, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(259, 'material application detail', 24, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(260, 'material application detail', 25, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(261, 'material application detail', 26, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(262, 'material application detail', 27, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(263, 'material application detail', 28, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(264, 'material application detail', 29, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(265, 'material application detail', 30, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(266, 'material application detail', 31, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(267, 'material application detail', 32, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(268, 'material application detail', 33, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(269, 'material application detail', 34, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(270, 'material application detail', 35, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
+(271, 'user', 1, ',0,', 0, 'admin', 'login', '2015-02-08 08:21:15', '', '', '0');
 
 -- --------------------------------------------------------
 
@@ -646,6 +722,39 @@ CREATE TABLE IF NOT EXISTS `tm_file` (
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `tm_financial`
+--
+
+DROP TABLE IF EXISTS `tm_financial`;
+CREATE TABLE IF NOT EXISTS `tm_financial` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) NOT NULL,
+  `material_id` int(11) NOT NULL,
+  `application_id` int(11) NOT NULL,
+  `applicationdetail_id` int(11) NOT NULL,
+  `price` float(11,2) NOT NULL DEFAULT '0.00' COMMENT '单价',
+  `remark` text,
+  `verified` int(2) NOT NULL DEFAULT '0',
+  `verified_by` varchar(30) DEFAULT NULL,
+  `distributed` int(2) DEFAULT '0' COMMENT '分配到项目',
+  `deleted` int(2) DEFAULT '0',
+  `created_by` varchar(30) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `tm_financial`
+--
+
+INSERT INTO `tm_financial` (`id`, `project_id`, `material_id`, `application_id`, `applicationdetail_id`, `price`, `remark`, `verified`, `verified_by`, `distributed`, `deleted`, `created_by`, `created`, `modified`) VALUES
+(1, 1, 6, 3, 1, 1000.00, '&lt;p&gt;备注备注备注备注备注&lt;/p&gt;\r\n&lt;p&gt;备注备注&lt;/p&gt;\r\n&lt;p&gt;备注备注备注备注备注备注备注&lt;/p&gt;', 0, NULL, 0, 0, 'admin', '2015-02-07 19:02:23', '2015-02-07 19:02:23'),
+(2, 3, 5, 4, 5, 100.00, '', 0, NULL, 0, 0, 'admin', '2015-02-07 20:10:38', '2015-02-07 20:10:38');
 
 -- --------------------------------------------------------
 
@@ -2795,13 +2904,15 @@ CREATE TABLE IF NOT EXISTS `tm_machinedistribution` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- 转存表中的数据 `tm_machinedistribution`
 --
 
 INSERT INTO `tm_machinedistribution` (`id`, `project_id`, `machine_id`, `begin`, `end`, `verified`, `verified_by`, `deleted`, `created_by`, `created`, `modified`) VALUES
+(7, 3, 4, '2015-02-07 20:20:37', '2015-02-05 09:15:37', 0, 'admin', 0, 'admin', '2015-02-07 20:18:02', '2015-02-07 20:18:02'),
+(6, 3, 1, '2015-02-07 07:10:46', '2015-02-14 11:30:47', 0, 'admin', 0, 'admin', '2015-02-07 20:11:15', '2015-02-07 20:11:15'),
 (5, 1, 1, '2015-02-05 23:00:11', '2015-02-11 04:00:11', 1, 'admin', 0, 'admin', '2015-02-04 23:32:56', '2015-02-04 23:32:56');
 
 -- --------------------------------------------------------
@@ -2846,11 +2957,20 @@ CREATE TABLE IF NOT EXISTS `tm_machineusedhistory` (
   `report_id` int(11) NOT NULL,
   `machine_id` int(11) NOT NULL,
   `hours` float(11,2) NOT NULL,
-  `created_by` varchar(30) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `updated` datetime DEFAULT NULL,
+  `created_by` varchar(30) NOT NULL,
+  `deleted` int(2) NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `tm_machineusedhistory`
+--
+
+INSERT INTO `tm_machineusedhistory` (`id`, `project_id`, `report_id`, `machine_id`, `hours`, `created_by`, `deleted`, `created`, `modified`) VALUES
+(1, 1, 3, 1, 6.00, 'admin', 0, '2015-02-07 10:04:25', '2015-02-07 10:04:25'),
+(2, 1, 3, 1, 6.00, 'admin', 0, '2015-02-07 10:04:25', '2015-02-07 10:04:25');
 
 -- --------------------------------------------------------
 
@@ -3478,6 +3598,7 @@ INSERT INTO `tm_material` (`id`, `code`, `name`, `type_id`, `unit`, `deleted`, `
 DROP TABLE IF EXISTS `tm_materialapplication`;
 CREATE TABLE IF NOT EXISTS `tm_materialapplication` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) NOT NULL COMMENT '材料申请编号',
   `project_id` int(11) NOT NULL,
   `verified` int(11) NOT NULL COMMENT '0: 未处理; 1: 通过审核 -1: 拒绝',
   `verified_by` varchar(30) DEFAULT NULL COMMENT '审核者，用户名',
@@ -3486,16 +3607,20 @@ CREATE TABLE IF NOT EXISTS `tm_materialapplication` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- 转存表中的数据 `tm_materialapplication`
 --
 
-INSERT INTO `tm_materialapplication` (`id`, `project_id`, `verified`, `verified_by`, `deleted`, `created_by`, `created`, `modified`) VALUES
-(1, 1, 1, NULL, 0, 'admin', '2015-02-02 23:35:14', '2015-02-02 23:35:14'),
-(2, 1, 1, NULL, 0, 'admin', '2015-02-02 23:36:10', '2015-02-02 23:36:10'),
-(3, 1, 1, NULL, 0, 'admin', '2015-02-03 20:54:43', '2015-02-03 20:54:43');
+INSERT INTO `tm_materialapplication` (`id`, `code`, `project_id`, `verified`, `verified_by`, `deleted`, `created_by`, `created`, `modified`) VALUES
+(1, '150208-70202', 1, 1, NULL, 0, 'admin', '2015-02-02 23:35:14', '2015-02-02 23:35:14'),
+(2, '150208-70203', 1, 1, NULL, 0, 'admin', '2015-02-02 23:36:10', '2015-02-02 23:36:10'),
+(3, '150208-70204', 1, 1, NULL, 0, 'admin', '2015-02-03 20:54:43', '2015-02-03 20:54:43'),
+(4, '150208-70206', 3, 0, NULL, 0, 'admin', '2015-02-07 20:03:58', '2015-02-07 20:03:58'),
+(5, '150208-70207', 3, 0, NULL, 0, 'admin', '2015-02-07 20:07:18', '2015-02-07 20:07:18'),
+(6, '150208-70208', 3, 0, NULL, 0, 'admin', '2015-02-07 20:20:00', '2015-02-07 20:20:00'),
+(7, '150208-70201', 2, 0, NULL, 0, 'admin', '2015-02-08 00:09:20', '2015-02-08 00:09:20');
 
 -- --------------------------------------------------------
 
@@ -3505,12 +3630,12 @@ INSERT INTO `tm_materialapplication` (`id`, `project_id`, `verified`, `verified_
 
 DROP TABLE IF EXISTS `tm_materialapplicationdetail`;
 CREATE TABLE IF NOT EXISTS `tm_materialapplicationdetail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `application_id` int(11) NOT NULL COMMENT 'material order ID',
   `material_id` int(11) NOT NULL COMMENT 'material ID',
   `qty` float(11,2) DEFAULT '0.00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
 --
 -- 转存表中的数据 `tm_materialapplicationdetail`
@@ -3520,7 +3645,38 @@ INSERT INTO `tm_materialapplicationdetail` (`id`, `application_id`, `material_id
 (1, 3, 6, 2.00),
 (2, 3, 7, 2.00),
 (3, 3, 4, 2.00),
-(4, 3, 4, 3.00);
+(4, 3, 4, 3.00),
+(5, 4, 5, 10.00),
+(6, 4, 37, 100.00),
+(7, 4, 69, 1000.00),
+(8, 4, 101, 1.00),
+(9, 4, 302, 2.00),
+(10, 4, 465, 1005.00),
+(11, 5, 5, 11.00),
+(12, 5, 229, 11.00),
+(13, 5, 540, 11.00),
+(14, 6, 133, 1.00),
+(15, 6, 5, 10.00),
+(16, 6, 37, 100.00),
+(17, 6, 69, 15.00),
+(18, 6, 283, 15.00),
+(19, 7, 157, 2.00),
+(20, 7, 167, 2.00),
+(21, 7, 182, 2.00),
+(22, 7, 155, 30.00),
+(23, 7, 96, 200.00),
+(24, 7, 101, 150.00),
+(25, 7, 42, 180.00),
+(26, 7, 184, 1090.00),
+(27, 7, 285, 200.00),
+(28, 7, 436, 800.00),
+(29, 7, 290, 90.00),
+(30, 7, 249, 100.00),
+(31, 7, 541, 110.00),
+(32, 7, 496, 180.00),
+(33, 7, 460, 2201.00),
+(34, 7, 543, 33.00),
+(35, 7, 466, 44.00);
 
 -- --------------------------------------------------------
 
@@ -3562,10 +3718,20 @@ CREATE TABLE IF NOT EXISTS `tm_materialusedhistory` (
   `material_id` int(11) NOT NULL,
   `qty` float(11,2) NOT NULL DEFAULT '0.00',
   `created_by` varchar(30) NOT NULL,
+  `deleted` int(2) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
-  `updated` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- 转存表中的数据 `tm_materialusedhistory`
+--
+
+INSERT INTO `tm_materialusedhistory` (`id`, `project_id`, `report_id`, `material_id`, `qty`, `created_by`, `deleted`, `created`, `modified`) VALUES
+(1, 1, 3, 6, 1.00, 'admin', 0, '2015-02-07 10:04:25', '2015-02-07 10:04:25'),
+(2, 1, 3, 4, 3.00, 'admin', 0, '2015-02-07 10:04:25', '2015-02-07 10:04:25'),
+(3, 1, 3, 7, 2.00, 'admin', 0, '2015-02-07 10:04:25', '2015-02-07 10:04:25');
 
 -- --------------------------------------------------------
 
@@ -3708,17 +3874,19 @@ CREATE TABLE IF NOT EXISTS `tm_project` (
   `created_by` varchar(50) DEFAULT NULL COMMENT '创建者 username',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
+  `delta` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `project` (`type`,`begin`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `tm_project`
 --
 
-INSERT INTO `tm_project` (`id`, `code`, `name`, `client`, `address`, `type`, `pm`, `sub_pm`, `begin`, `espected_completion`, `actual_completion`, `desc`, `deleted`, `created_by`, `created`, `modified`) VALUES
-(1, 'coWeb1', '企业网站第一期', NULL, NULL, 'sprint', NULL, NULL, '2012-06-05', NULL, NULL, '开发企业网站的基本雏形。<br />', '0', NULL, NULL, NULL),
-(2, 'coWebsite2', '企业网站第二期', NULL, NULL, 'sprint', NULL, NULL, '2013-06-05', NULL, NULL, '', '0', NULL, NULL, NULL);
+INSERT INTO `tm_project` (`id`, `code`, `name`, `client`, `address`, `type`, `pm`, `sub_pm`, `begin`, `espected_completion`, `actual_completion`, `desc`, `deleted`, `created_by`, `created`, `modified`, `delta`) VALUES
+(1, 'coWeb1', '企业网站第一期', NULL, NULL, 'sprint', NULL, NULL, '2012-06-05', NULL, NULL, '开发企业网站的基本雏形。<br />', '0', NULL, NULL, NULL, NULL),
+(2, 'coWebsite2', '企业网站第二期', NULL, NULL, 'sprint', NULL, NULL, '2013-06-05', NULL, NULL, '', '0', NULL, NULL, NULL, NULL),
+(3, 'D20150207', '世园大道道路项目', '青岛市政府', '崂山区李沙路', '道路', 'productManager', NULL, '2015-02-07', '2016-02-07', '2016-02-07', '世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路', '0', NULL, NULL, NULL, 365);
 
 -- --------------------------------------------------------
 
@@ -3812,7 +3980,16 @@ CREATE TABLE IF NOT EXISTS `tm_report` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- 转存表中的数据 `tm_report`
+--
+
+INSERT INTO `tm_report` (`id`, `project_id`, `staff_qty`, `extternal_qty`, `lunch_qty`, `supper_qty`, `planned_qty`, `actual_qty`, `type`, `created_by`, `report_date`, `verified`, `verified_by`, `deleted`, `created`, `modified`) VALUES
+(1, 1, 10, 5, 15, 15, '计划工程量', '实际工程量', 'today', 'admin', '2015-02-07', 0, '', 0, '2015-02-07 10:00:30', '2015-02-07 10:00:30'),
+(2, 1, 10, 5, 15, 15, '计划工程量', '实际工程量', 'today', 'admin', '2015-02-07', 0, '', 0, '2015-02-07 10:02:22', '2015-02-07 10:02:22'),
+(3, 1, 10, 5, 15, 15, '计划工程量', '实际工程量', 'today', 'admin', '2015-02-07', 0, '', 0, '2015-02-07 10:04:25', '2015-02-07 10:04:25');
 
 -- --------------------------------------------------------
 
@@ -4015,7 +4192,8 @@ INSERT INTO `tm_team` (`project`, `account`, `role`, `join`, `days`, `hours`) VA
 (1, 'dev2', '研发', '2013-02-20', 184, 7.0),
 (1, 'projectManager', '项目经理', '2013-02-20', 184, 7.0),
 (1, 'testManager', '测试主管', '2013-02-20', 184, 7.0),
-(2, 'productManager', '产品经理', '2013-02-20', 365, 7.0);
+(2, 'productManager', '产品经理', '2013-02-20', 365, 7.0),
+(3, 'admin', '', '2015-02-07', 0, 7.0);
 
 -- --------------------------------------------------------
 
@@ -4207,7 +4385,7 @@ CREATE TABLE IF NOT EXISTS `tm_user` (
 --
 
 INSERT INTO `tm_user` (`id`, `dept`, `account`, `password`, `role`, `realname`, `nickname`, `commiter`, `avatar`, `birthday`, `gender`, `email`, `skype`, `qq`, `yahoo`, `gtalk`, `wangwang`, `mobile`, `phone`, `address`, `zipcode`, `join`, `visits`, `ip`, `last`, `fails`, `locked`, `deleted`) VALUES
-(1, 0, 'admin', '7fef6171469e80d32c0559f88b377245', '', 'Administrator', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 38, '192.168.1.3', 1423234416, 0, '0000-00-00 00:00:00', '0'),
+(1, 0, 'admin', '7fef6171469e80d32c0559f88b377245', '', 'Administrator', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 42, '192.168.1.3', 1423354875, 0, '0000-00-00 00:00:00', '0'),
 (2, 5, 'productManager', 'e10adc3949ba59abbe56e057f20f883e', 'po', '产品经理', '', '', '', '0000-00-00', 'm', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 3, '192.168.0.8', 1338866083, 0, '0000-00-00 00:00:00', '0'),
 (3, 6, 'projectManager', 'e10adc3949ba59abbe56e057f20f883e', 'pm', '项目经理', '', '', '', '0000-00-00', 'm', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 3, '192.168.0.8', 1338865876, 1, '0000-00-00 00:00:00', '0'),
 (4, 2, 'dev1', 'e10adc3949ba59abbe56e057f20f883e', 'dev', '开发甲', '', '', '', '0000-00-00', 'm', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 1, '192.168.0.8', 1338863860, 0, '0000-00-00 00:00:00', '0'),
