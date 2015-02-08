@@ -22,7 +22,7 @@ class financial extends control
 	 */
 	public function index($projectID = 0, $verified = 0, $pageID = 1)
 	{
-		if (!$projectID && !empty($_POST)) {
+		if (!empty($_POST)) {
 			$search = fixer::input('post')->get();
 			$projectID = $search->search['project_id'];
 		}
@@ -32,7 +32,10 @@ class financial extends control
 		$recPerPage = 5;
 		$pager = new pager(0, $recPerPage, $pageID);
 
-		$conds = array('project_id' => $projectID, 'verified' => $verified);
+		$conds = array('project_id' => $projectID);
+		if (!is_null($verified)) {
+			$conds['verified'] = $verified;
+		}
 		$applications = $this->material->getApplicationList($conds, $pager);
 
 		//

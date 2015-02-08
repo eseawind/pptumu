@@ -45,10 +45,12 @@
 			<?php } ?></td>
 			<td><?php echo date('Y-m-d', strtotime($application->created)); ?></td>
 			<td><?php echo $application->created_by; ?></td>
-			<td><?php echo $application->verified; ?></td>
-			<td>
-				<?php echo html::a($this->createLink('financial', 'verify', "machineID={$application->id}"), '点击审批'); ?>
-			</td>
+			<td><?php if ($application->verified) {
+					echo "<span class=\"label label-badge label-success\">已通过</span>";
+				} else {
+					echo "<span class=\"label label-badge label-warning\">未通过</span>";
+				} ?></td>
+			<td><?php echo html::a($this->createLink('financial', 'verify', "machineID={$application->id}"), '点击审批'); ?></td>
 		</tr>
 		<?php } ?>
 		</tbody>

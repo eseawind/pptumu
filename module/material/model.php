@@ -231,7 +231,8 @@ class materialModel extends model
 		if (@$conds['project_id']) {
 			$this->dao->andWhere('application.project_id')->eq($conds['project_id']);
 		}
-		if (@$conds['verified']) {
+		// verified = 0 情况
+		if (isset($conds['verified'])) {
 			$this->dao->andWhere('application.verified')->eq($conds['verified']);
 		}
 		$applications = $this->dao->page($pager)->fetchAll();
