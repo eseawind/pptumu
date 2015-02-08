@@ -56,7 +56,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan='5'><div class='text-right'><?php $pager->show();?></div></td>
+            <td colspan='9'><div class='text-right'><?php $pager->show();?></div></td>
         </tr>
     </tfoot>
     </table>

@@ -117,10 +117,14 @@ class machine extends control
 
 			die(js::locate($this->createLink('machine', 'index'), 'parent'));
 		}
+
 		$this->loadModel('project');
 		$projects = $this->project->getPairs();
 
+		$machine = $this->machine->getById($machineID);
+
 		$this->view->projects = array('' => '选择项目') + $projects;
+		$this->view->machine = $machine;
 		$this->view->machineID = $machineID;
 
 		$this->display();

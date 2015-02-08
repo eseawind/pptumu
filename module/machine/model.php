@@ -104,7 +104,12 @@ class machineModel extends model
 	 */
 	public function getById($machineID)
 	{
-		$machine = $this->dao->findById((int)$machineID)->from(TABLE_MACHINE)->fetch();
+		$fields = 'machine.*, mtype.name AS type_name';
+		$machine = $this->dao->select($fields)->from(TABLE_MACHINE)->alias('machine')
+			->leftJoin(TABLE_MACHINETYPE)->alias('mtype')
+			->on('machine.type_id = mtype.id')
+			->where('machine.id')->eq($machineID)
+			->fetch();
 
 		return $machine;
 	}
