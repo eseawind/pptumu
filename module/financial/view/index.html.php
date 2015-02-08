@@ -1,7 +1,27 @@
 <?php include '../../common/view/header.html.php';?>
 
+<div id='featurebar'>
+<form method="post" taget="" class="form-condensed">
+	<div class="input-group">
+		<span class="input-group-addon">按照项目筛查询申请记录：</span>
+		<?php echo html::select('search[project_id]', $projects, $projectID, 'class="form-control"'); ?>
+		<span class="input-group-btn">
+			<button class="btn btn-default" type="submit">搜索</button>
+		</span>
+	</div>
+</form>
+</div>
+
 <div class='main'>
-	<table class='table table-condensed table-striped table-bordered tablesorter table-fixed active-disabled' id='bugAssign'>
+	<ul id="financial_tab" class="nav nav-primary nav-justified">
+		<li class="<?php echo !$verified ? 'active' : ''; ?>">
+			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=0"), '待审批'); ?>
+		</li>
+		<li class="<?php echo ($verified == 1) ? 'active' : ''; ?>">
+			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=1"), '待审批'); ?>
+		</li>
+	</ul>
+	<table class='table table-condensed table-striped table-bordered tablesorter table-fixed active-disabled'>
 		<thead>
 		<tr class="a-center">
 			<th>序号</th>
@@ -27,7 +47,7 @@
 			<td><?php echo $application->created_by; ?></td>
 			<td><?php echo $application->verified; ?></td>
 			<td>
-				<?php echo html::a($this->createLink('financial', 'distribute', "machineID={$machine->id}"), '点击审批'); ?>
+				<?php echo html::a($this->createLink('financial', 'verify', "machineID={$application->id}"), '点击审批'); ?>
 			</td>
 		</tr>
 		<?php } ?>

@@ -264,10 +264,9 @@ $lang->report->menu->statistics     = array('link' => '日报统计|report|stati
 // $lang->report->menu->staff       = array('link' => '组织|report|workload');
 
 /** 财务管理菜单 */
-$lang->parchase = new stdClass();
-$lang->parchase->menu = new stdClass();
-$lang->parchase->menu->prj          = array('link' => '工程列表|parchase|index', 'alias' => '');
-$lang->parchase->menu->history      = array('link' => '采购记录|parchase|history', 'alias' => '');
+$lang->financial = new stdClass();
+$lang->financial->menu = new stdClass();
+$lang->financial->menu->index          = '财务管理';
 
 /* 组织结构视图菜单设置。*/
 $lang->company = new stdclass();

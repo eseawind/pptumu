@@ -20,16 +20,31 @@ class financial extends control
 	/**
 	 *
 	 */
-	public function index($pageID = 1)
+	public function index($projectID = 0, $verified = 0, $pageID = 1)
 	{
+		if (!$projectID && !empty($_POST)) {
+			$search = fixer::input('post')->get();
+			$projectID = $search->search['project_id'];
+		}
+
 		/* Load and initial pager. */
 		$this->app->loadClass('pager', $static = true);
 		$recPerPage = 5;
 		$pager = new pager(0, $recPerPage, $pageID);
 
-		$applications = $this->material->getApplicationList(array(), $pager);
+		$conds = array('project_id' => $projectID, 'verified' => $verified);
+		$applications = $this->material->getApplicationList($conds, $pager);
+
+		//
+		$projects = $this->project->getPairs();
+
+		$verifiedParams = helper::genParamstr(array('projectID' => $projectID));
 
 		$this->view->applications = $applications;
+		$this->view->projects = array('' => '选择项目') + $projects;
+		$this->view->projectID = $projectID;
+		$this->view->verified = $verified;
+		$this->view->verifiedParams = $verifiedParams;
 		$this->view->pager = $pager;
 
 		$this->display();

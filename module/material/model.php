@@ -217,7 +217,8 @@ class materialModel extends model
 	}
 
 	/**
-	 *
+	 * @param $conds array('project_id' => 0, 'verified' => 0)
+	 * @raturn
 	 */
 	public function getApplicationList($conds = array(), $pager = null)
 	{
@@ -225,8 +226,14 @@ class materialModel extends model
 		$this->dao->select($fields)
 			->from(TABLE_MATERIALAPPLICATION)->alias('application')
 			->leftJoin(TABLE_PROJECT)->alias('project')
-			->on('application.project_id = project.id');
-
+			->on('application.project_id = project.id')
+			->where(1);
+		if (@$conds['project_id']) {
+			$this->dao->andWhere('application.project_id')->eq($conds['project_id']);
+		}
+		if (@$conds['verified']) {
+			$this->dao->andWhere('application.verified')->eq($conds['verified']);
+		}
 		$applications = $this->dao->page($pager)->fetchAll();
 
 		foreach ($applications As $i => $application) {
@@ -260,10 +267,12 @@ class materialModel extends model
 	 */
 	public function getApplicationDetails($applicationID)
 	{
-		$details = $this->dao->select('detail.id, detail.qty, detail.material_id, material.name AS material_name, material.unit AS material_unit')
+		$details = $this->dao->select('detail.id, detail.qty, detail.material_id, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')
 			->from(TABLE_MATERIALAPPLICATIONDETAIL)->alias('detail')
 			->leftJoin(TABLE_MATERIAL)->alias('material')
 			->on('detail.material_id = material.id')
+			->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
+			->on('material.type_id = mtype.id')
 			->where('detail.application_id')->eq($applicationID)
 			->orderBy('id ASC')
 			->fetchAll('id');
