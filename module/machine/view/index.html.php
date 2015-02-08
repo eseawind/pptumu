@@ -38,9 +38,9 @@
         <tr>
             <td class='text-center'><?php echo html::a($this->createLink('material', 'edit', 'id=' . $machine->id), sprintf('%03d', $machine->id));?> </td>
             <td class='text-center'><?php echo $machine->code;?></td>
-            <td class='text-center'><?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $machine->name);?></td>
+            <td><?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $machine->name);?></td>
             <td class='text-center'><?php echo $machine->type_name;?></td>
-            <td><?php echo (!empty($machine->distribution)) ? '已分配' : '未分配'; ?></td>
+            <td class='text-center'><?php echo (!empty($machine->distribution)) ? '<span class="label label-badge label-danger">已分配</span>' : '<span class="label label-badge label-success">未分配</span>'; ?></td>
             <td><?php echo (!empty($machine->distribution)) ? $machine->distribution->project_name : ''; ?></td>
             <td><?php echo (!empty($machine->distribution)) ? $machine->distribution->project_code : ''; ?></td>
             <td><?php echo (!empty($machine->distribution)) ? $machine->distribution->begin . '<br />' . $machine->distribution->end : ''; ?></td>
@@ -56,7 +56,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan='9'><div class='text-right'><?php $pager->show();?></div></td>
+            <td colspan='9'><div class='text-right'><?php $pager->show(); ?></div></td>
         </tr>
     </tfoot>
     </table>

@@ -12,19 +12,23 @@
     <table class='table table-form'>
 	  <tr>
         <th class='w-90px'><?php echo $lang->machine->code;?></th>
-        <td class='w-p25-f'><?php echo html::input('code', '', "class='form-control'");?></td><td></td>
+        <td class='w-p25-f'><?php echo html::input('code', '', "class='form-control'");?></td>
+        <td></td>
       </tr>
       <tr>
         <th><?php echo $lang->machine->name;?></th>
-        <td><?php echo html::input('name', '', "class='form-control'");?></td><td></td>
+        <td><?php echo html::input('name', '', "class='form-control'");?></td>
+        <td></td>
       </tr>
       <tr>
         <th><?php echo $isRent ? $lang->machine->ownerRent : $lang->machine->owner;?></th>
-        <td><?php echo html::input('owner', $machine->owner, "class='form-control'");?></td><td></td>
+        <td><?php echo html::input('owner', $machine->owner, "class='form-control'");?></td>
+        <td></td>
       </tr>
 	  <tr>
         <th><?php echo $lang->machine->type;?></th>
-        <td><?php echo html::select('type_id', $machineTypes, '', "class='form-control'");?></td><td></td>
+        <td><?php echo html::select('type_id', $machineTypes, '', "class='form-control'");?></td>
+        <td></td>
       </tr>
 	  <tr>
         <td></td>

@@ -28,7 +28,8 @@
 		</tr>
 		<tr>
 			<th><?php echo $lang->machine->type; ?></th>
-			<td><?php echo $machine->type_name; ?></td><td></td>
+			<td><?php echo $machine->type_name; ?></td>
+			<td></td>
 		</tr>
 
 		<tr>
