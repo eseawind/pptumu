@@ -14,11 +14,14 @@
 
 <div class='main'>
 	<ul id="financial_tab" class="nav nav-primary nav-justified">
-		<li class="<?php echo !$verified ? 'active' : ''; ?>">
-			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=0"), '待审批'); ?>
+		<li class="<?php echo ($verified == 'pending') ? 'active' : ''; ?>">
+			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=pending"), '待审批'); ?>
 		</li>
-		<li class="<?php echo ($verified == 1) ? 'active' : ''; ?>">
-			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=1"), '待审批'); ?>
+		<li class="<?php echo ($verified == 'passed') ? 'active' : ''; ?>">
+			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=passed"), '已审批'); ?>
+		</li>
+		<li class="<?php echo ($verified == 'refused') ? 'active' : ''; ?>">
+			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=refused"), '已拒绝'); ?>
 		</li>
 	</ul>
 	<table class='table table-condensed table-striped table-bordered tablesorter table-fixed active-disabled'>

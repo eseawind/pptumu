@@ -20,8 +20,10 @@ class financial extends control
 	/**
 	 *
 	 */
-	public function index($projectID = 0, $verified = 0, $pageID = 1)
+	public function index($projectID = 0, $verified = 'pending', $pageID = 1)
 	{
+		$verifiedVal = $this->financial->getVerifyStatusVal($verified);
+
 		if (!empty($_POST)) {
 			$search = fixer::input('post')->get();
 			$projectID = $search->search['project_id'];
@@ -33,9 +35,7 @@ class financial extends control
 		$pager = new pager(0, $recPerPage, $pageID);
 
 		$conds = array('project_id' => $projectID);
-		if (!is_null($verified)) {
-			$conds['verified'] = $verified;
-		}
+		$conds['verified'] = $verifiedVal;
 		$applications = $this->material->getApplicationList($conds, $pager);
 
 		//
@@ -47,6 +47,7 @@ class financial extends control
 		$this->view->projects = array('' => '选择项目') + $projects;
 		$this->view->projectID = $projectID;
 		$this->view->verified = $verified;
+		$this->view->verifiedVal = $verifiedVal;
 		$this->view->verifiedParams = $verifiedParams;
 		$this->view->pager = $pager;
 
@@ -59,11 +60,11 @@ class financial extends control
 	public function verify($applicationID)
 	{
 		if (!empty($_POST)) {
-			$parchaseID = $this->parchase->create();
+			$applicationID = $this->financial->verifyMaterialApplicatioin($applicationID);
 			if(dao::isError()) die(js::error(dao::getError()));
 
 			$this->loadModel('action')->create('parchase', $parchaseID, 'created');
-			die(js::locate($this->createLink('parchase', 'index'), 'parent'));
+			die(js::locate($this->createLink('financial', 'index'), 'parent'));
 		}
 
 		$application = $this->material->getApplicationById($applicationID);

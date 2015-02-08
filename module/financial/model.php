@@ -7,51 +7,72 @@ class financialModel extends model
 {
 
 	/**
-	 *
+	 * 审批材料分配
 	 */
-	public function getList($conds = array(), $pager = null)
-	{
-		$financials = $this->dao->select('financial.id, financial.project_id, financial.material_id, financial.application_id, financial.applicationdetail_id, financial.price, financial.remark, project.name AS project_name, material.code AS material_code, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')
-			->from(TABLE_FINANCIAL)->alias('financial')
-			->leftJoin(TABLE_PROJECT)->alias('project')
-			->on('financial.project_id = project.id')
-			->leftJoin(TABLE_MATERIAL)->alias('material')
-			->on('financial.material_id = material.id')
-			->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
-			->on('material.type_id = mtype.id')
-			->where('financial.deleted')->eq(0)
-			->page($pager)
-			->fetchAll('id');
-
-		return $financials;
-	}
-
-	/**
-	 * Create material financial for a project
-	 */
-	public function create()
+	public function verifyMaterialApplicatioin($applicationID)
 	{
 		global $app;
 
 		$dt = date('Y-m-d H:i:s');
-		$archase = fixer::input('post')->get();
-		$archase->verified = 0;
-		$archase->deleted = 0;
-		$archase->created_by = $app->user->account;
-		$archase->created = $dt;
-		$archase->modified = $dt;
+		$application = fixer::input('post')->get();
 
-		$this->dao->insert(TABLE_financial)->data($archase)
-			->check('price', 'float')
-			->check('price', 'gt', 0)
+		$application->modified = $dt;
+		$application->verified_by = $app->user->account;
+		$application->verified_date = $dt;
+
+		$details = $application->detail;
+		unset($application->detail);
+
+		$this->dao->update(TABLE_MATERIALAPPLICATION)->data($application)
+			->where('id')->eq($applicationID)
 			->exec();
-		if (!dao::isError()) {
-			$financialID = $this->dao->lastInsertId();
 
-			return $financialID;
+		if ($application->verified > 0 && !dao::isError()) {
+			// update application detail item
+			foreach ($details['id'] As $i => $did) {
+				$detail = array('price' => $application->detail['price'][$i]);
+
+				$this->dao->update(TABLE_MATERIALAPPLICATIONDETAIL)->data($detail)
+					->where('id')->eq($did)
+					->exec();
+			}
+
+			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 *
+	 */
+	public function getVerifyStatusVal($statusKey)
+	{
+		if (!array_key_exists($statusKey, $this->config->financial->verificationStatus)) {
+			return 0;
+		}
+
+		return $this->config->financial->verificationStatus[$statusKey];
+	}
+
+	/**
+	 *
+	 */
+	public function getVerifyStatusKey($statusVal)
+	{
+		$statusKey = '';
+
+		if (!in_array($statusVal, $this->config->financial->verificationStatus)) {
+			return 'pending';
+		}
+		foreach ($this->config->financial->verificationStatus As $k => $v) {
+			if ($v === $statusVal) {
+				$statusKey = $k;
+				break;
+			}
+		}
+
+		return $statusKey;
 	}
 
 }
