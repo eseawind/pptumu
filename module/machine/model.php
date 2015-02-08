@@ -1,12 +1,10 @@
 <?php
-
 /**
  *
  */
+
 class machineModel extends model
 {
-	/* The members every linking. */
-	const LINK_MEMBERS_ONE_TIME = 20;
 
 	/**
 	 *
@@ -29,10 +27,16 @@ class machineModel extends model
 		if ($typeId) {
 			$this->dao->andWhere('machine.type_id')->eq($typeId);
 		}
-		$this->dao->orderBy('machine.code');
+		$this->dao->orderBy('machine.id');
 		$this->dao->page($pager);
 
-		return $this->dao->fetchAll('id');
+		$machines = $this->dao->fetchAll();
+
+		foreach ($machines As $i => $machine) {
+			$machines[$i]->distribution = $this->getMachineDistribution($machine->id);
+		}
+
+		return $machines;
 	}
 
 	/**
@@ -169,6 +173,32 @@ class machineModel extends model
 			->andWhere('distribution.end')->gt($dt)
 			->orderBy('distribution.id DESC')
 			->fetchAll();
+
+		return $distributions;
+	}
+
+	/**
+	 * machine distributions for a project
+	 * @param $projectID
+	 * @param array $mConds conditions for machine
+	 * @return mixed
+	 */
+	public function getMachineDistribution($machineID, $endDate = '', $mconds = array())
+	{
+		if (!$endDate || validater::checkDate($endDate)) $endDate = date('Y-m-d H:i:s');
+
+		$fields = 'distribution.*, project.code AS project_code, project.name AS project_name';
+		$distributions = $this->dao->select($fields)
+			->from(TABLE_MACHINEDISTRIBUTIION)->alias('distribution')
+			->leftJoin(TABLE_PROJECT)->alias('project')
+			->on('project.id = distribution.project_id')
+			->where('distribution.verified')->eq(1)
+			->andWhere('distribution.machine_id')->eq($machineID)
+			->andWhere('distribution.deleted')->eq(0)
+			->andWhere('distribution.end')->gt($endDate)
+			->orderBy('distribution.id DESC')
+			->limit(1)
+			->fetch();
 
 		return $distributions;
 	}

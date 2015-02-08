@@ -77,12 +77,4 @@ class financial extends control
 		$this->display();
 	}
 
-	/**
-	 *
-	 */
-	public function edit()
-	{
-		$this->display();
-	}
-
 }

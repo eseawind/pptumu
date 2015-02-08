@@ -23,9 +23,13 @@
     <thead>
         <tr>
             <th class='w-id'><?php common::printOrderLink('id', $orderBy, '', $lang->idAB);?></th>
-            <th><?php common::printOrderLink('code', $orderBy, '', $lang->machine->code);?></th>
-            <th class='w-200px'><?php common::printOrderLink('name', $orderBy, '', $lang->machine->name);?></th>
-            <th><?php echo $lang->machine->type; ?></th>
+            <th class='w-80px'><?php common::printOrderLink('code', $orderBy, '', $lang->machine->code);?></th>
+            <th class='w-100px'><?php common::printOrderLink('name', $orderBy, '', $lang->machine->name);?></th>
+            <th class='w-100px'><?php echo $lang->machine->type; ?></th>
+            <th>是否分配</th>
+            <th>所在项目</th>
+            <th>项目编号</th>
+            <th>分配日期</th>
             <th class='w-150px'><?php echo $lang->actions; ?></th>
         </tr>
     </thead>
@@ -36,6 +40,10 @@
             <td class='text-center'><?php echo $machine->code;?></td>
             <td class='text-center'><?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $machine->name);?></td>
             <td class='text-center'><?php echo $machine->type_name;?></td>
+            <td><?php echo (!empty($machine->distribution)) ? '已分配' : '未分配'; ?></td>
+            <td><?php echo (!empty($machine->distribution)) ? $machine->distribution->project_name : ''; ?></td>
+            <td><?php echo (!empty($machine->distribution)) ? $machine->distribution->project_code : ''; ?></td>
+            <td><?php echo (!empty($machine->distribution)) ? $machine->distribution->begin . '<br />' . $machine->distribution->end : ''; ?></td>
             <td class='text-center'>
                 <?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $lang->edit); ?>
                 |&nbsp;
@@ -48,14 +56,12 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan='5'>
-                <div class='text-right'><?php $pager->show();?></div>
-            </td>
+            <td colspan='5'><div class='text-right'><?php $pager->show();?></div></td>
         </tr>
     </tfoot>
     </table>
 </div>
 
-<script>$("#<?php echo $status;?>Tab").addClass('active');</script>
+<script>$("#<?php echo $status; ?>Tab").addClass('active');</script>
 
 <?php include '../../common/view/footer.html.php';?>

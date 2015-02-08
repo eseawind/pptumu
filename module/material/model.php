@@ -268,7 +268,7 @@ class materialModel extends model
 	 */
 	public function getApplicationDetails($applicationID)
 	{
-		$details = $this->dao->select('detail.id, detail.qty, detail.material_id, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')
+		$details = $this->dao->select('detail.*, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')
 			->from(TABLE_MATERIALAPPLICATIONDETAIL)->alias('detail')
 			->leftJoin(TABLE_MATERIAL)->alias('material')
 			->on('detail.material_id = material.id')

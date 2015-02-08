@@ -1,8 +1,8 @@
 <?php include '../../common/view/header.html.php'; ?>
 <?php include '../../common/view/kindeditor.html.php'; ?>
 
-<div class='container mw-1400px'> <!--  target='hiddenwin' -->
-	<form id="application_vefried_form" class='form-condensed' method='post'>
+<div class='container mw-1400px'>
+	<form id="application_vefried_form" target='hiddenwin' class='form-condensed' method='post'>
 	<table class='table table-form'>
 		<tr>
 			<th class='w-180px'><?php echo '申请编号'; ?></th>
@@ -28,7 +28,7 @@
 					</span>
 					<?php
 					echo html::hidden('detail[id][]', $detail->id);
-					echo html::input('detail[price][]', 0, "class='form-control'"); ?>
+					echo html::input('detail[price][]', $detail->price, "class='form-control'"); ?>
 					<span class="input-group-addon fix-border w-80px"><?php echo "元/{$detail->material_unit}"; ?></span>
 				</div>
 			<?php } ?></td>
@@ -36,7 +36,7 @@
 		</tr>
 		<tr>
 			<th><?php echo '备注'; ?></th>
-			<td colspan="2"><?php echo html::textarea('remark', '', "class='form-control' rows='6'");?></td>
+			<td colspan="2"><?php echo html::textarea('remark', $application->remark, "class='form-control' rows='6'");?></td>
 		</tr>
 		<tr>
 			<td></td>
@@ -44,9 +44,15 @@
 				<?php
 				echo html::hidden('verified', $application->verified);
 
-				echo html::commonButton('通过审批', 'name="btn_verified" id="btn_verified""', 'btn-success');
-				echo html::commonButton('不通过审批', 'name="btn_unverified" id="btn_unverified"', 'btn-warning');
-				echo html::commonButton('采购到位，发放到工程', 'name="btn_parchased_distributed" id="btn_parchased_distributed"', 'btn-success');
+				if ($application->verified >= 0) {
+					echo html::commonButton('通过审批', 'name="btn_verified" id="btn_verified""', 'btn-success');
+				}
+				if ($application->verified <= 0) {
+					echo html::commonButton('不通过审批', 'name="btn_unverified" id="btn_unverified"', 'btn-warning');
+				}
+				if ($application->verified >= 0) {
+					echo html::commonButton('采购到位，发放到工程', 'name="btn_parchased_distributed" id="btn_parchased_distributed"', 'btn-success');
+				}
 				echo html::backButton();
 				?>
 			</td>
@@ -56,21 +62,26 @@
 </div>
 <script language="javascript">
 $(function () {
+<?php if ($application->verified >= 0) { ?>
 	$('#btn_verified').bind('click', function () {
 		$('#verified').val('1');
 
 		$('#application_vefried_form').submit();
 	});
-	$('#btn_unverified').bind('click', function () {
-		$('#verified').val('-1');
 
-		$('#application_vefried_form').submit();
-	});
 	$('#btn_parchased_distributed').bind('click', function () {
 		$('#verified').val('2');
 
 		$('#application_vefried_form').submit();
 	});
+<?php } ?>
+<?php if ($application->verified <= 0) { ?>
+	$('#btn_unverified').bind('click', function () {
+		$('#verified').val('-1');
+
+		$('#application_vefried_form').submit();
+	});
+<?php } ?>
 });
 </script>
 <?php include '../../common/view/footer.html.php'; ?>
