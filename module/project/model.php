@@ -186,58 +186,27 @@ class projectModel extends model
 	 */
 	public function create($copyProjectID = '')
 	{
-		$this->lang->project->team = $this->lang->project->teamname;
 		$project = fixer::input('post')
-			// ->setDefault('status', 'wait')
-			// ->setIF($this->post->acl != 'custom', 'whitelist', '')
-			// ->setDefault('openedVersion', $this->config->version)
-			// ->setDefault('team', $this->post->name)
-			// ->join('whitelist', ',')
-			// ->stripTags($this->config->project->editor->create['id'], $this->config->allowedTags)
-			// ->remove('products, workDays, delta')
+			->stripTags($this->config->project->editor->create['id'], $this->config->allowedTags)
 			->get();
 		$this->dao->insert(TABLE_PROJECT)->data($project)
-			// ->autoCheck($skipFields = 'begin,end')
-			// ->batchcheck($this->config->project->create->requiredFields, 'notempty')
+			->autoCheck($skipFields = 'begin,espected_completion')
+			->batchcheck($this->config->project->create->requiredFields, 'notempty')
 			->checkIF($project->begin != '', 'begin', 'date')
-			->checkIF($project->end != '', 'end', 'date')
-			->checkIF($project->end != '', 'end', 'gt', $project->begin)
+			->checkIF($project->espected_completion != '', 'espected_completion', 'date')
+			->checkIF($project->espected_completion != '', 'espected_completion', 'gt', $project->begin)
+			->checkIF($project->actual_completion != '', 'actual_completion', 'date')
+			->checkIF($project->actual_completion != '', 'actual_completion', 'gt', $project->begin)
 			->check('name', 'unique')
 			->check('code', 'unique')
 			->exec();
 
 		/* Add the creater to the team. */
 		if (!dao::isError()) {
-			$projectID = $this->dao->lastInsertId();
-			$today = helper::today();
-			$creatorExists = false;
-
-			/* Copy team of project. */
-			if ($copyProjectID != '') {
-				$members = $this->dao->select('*')->from(TABLE_TEAM)->where('project')->eq($copyProjectID)->fetchAll();
-				foreach ($members as $member) {
-					$member->project = $projectID;
-					$member->join = $today;
-					$member->days = $project->days;
-					$this->dao->insert(TABLE_TEAM)->data($member)->exec();
-					if ($member->account == $this->app->user->account) $creatorExists = true;
-				}
-			}
-
-			/* Add the creator to team. */
-			if ($copyProjectID == '' or !$creatorExists) {
-				$member = new stdclass();
-				$member->project = $projectID;
-				$member->account = $this->app->user->account;
-				$member->role = $this->lang->user->roleList[$this->app->user->role];
-				$member->join = $today;
-				$member->days = $project->days;
-				$member->hours = $this->config->project->defaultWorkhours;
-				$this->dao->insert(TABLE_TEAM)->data($member)->exec();
-			}
-
 			return $projectID;
 		}
+
+		return false;
 	}
 
 	/**
@@ -250,42 +219,27 @@ class projectModel extends model
 	public function update($projectID)
 	{
 		$oldProject = $this->getById($projectID);
-		$team = $this->getTeamMemberPairs($projectID);
-		$this->lang->project->team = $this->lang->project->teamname;
 		$projectID = (int)$projectID;
+
 		$project = fixer::input('post')
 			->setIF($this->post->begin == '0000-00-00', 'begin', '')
-			->setIF($this->post->end == '0000-00-00', 'end', '')
-			->setIF($this->post->acl != 'custom', 'whitelist', '')
-			->setDefault('team', $this->post->name)
-			->join('whitelist', ',')
-			->stripTags($this->config->project->editor->create['id'], $this->config->allowedTags)
-			->remove('products')
+			->setIF($this->post->espected_completion == '0000-00-00', 'end', '')
+			->stripTags($this->config->project->editor->edit['id'], $this->config->allowedTags)
 			->get();
 		$this->dao->update(TABLE_PROJECT)->data($project)
 			->autoCheck($skipFields = 'begin,end')
 			->batchcheck($this->config->project->edit->requiredFields, 'notempty')
 			->checkIF($project->begin != '', 'begin', 'date')
-			->checkIF($project->end != '', 'end', 'date')
-			->checkIF($project->end != '', 'end', 'gt', $project->begin)
-			->check('name', 'unique', "id!=$projectID")
+			->checkIF($project->espected_completion != '', 'espected_completion', 'date')
+			->checkIF($project->espected_completion != '', 'espected_completion', 'gt', $project->begin)
+			->checkIF($project->actual_completion != '', 'actual_completion', 'date')
+			->checkIF($project->actual_completion != '', 'actual_completion', 'gt', $project->begin)
 			->check('code', 'unique', "id!=$projectID")
+			->check('name', 'unique', "id!=$projectID")
 			->where('id')->eq($projectID)
 			->limit(1)
 			->exec();
-		foreach ($project as $fieldName => $value) {
-			if ($fieldName == 'PO' or $fieldName == 'PM' or $fieldName == 'QD' or $fieldName == 'RD') {
-				if (!empty($value) and !isset($team[$value])) {
-					$member->project = (int)$projectID;
-					$member->account = $value;
-					$member->join = helper::today();
-					$member->role = $this->lang->project->$fieldName;
-					$member->days = $project->days;
-					$member->hours = $this->config->project->defaultWorkhours;
-					$this->dao->insert(TABLE_TEAM)->data($member)->exec();
-				}
-			}
-		}
+
 		if (!dao::isError()) return common::createChanges($oldProject, $project);
 	}
 

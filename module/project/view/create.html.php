@@ -29,15 +29,13 @@
 				<small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->project->create; ?>
 			</strong>
 		</div>
-		<div class='actions'>
-			<button class='btn' id='cpmBtn'><?php echo html::icon($lang->icons['copy']) . ' ' . $lang->project->copy; ?></button>
-		</div>
-	</div><!-- target='hiddenwin'-->
+	</div>
+	<!-- target='hiddenwin'-->
 	<form class='form-condensed' method='post' id='dataform'>
 	<table class='table table-form'>
 		<tr>
-			<th class='w-90px'><?php echo $lang->project->code; ?></th>
-			<td class='w-p25-f'><?php echo html::input('code', $code, "class='form-control'"); ?></td>
+			<th class='w-100px'><?php echo $lang->project->code; ?></th>
+			<td class='w-p25-f'><?php echo html::input('code', $code, "class='form-control' readonly='readonly'"); ?></td>
 			<td></td>
 		</tr>
 		<tr>
@@ -63,11 +61,11 @@
 		<tr>
 			<th><?php echo $lang->project->dateRange; ?></th>
 			<td>
-			<div class='input-group'>
-				<?php echo html::input('begin', date('Y-m-d'), "class='form-control w-100px form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->begin . "'"); ?>
-				<span class='input-group-addon'><?php echo $lang->project->to; ?></span>
-				<?php echo html::input('espected_completion', '', "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->espected_completion . "'"); ?>
-			</div>
+				<div class='input-group'>
+					<?php echo html::input('begin', date('Y-m-d'), "class='form-control w-100px form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->begin . "' readonly='readonly'"); ?>
+					<span class='input-group-addon'><?php echo $lang->project->to; ?></span>
+					<?php echo html::input('espected_completion', '', "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->espected_completion . "' readonly='readonly'"); ?>
+				</div>
 			</td>
 			<td>
 				&nbsp; &nbsp;
@@ -76,7 +74,7 @@
 		</tr>
 		<tr>
 			<th><?php echo $lang->project->actual_completion; ?></th>
-			<td><?php echo html::input('actual_completion', $actual_completion, "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->actual_completion . "'"); ?></td>
+			<td><?php echo html::input('actual_completion', $actual_completion, "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->actual_completion . "' readonly='readonly'"); ?></td>
 			<td></td>
 		</tr>
 		<tr>
@@ -103,38 +101,5 @@
 	</table>
 	</form>
 </div>
-<div class='modal fade' id='copyProjectModal'>
-	<div class='modal-dialog mw-800px'>
-		<div class='modal-header'>
-			<button type='button' class='close' data-dismiss='modal'>&times;</button>
-			<h4 class='modal-title' id='myModalLabel'><?php echo $lang->project->copyTitle; ?></h4>
-		</div>
-		<div class='modal-body'>
-		<?php if (count($projects) == 1): ?>
-			<div class='alert alert-warning'>
-				<i class='icon-info-sign'></i>
 
-				<div class='content'>
-					<p><?php echo $lang->project->copyNoProject; ?></p>
-				</div>
-			</div>
-		<?php else: ?>
-			<div id='copyProjects' class='row'>
-				<?php foreach ($projects as $id => $name): ?>
-				<?php if (empty($id)): ?>
-				<?php if ($copyProjectID != 0): ?>
-				<div class='col-md-4 col-sm-6'>
-					<a href='javascript:;' data-id='' class='cancel'><?php echo html::icon($lang->icons['cancel']) . ' ' . $lang->project->cancelCopy; ?></a>
-				</div>
-				<?php endif; ?>
-				<?php else: ?>
-				<div class='col-md-4 col-sm-6'><a href='javascript:;' data-id='<?php echo $id; ?>' class='nobr <?php echo ($copyProjectID == $id) ? ' active' : ''; ?>'><?php echo html::icon($lang->icons['project'], 'text-muted') . ' ' . $name; ?></a>
-				</div>
-				<?php endif; ?>
-				<?php endforeach; ?>
-			</div>
-		<?php endif; ?>
-		</div>
-	</div>
-</div>
 <?php include '../../common/view/footer.html.php'; ?>
