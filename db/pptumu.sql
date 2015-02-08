@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2015-02-08 10:39:20
+-- Generation Time: 2015-02-08 18:29:49
 -- 服务器版本： 5.6.21
 -- PHP Version: 5.5.19
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `tm_action` (
   `extra` varchar(255) NOT NULL,
   `read` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=272 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=280 ;
 
 --
 -- 转存表中的数据 `tm_action`
@@ -317,7 +317,15 @@ INSERT INTO `tm_action` (`id`, `objectType`, `objectID`, `product`, `project`, `
 (268, 'material application detail', 33, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
 (269, 'material application detail', 34, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
 (270, 'material application detail', 35, ',0,', 0, 'admin', 'edited', '2015-02-08 00:12:16', '', '', '0'),
-(271, 'user', 1, ',0,', 0, 'admin', 'login', '2015-02-08 08:21:15', '', '', '0');
+(271, 'user', 1, ',0,', 0, 'admin', 'login', '2015-02-08 08:21:15', '', '', '0'),
+(272, 'parchase', 0, ',0,', 0, 'admin', 'created', '2015-02-08 12:04:46', '', '', '0'),
+(273, 'parchase', 0, ',0,', 0, 'admin', 'created', '2015-02-08 12:06:18', '', '', '0'),
+(274, 'project', 5, ',,', 5, 'admin', 'opened', '2015-02-08 17:27:08', '', '', '0'),
+(275, 'project', 6, ',,', 6, 'admin', 'opened', '2015-02-08 17:32:45', '', '', '0'),
+(276, 'project', 8, ',,', 8, 'admin', 'opened', '2015-02-08 18:00:45', '', '', '0'),
+(277, 'project', 8, ',,', 8, 'admin', 'editfile', '2015-02-08 18:19:32', '', 'mysql_examples11.sql', '0'),
+(278, 'project', 8, ',,', 8, 'admin', 'editfile', '2015-02-08 18:19:42', '', '新建 Microsoft Word 文档11.doc', '0'),
+(279, 'project', 7, ',,', 7, 'admin', 'edited', '2015-02-08 18:23:45', '', '', '0');
 
 -- --------------------------------------------------------
 
@@ -721,7 +729,17 @@ CREATE TABLE IF NOT EXISTS `tm_file` (
   `extra` varchar(255) NOT NULL,
   `deleted` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- 转存表中的数据 `tm_file`
+--
+
+INSERT INTO `tm_file` (`id`, `pathname`, `title`, `extension`, `size`, `objectType`, `objectID`, `addedBy`, `addedDate`, `downloads`, `extra`, `deleted`) VALUES
+(1, '201502/0818004505411ugv.sql', 'mysql_examples11', 'sql', 926, 'project', 8, 'admin', '2015-02-08 00:00:00', 0, '', '0'),
+(2, '201502/08180045178210lu.doc', '新建 Microsoft Word 文档11', 'doc', 20992, 'project', 8, 'admin', '2015-02-08 00:00:00', 0, '', '0'),
+(3, '201502/0818223403821ugv.doc', '新建 Microsoft Word 文档', 'doc', 20992, 'project', 0, 'admin', '2015-02-08 00:00:00', 0, '', '0'),
+(4, '201502/0818234503215gvs.doc', '新建 Microsoft Word 文档', 'doc', 20992, 'project', 7, 'admin', '2015-02-08 00:00:00', 0, '', '0');
 
 -- --------------------------------------------------------
 
@@ -2735,7 +2753,7 @@ CREATE TABLE IF NOT EXISTS `tm_history` (
   `new` text NOT NULL,
   `diff` mediumtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=68 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=70 ;
 
 --
 -- 转存表中的数据 `tm_history`
@@ -2805,7 +2823,9 @@ INSERT INTO `tm_history` (`id`, `action`, `field`, `old`, `new`, `diff`) VALUES
 (64, 60, 'closedDate', '2012-06-05 10:41:20', '', ''),
 (65, 82, 'title', '首页的测试用例', '售后服务的测试用例', '001- <del>首页的测试用例</del>\n001+ <ins>售后服务的测试用例</ins>'),
 (66, 82, 'story', '1', '4', ''),
-(67, 93, 'build', '', 'trunk', '');
+(67, 93, 'build', '', 'trunk', ''),
+(68, 277, 'fileName', 'mysql_examples.sql', 'mysql_examples11.sql', ''),
+(69, 278, 'fileName', '新建 Microsoft Word 文档.doc', '新建 Microsoft Word 文档11.doc', '');
 
 -- --------------------------------------------------------
 
@@ -3602,6 +3622,8 @@ CREATE TABLE IF NOT EXISTS `tm_materialapplication` (
   `project_id` int(11) NOT NULL,
   `verified` int(11) NOT NULL COMMENT '0: 未处理; 1: 通过审核 -1: 拒绝',
   `verified_by` varchar(30) DEFAULT NULL COMMENT '审核者，用户名',
+  `verified_date` datetime DEFAULT NULL,
+  `remark` text COMMENT '审核说明',
   `deleted` int(2) DEFAULT NULL,
   `created_by` varchar(30) NOT NULL,
   `created` datetime NOT NULL,
@@ -3613,14 +3635,14 @@ CREATE TABLE IF NOT EXISTS `tm_materialapplication` (
 -- 转存表中的数据 `tm_materialapplication`
 --
 
-INSERT INTO `tm_materialapplication` (`id`, `code`, `project_id`, `verified`, `verified_by`, `deleted`, `created_by`, `created`, `modified`) VALUES
-(1, '150208-70202', 1, 1, NULL, 0, 'admin', '2015-02-02 23:35:14', '2015-02-02 23:35:14'),
-(2, '150208-70203', 1, 1, NULL, 0, 'admin', '2015-02-02 23:36:10', '2015-02-02 23:36:10'),
-(3, '150208-70204', 1, 1, NULL, 0, 'admin', '2015-02-03 20:54:43', '2015-02-03 20:54:43'),
-(4, '150208-70206', 3, 0, NULL, 0, 'admin', '2015-02-07 20:03:58', '2015-02-07 20:03:58'),
-(5, '150208-70207', 3, 0, NULL, 0, 'admin', '2015-02-07 20:07:18', '2015-02-07 20:07:18'),
-(6, '150208-70208', 3, 0, NULL, 0, 'admin', '2015-02-07 20:20:00', '2015-02-07 20:20:00'),
-(7, '150208-70201', 2, 0, NULL, 0, 'admin', '2015-02-08 00:09:20', '2015-02-08 00:09:20');
+INSERT INTO `tm_materialapplication` (`id`, `code`, `project_id`, `verified`, `verified_by`, `verified_date`, `remark`, `deleted`, `created_by`, `created`, `modified`) VALUES
+(1, '150208-70202', 1, 1, NULL, NULL, NULL, 0, 'admin', '2015-02-02 23:35:14', '2015-02-02 23:35:14'),
+(2, '150208-70203', 1, 1, NULL, NULL, NULL, 0, 'admin', '2015-02-02 23:36:10', '2015-02-02 23:36:10'),
+(3, '150208-70204', 1, 1, NULL, NULL, NULL, 0, 'admin', '2015-02-03 20:54:43', '2015-02-03 20:54:43'),
+(4, '150208-70206', 3, 1, 'admin', '2015-02-08 12:06:18', '&lt;p&gt;备注备注备注备注备注备注&lt;/p&gt;\r\n&lt;p&gt;备注备注备注&lt;/p&gt;\r\n&lt;p&gt;备注备注备注备注备注备注备注&lt;/p&gt;\r\n&lt;p&gt;备注备注备注备注备注备注&lt;/p&gt;', 0, 'admin', '2015-02-07 20:03:58', '2015-02-08 12:06:18'),
+(5, '150208-70207', 3, 0, NULL, NULL, NULL, 0, 'admin', '2015-02-07 20:07:18', '2015-02-07 20:07:18'),
+(6, '150208-70208', 3, 0, NULL, NULL, NULL, 0, 'admin', '2015-02-07 20:20:00', '2015-02-07 20:20:00'),
+(7, '150208-70201', 2, 1, 'admin', '2015-02-08 12:04:46', '&lt;p&gt;备注备注&lt;/p&gt;\r\n&lt;p&gt;备注&lt;/p&gt;\r\n&lt;p&gt;备注备注备注备注&lt;/p&gt;\r\n&lt;p&gt;备注备注备注&lt;/p&gt;', 0, 'admin', '2015-02-08 00:09:20', '2015-02-08 12:04:46');
 
 -- --------------------------------------------------------
 
@@ -3634,6 +3656,7 @@ CREATE TABLE IF NOT EXISTS `tm_materialapplicationdetail` (
   `application_id` int(11) NOT NULL COMMENT 'material order ID',
   `material_id` int(11) NOT NULL COMMENT 'material ID',
   `qty` float(11,2) DEFAULT '0.00',
+  `price` float(11,2) DEFAULT '0.00' COMMENT '单价,审批时添加',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
@@ -3641,42 +3664,42 @@ CREATE TABLE IF NOT EXISTS `tm_materialapplicationdetail` (
 -- 转存表中的数据 `tm_materialapplicationdetail`
 --
 
-INSERT INTO `tm_materialapplicationdetail` (`id`, `application_id`, `material_id`, `qty`) VALUES
-(1, 3, 6, 2.00),
-(2, 3, 7, 2.00),
-(3, 3, 4, 2.00),
-(4, 3, 4, 3.00),
-(5, 4, 5, 10.00),
-(6, 4, 37, 100.00),
-(7, 4, 69, 1000.00),
-(8, 4, 101, 1.00),
-(9, 4, 302, 2.00),
-(10, 4, 465, 1005.00),
-(11, 5, 5, 11.00),
-(12, 5, 229, 11.00),
-(13, 5, 540, 11.00),
-(14, 6, 133, 1.00),
-(15, 6, 5, 10.00),
-(16, 6, 37, 100.00),
-(17, 6, 69, 15.00),
-(18, 6, 283, 15.00),
-(19, 7, 157, 2.00),
-(20, 7, 167, 2.00),
-(21, 7, 182, 2.00),
-(22, 7, 155, 30.00),
-(23, 7, 96, 200.00),
-(24, 7, 101, 150.00),
-(25, 7, 42, 180.00),
-(26, 7, 184, 1090.00),
-(27, 7, 285, 200.00),
-(28, 7, 436, 800.00),
-(29, 7, 290, 90.00),
-(30, 7, 249, 100.00),
-(31, 7, 541, 110.00),
-(32, 7, 496, 180.00),
-(33, 7, 460, 2201.00),
-(34, 7, 543, 33.00),
-(35, 7, 466, 44.00);
+INSERT INTO `tm_materialapplicationdetail` (`id`, `application_id`, `material_id`, `qty`, `price`) VALUES
+(1, 3, 6, 2.00, 0.00),
+(2, 3, 7, 2.00, 0.00),
+(3, 3, 4, 2.00, 0.00),
+(4, 3, 4, 3.00, 0.00),
+(5, 4, 5, 10.00, 0.00),
+(6, 4, 37, 100.00, 0.00),
+(7, 4, 69, 1000.00, 0.00),
+(8, 4, 101, 1.00, 0.00),
+(9, 4, 302, 2.00, 0.00),
+(10, 4, 465, 1005.00, 0.00),
+(11, 5, 5, 11.00, 0.00),
+(12, 5, 229, 11.00, 0.00),
+(13, 5, 540, 11.00, 0.00),
+(14, 6, 133, 1.00, 0.00),
+(15, 6, 5, 10.00, 0.00),
+(16, 6, 37, 100.00, 0.00),
+(17, 6, 69, 15.00, 0.00),
+(18, 6, 283, 15.00, 0.00),
+(19, 7, 157, 2.00, 0.00),
+(20, 7, 167, 2.00, 0.00),
+(21, 7, 182, 2.00, 0.00),
+(22, 7, 155, 30.00, 0.00),
+(23, 7, 96, 200.00, 0.00),
+(24, 7, 101, 150.00, 0.00),
+(25, 7, 42, 180.00, 0.00),
+(26, 7, 184, 1090.00, 0.00),
+(27, 7, 285, 200.00, 0.00),
+(28, 7, 436, 800.00, 0.00),
+(29, 7, 290, 90.00, 0.00),
+(30, 7, 249, 100.00, 0.00),
+(31, 7, 541, 110.00, 0.00),
+(32, 7, 496, 180.00, 0.00),
+(33, 7, 460, 2201.00, 0.00),
+(34, 7, 543, 33.00, 0.00),
+(35, 7, 466, 44.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -3874,19 +3897,23 @@ CREATE TABLE IF NOT EXISTS `tm_project` (
   `created_by` varchar(50) DEFAULT NULL COMMENT '创建者 username',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  `delta` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `project` (`type`,`begin`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- 转存表中的数据 `tm_project`
 --
 
-INSERT INTO `tm_project` (`id`, `code`, `name`, `client`, `address`, `type`, `pm`, `sub_pm`, `begin`, `espected_completion`, `actual_completion`, `desc`, `deleted`, `created_by`, `created`, `modified`, `delta`) VALUES
-(1, 'coWeb1', '企业网站第一期', NULL, NULL, 'sprint', NULL, NULL, '2012-06-05', NULL, NULL, '开发企业网站的基本雏形。<br />', '0', NULL, NULL, NULL, NULL),
-(2, 'coWebsite2', '企业网站第二期', NULL, NULL, 'sprint', NULL, NULL, '2013-06-05', NULL, NULL, '', '0', NULL, NULL, NULL, NULL),
-(3, 'D20150207', '世园大道道路项目', '青岛市政府', '崂山区李沙路', '道路', 'productManager', NULL, '2015-02-07', '2016-02-07', '2016-02-07', '世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路', '0', NULL, NULL, NULL, 365);
+INSERT INTO `tm_project` (`id`, `code`, `name`, `client`, `address`, `type`, `pm`, `sub_pm`, `begin`, `espected_completion`, `actual_completion`, `desc`, `deleted`, `created_by`, `created`, `modified`) VALUES
+(1, 'coWeb1', '企业网站第一期', NULL, NULL, 'sprint', NULL, NULL, '2012-06-05', NULL, NULL, '开发企业网站的基本雏形。<br />', '0', NULL, NULL, NULL),
+(2, 'coWebsite2', '企业网站第二期', NULL, NULL, 'sprint', NULL, NULL, '2013-06-05', NULL, NULL, '', '0', NULL, NULL, NULL),
+(3, 'D20150207', '世园大道道路项目', '青岛市政府', '崂山区李沙路', '道路', 'productManager', NULL, '2015-02-07', '2016-02-07', '2016-02-07', '世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路世园大道道路项目崂山区李沙路', '0', NULL, NULL, NULL),
+(4, '150208-69368', '世园大道道路项目22', '青岛市政府', '崂山区李沙路', '道路', 'projectManager', NULL, '2015-02-08', '2016-02-08', '2016-02-08', '<p>范德萨发到萨芬</p>\r\n<p>fdsa fdws</p>\r\n<p>范德萨</p>', '0', NULL, NULL, NULL),
+(5, '150208-71106', '世园大道道路项目33', '青岛市政府', '崂山区李沙路', '道路', 'projectManager', NULL, '2015-02-08', '2016-02-08', '2016-02-08', '<p>项目说明项目说明项目说明项目说明项目说明项目说明</p>\r\n<p>项目说明项目说明项目说明</p>\r\n<p>项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明</p>\r\n<p>项目说明项目说明</p>', '0', NULL, NULL, NULL),
+(6, '150208-66608', '世园大道道路项目44', '青岛市政府', '崂山区李沙路', '道路', 'projectManager', NULL, '2015-02-08', '2016-02-08', '2016-02-08', '<p>项目说明项目说明项目说明项目说明</p>\r\n<p>项目说明项目说明</p>\r\n<p>项目说明项目说明项目说明项目说明项目说明项目说明</p>\r\n<p>项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明</p>', '0', NULL, NULL, NULL),
+(7, '150208-23670', '世园大道道路项目55', '青岛市政府', '崂山区李沙路', '道路', 'projectManager', NULL, '2015-02-08', '2016-02-08', '2016-02-08', '<p>fdsafdsafdsafdsa</p>\r\n<p>fdsaf</p>\r\n<p>dsafd</p>\r\n<p>safdsafdsafdsafdsafdsa</p>', '0', NULL, NULL, NULL),
+(8, '150208-48369', '世园大道道路项目66', '青岛市政府', '崂山区李沙路', '道路', 'projectManager', NULL, '2015-02-08', '2016-02-08', '2016-02-08', '<p>fdsafdsafdsaf</p>\r\n<p>fdsafdsafdsafdsaf</p>\r\n<p>dsafdsafdsafdsafdsafds</p>\r\n<p>afdsafdsafdsafdsafdsafdsafdsafdsa</p>', '0', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
