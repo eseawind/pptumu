@@ -139,6 +139,7 @@ define('TABLE_MACHINEUSEDHISTORY', '`' . $config->db->prefix . 'machineusedhisto
 
 define('TABLE_FINANCIAL', '`' . $config->db->prefix . 'financial`');
 
+define('TABLE_APPLICATION', '`' . $config->db->prefix . 'application`'); // 内容修改申请表
 // *********************************************************************************************
 define('TABLE_DOCLIB',        '`' . $config->db->prefix . 'doclib`');
 define('TABLE_DOC',           '`' . $config->db->prefix . 'doc`');

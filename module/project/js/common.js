@@ -106,7 +106,7 @@ function computeEndDate(delta)
     endDate = convertStringToDate(beginDate).addDays(parseInt(delta));
     endDate = endDate.toString('yyyy-M-dd');
     $('#espected_completion').val(endDate);
-	$('#actual_completion').val(endDate);
+	// $('#actual_completion').val(endDate);
     // computeWorkDays();
 }
 

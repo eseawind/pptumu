@@ -3,6 +3,7 @@
 <?php include '../../common/view/kindeditor.html.php'; ?>
 <?php js::import($jsRoot . 'misc/date.js'); ?>
 <?php js::set('holders', $lang->project->placeholder); ?>
+
 <div class='container mw-1400px'>
 	<div id='titlebar'>
 		<div class='heading'>
