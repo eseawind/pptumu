@@ -16,7 +16,7 @@
 	<table class='table table-form'>
 		<tr>
 			<th class='w-100px'><?php echo $lang->project->code; ?></th>
-			<td class='w-p25-f'><?php echo html::input('code', $project->code, "class='form-control'"); ?></td>
+			<td class='w-p25-f'><?php echo html::input('code', $project->code, "class='form-control' readonly='readonly'"); ?></td>
 		</tr>
 		<tr>
 			<th><?php echo $lang->project->name; ?></th>

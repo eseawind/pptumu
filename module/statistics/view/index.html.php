@@ -19,7 +19,7 @@
 			<td class='text-center'><?php echo $project->code; ?></td>
 			<td><?php echo $project->name; ?></td>
 			<td><?php echo $project->type; ?></td>
-			<td><?php echo $project->pm; ?></td>
+			<td><?php echo $users[$project->pm]; ?></td>
 			<td class='text-center'><?php echo $project->begin . ' -> ' . $project->espected_completion; ?></td>
 			<td class='text-center'><?php echo '进行中'; ?></td>
 			<td class='text-center'>

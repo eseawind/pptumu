@@ -471,11 +471,11 @@ class projectModel extends model
 	 * @access public
 	 * @return array
 	 */
-	public function getList($conditions = array(), $pager = null)
+	public function getList($conds = array(), $pager = null)
 	{
 		$this->dao->select('*')->from(TABLE_PROJECT)->where(1)->eq(1)
 			->andWhere('deleted')->eq(0)
-			->orderBy('code');
+			->orderBy('id DESC');
 		if (is_object($pager) && is_a($pager, 'pager')) {
 			$this->dao->page($pager);
 		}

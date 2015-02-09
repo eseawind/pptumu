@@ -140,7 +140,6 @@ $lang->my->menu = new stdclass();
 
 $lang->my->menu->account        = '<span id="myname"><i class="icon-user"></i> %s' . $lang->arrow . '</span>';
 $lang->my->menu->index          = '首页|my|index';
-$lang->my->menu->myProject      = '项目|my|project|';
 $lang->my->menu->profile        = array('link' => '档案|my|profile', 'alias' => 'editprofile');
 $lang->my->menu->changePassword = '密码|my|changepassword';
 

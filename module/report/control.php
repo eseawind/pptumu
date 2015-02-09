@@ -20,8 +20,6 @@ class report extends control
 	 */
 	public function index($pageID = 1)
 	{
-		$this->view->title = $this->lang->report->productInfo;
-
 		/* Load and initial pager. */
 		$this->app->loadClass('pager', $static = true);
 		$recPerPage = 5;
@@ -31,6 +29,9 @@ class report extends control
 
 		$this->view->projects = $projects;
 		$this->view->pager = $pager;
+		// $this->view->users = $this->loadModel('user')->getPairs('noletter|noclosed');
+		$this->view->title = $this->lang->report->common;
+		$this->view->position[] = $this->view->title;
 
 		$this->display();
 	}
@@ -102,6 +103,9 @@ class report extends control
 
 		$this->view->report = $report;
 		$this->view->project = $project;
+		$this->view->title = $project->name . ' > ' . $report->report_date . '日报';
+		$this->view->positiion[] = $project->name;
+		$this->view->position[] = $report->report_date . '日报';
 
 		$this->display();
 	}

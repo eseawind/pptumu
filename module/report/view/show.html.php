@@ -1,13 +1,9 @@
 <?php include '../../common/view/header.html.php';?>
 
-<div class='container mw-1400px'>
+<div class='main'>
 	<div id='titlebar'>
-		<div class='heading'>
-			<span class='prefix'><?php echo html::icon($lang->icons['project']);?></span>
-			<strong><small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->project->create;?></strong>
-		</div>
-		<div class='actions'>
-			<button class='btn' id='cpmBtn'><?php echo html::icon($lang->icons['copy']) . ' ' . $lang->project->copy;?></button>
+		<div id="crumbs">
+			<?php commonModel::printBreadMenu($this->moduleName, isset($position) ? $position : ''); ?>
 		</div>
 	</div>
 

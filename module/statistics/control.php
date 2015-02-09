@@ -28,6 +28,7 @@ class statistics extends control
 
 		$this->view->projects = $projects;
 		$this->view->pager = $pager;
+		$this->view->users = $this->loadModel('user')->getPairs('noletter|noclosed');
 		$this->view->title = '项目列表';
 		$this->view->position[] = $this->view->title;
 
