@@ -1,4 +1,6 @@
-/tmp/*
-/tmp/model/misc.php
-www/data/upload/*
+tmp/cache/
+tmp/extension/
+tmp/log/
+tmp/model/
+www/data/upload/
 

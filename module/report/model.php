@@ -9,30 +9,19 @@ class reportModel extends model
 	/**
 	 *
 	 */
-	public function getProjectReports($conds = array(), $pager = null)
+	public function getProjectReports($projectID, $conds = array(), $pager = null)
 	{
-		$projects = $this->dao->select('project.id, project.code, project.name')
-			->from(TABLE_PROJECT)->alias('project')
+		$this->dao->select('report.*')->from(TABLE_REPORT)->alias('report')
 			->where('deleted')->eq(0)
-			->page($pager)
-			->fetchAll('id');
-		foreach ($projects As $pid => $project) {
-			$appDetails = $this->dao->select('application.id, applicationdetail.id AS applicationdetail_id, applicationdetail.material_id, applicationdetail.qty, material.code AS material_code, material.name AS material_name, mtype.name AS material_type_name')
-				->from(TABLE_MATERIALAPPLICATION)->alias('application')
-				->rightJoin(TABLE_MATERIALAPPLICATIONDETAIL)->alias('applicationdetail')
-				->on('applicationdetail.application_id = application.id')
-				->leftJoin(TABLE_MATERIAL)->alias('material')
-				->on('applicationdetail.material_id = material.id')
-				->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
-				->on('material.type_id = mtype.id')
-				->where('application.project_id')->eq($pid)
-				->fetchAll();
+			->andWhere('report.project_id')->eq($projectID);
 
-			$projects[$pid]->appdetails = $appDetails;
-			unset($appDetails);
+		if (isset($conds['type']) && in_array($conds['type'], $this->config->report->type)) {
+			$this->dao->andWhere('report.type')->eq($conds['type']);
 		}
 
-		return $projects;
+		$reports = $this->dao->page($pager)->fetchAll('id');
+
+		return $reports;
 	}
 
 	/**
@@ -40,11 +29,12 @@ class reportModel extends model
 	 */
 	public function getList($projectID, $type = 'today', $conds = array())
 	{
-		$reports = $this->dao->select('report.*')->from(TABLE_REPORT)->alias('report')
+		$this->dao->select('report.*')->from(TABLE_REPORT)->alias('report')
 			->where('deleted')->eq(0)
 			->andWhere('type')->eq($type)
-			->andWhere('project_id')->eq($projectID)
-			->fetchAll('id');
+			->andWhere('project_id')->eq($projectID);
+
+		$reports = $this->dao->fetchAll('id');
 
 		return $reports;
 	}

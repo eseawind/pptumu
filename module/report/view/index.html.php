@@ -20,11 +20,11 @@
 		<tr>
 			<td colspan="4">
 				本日情况:
-				<?php echo html::a($this->createLink('report', 'create', "reportType=today&projectID={$project->id}"), $lang->report->create, '',  'class="btn"');?>
-				<?php echo html::a($this->createLink('report', 'history', "reportType=today&projectID={$project->id}"), $lang->report->history, '', 'class="btn"');?>
+				<?php echo html::a($this->createLink('report', 'create', "projectID={$project->id}&reportType=today"), $lang->report->create, '',  'class="btn"');?>
+				<?php echo html::a($this->createLink('report', 'history', "projectID={$project->id}&reportType=today"), $lang->report->history, '', 'class="btn"');?>
 				明日计划:
-				<?php echo html::a($this->createLink('report', 'create', "reportType=tomorrow&projectID={$project->id}"), $lang->report->create, '',  'class="btn"');?>
-				<?php echo html::a($this->createLink('report', 'history', "reportType=tomorrow&projectID={$project->id}"), $lang->report->history, '', 'class="btn"');?>
+				<?php echo html::a($this->createLink('report', 'create', "projectID={$project->id}&reportType=tomorrow"), $lang->report->create, '',  'class="btn"');?>
+				<?php echo html::a($this->createLink('report', 'history', "projectID={$project->id}&reportType=tomorrow"), $lang->report->history, '', 'class="btn"');?>
 				<br />
 				填写签证:
 				<?php echo html::a($this->createLink('report', 'createtestation', "projectID={$project->id}"), $lang->report->create, '',  'class="btn"');?>

@@ -387,7 +387,7 @@ class project extends control
 	 * @access public
 	 * @return void
 	 */
-	public function view($projectID, $onlybody = 'no')
+	public function view($projectID)
 	{
 		$project = $this->project->getById($projectID, true);
 		if (!$project) die(js::error($this->lang->notFound) . js::locate('back'));

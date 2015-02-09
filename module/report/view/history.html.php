@@ -18,6 +18,8 @@
 	</li>
 	<?php } ?>
 </ul>
+
+<p><div class='text-right'><?php $pager->show(); ?></div></p>
 </div>
 
 <?php include '../../common/view/footer.html.php'; ?>

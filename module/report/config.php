@@ -12,3 +12,4 @@ $config->report->editor->edit    = array('id' => 'planned_qty,actual_qty',    't
 $config->report->editor->createtestation = array('id' => 'content', 'tools' => 'simpleTools');
 $config->report->editor->createproblem = array('id' => 'content', 'tools' => 'simpleTools');
 
+$config->report->type = array('today', 'tomorrow');

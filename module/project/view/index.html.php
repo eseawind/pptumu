@@ -14,7 +14,7 @@
 	</ul>
 </div>
 
-<form class='form-condensed' method='post' action='<?php echo inLink('batchEdit', "projectID=$projectID"); ?>'>
+<div class='main'>
 	<table class='table tablesorter'>
 		<?php $vars = "locate=no&status=$status&projectID=$projectID&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}"; ?>
 		<thead>
@@ -57,6 +57,7 @@
 		</tr>
 		</tfoot>
 	</table>
-</form>
+</div>
 <script>$("#<?php echo $status;?>Tab").addClass('active');</script>
+
 <?php include '../../common/view/footer.html.php'; ?>

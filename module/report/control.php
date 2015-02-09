@@ -70,14 +70,23 @@ class report extends control
 	/**
 	 * 项目日报历史记录
 	 */
-	public function history($reportType = 'today', $projectID = 0)
+	public function history($projectID, $reportType = 'today')
 	{
-		$project = $this->project->getById($projectID);
+		/* Load and initial pager. */
+		$this->app->loadClass('pager', $static = true);
+		$recPerPage = 10;
+		$pager = new pager(0, $recPerPage, $pageID);
+		$reports = $this->report->getProjectReports($projectID, array('type' => $reportType), $pager);
 
-		$reports = $this->report->getList($projectID, $reportType, array());
+		$project = $this->project->getById($projectID);
 
 		$this->view->project = $project;
 		$this->view->reports = $reports;
+		$this->view->pager = $pager;
+
+		$this->view->title = $project->name . ' > ' . ($reportType == 'today' ? '今日' : '明日') . '列表';
+		$this->view->position[] = $project->name;
+		$this->view->position[] = ($reportType == 'today' ? '今日' : '明日') . '列表';
 
 		$this->display();
 	}
@@ -119,23 +128,6 @@ class report extends control
 	public function verify($reportID)
 	{
 
-	}
-
-	/**
-	 *
-	 */
-	public function statistics($pageID = 1)
-	{
-		/* Load and initial pager. */
-		$this->app->loadClass('pager', $static = true);
-		$recPerPage = 5;
-		$pager = new pager(0, $recPerPage, $pageID);
-
-		$projects = $this->project->getList(array(), $pager);
-
-		$this->view->projects = $projects;
-
-		$this->display();
 	}
 
 	/**
