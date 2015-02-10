@@ -152,7 +152,7 @@ $lang->project->menu = new stdclass();
 
 $lang->project->menu->list      = '所有项目';
 $lang->project->menu->create    = array('link' => '<i class="icon-plus"></i>&nbsp;添加项目|project|create', 'float' => 'right');
-$lang->project->menu->all       = array('link' => '<i class="icon-th-large"></i>&nbsp;所有项目|project|index|locate=no&status=undone&projectID=%s', 'float' => 'right');
+$lang->project->menu->all       = array('link' => '<i class="icon-th-large"></i>&nbsp;所有项目|project|index|', 'float' => 'right');
 
 /* 材料视图菜单设置。*/
 $lang->material = new stdclass();

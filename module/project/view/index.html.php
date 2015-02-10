@@ -18,7 +18,7 @@
 </div>
 
 <div class="main">
-	<table class='table table-condensed table-hover table-striped tablesorter'>
+	<table class='table table-condensed table-hover table-striped tablesorter' id="projectList">
 		<?php $vars = "status=$status&orderBy=%s&pageID={$pager->pageID}"; ?>
 		<thead>
 		<tr>
@@ -48,9 +48,10 @@
 				<td>
 					<?php echo html::a($this->createLink('project', 'edit', "projectID={$project->id}"), '编辑'); ?>
 					|
-					申请修改
+					<?php echo html::a("javascript:orderModificationApplication($(this),\"projectList\")", '申请修改', '', "objecttype='project' objecttypename='项目' objectid='{$project->id}' objectname='{$project->name}'"); ?>
 					|
-					<?php echo html::a($this->createLink('project', 'delete', "projectID={$project->id}"), '删除'); ?></td>
+					<?php echo html::a($this->createLink('project', 'delete', "projectID={$project->id}"), '删除'); ?>
+				</td>
 			</tr>
 		<?php } ?>
 		<tfoot>
@@ -65,4 +66,5 @@
 </div>
 <script>$("#<?php echo $status;?>Tab").addClass('active');</script>
 
+<?php include '../../common/view/application.html.php'; // 申请修改 ?>
 <?php include '../../common/view/footer.html.php'; ?>

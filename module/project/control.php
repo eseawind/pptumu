@@ -100,23 +100,6 @@ class project extends control
 	 */
 	public function create()
 	{
-		$this->projects = $this->project->getPairs('nocode');
-
-		if ($projectID) {
-			$this->view->tips = $this->fetch('project', 'tips', "projectID=$projectID");
-			$this->view->projectID = $projectID;
-			$this->display();
-			exit;
-		}
-
-		$name = '';
-		$code = helper::genRandCode();
-		$team = '';
-		$products = '';
-		$whitelist = '';
-		$acl = 'open';
-
-
 		if (!empty($_POST)) {
 			$projectID = $this->project->create();
 			if (dao::isError()) die(js::error(dao::getError()));
@@ -125,18 +108,14 @@ class project extends control
 			die(js::locate($this->createLink('project', 'index', "projectID=$projectID"), 'parent'));
 		}
 
-		$this->project->setMenu($this->projects, key($this->projects));
+		$name = '';
+		$code = helper::genRandCode();
 
-		$this->view->title = $this->lang->project->create;
-		$this->view->position[] = $this->view->title;
-		$this->view->groups = $this->loadModel('group')->getPairs();
-		$this->view->allProducts = $this->loadModel('product')->getPairs();
 		$this->view->name = $name;
 		$this->view->code = $code;
-		$this->view->poUsers = $this->loadModel('user')->getPairs('noclosed,nodeleted,pofirst', @$project->PO);
-		$this->view->team = $team;
-		$this->view->products = $products;
-		$this->view->whitelist = $whitelist;
+		$this->view->pmUsers = $this->loadModel('user')->getPairs('noclosed,nodeleted,pmfirst');
+		$this->view->title = $this->lang->project->create;
+		$this->view->position[] = $this->view->title;
 
 		$this->display();
 	}

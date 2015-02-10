@@ -3,6 +3,7 @@
 /**
  * The control file of dashboard module
  */
+
 class my extends control
 {
 	/**
@@ -445,6 +446,22 @@ class my extends control
 		$this->view->pager = $pager;
 		$this->view->actions = $this->loadModel('action')->getDynamic($this->app->user->account, $type, $sort, $pager);
 		$this->display();
+	}
+
+	/**
+	 * order
+	 * @param $objectType
+	 * @param $objectID
+	 */
+	public function ordermodification()
+	{
+		$this->my->orderApplication();
+
+		if (dao::isError()) {
+			$this->send(dao::getError(), 'json');
+		} else {
+			$this->send(1, 'json');
+		}
 	}
 
 }

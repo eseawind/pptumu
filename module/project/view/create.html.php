@@ -4,16 +4,16 @@
 <?php js::import($jsRoot . 'misc/date.js'); ?>
 <?php js::set('holders', $lang->project->placeholder); ?>
 
-<div class='container mw-1400px'>
-	<div id='titlebar'>
-		<div class='heading'>
-			<span class='prefix'><?php echo html::icon($lang->icons['project']); ?></span>
-			<strong>
-				<small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->project->create; ?>
-			</strong>
-		</div>
+<div id='titlebar'>
+	<div class='heading'>
+		<span class='prefix'><?php echo html::icon($lang->icons['project']); ?></span>
+		<strong>
+			<small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->project->create; ?>
+		</strong>
 	</div>
-	<!-- -->
+</div>
+
+<div class='container mw-1400px'>
 	<form class='form-condensed' method='post' target='hiddenwin' id='dataform' enctype='multipart/form-data'>
 	<table class='table table-form'>
 		<tr>
@@ -62,7 +62,7 @@
 		</tr>
 		<tr>
 			<th><?php echo $lang->project->pm; ?></th>
-			<td><?php echo html::select('pm', $poUsers, $project->pm, "class='form-control'"); ?></td>
+			<td><?php echo html::select('pm', $pmUsers, $project->pm, "class='form-control'"); ?></td>
 			<td></td>
 		</tr>
 		<tr>

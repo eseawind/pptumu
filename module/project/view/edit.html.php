@@ -3,17 +3,17 @@
 <?php include '../../common/view/kindeditor.html.php'; ?>
 <?php js::import($jsRoot . 'misc/date.js'); ?>
 
-<div class='container mw-1400px'>
-	<div id='titlebar'>
-		<div class='heading'>
+<div id='titlebar'>
+	<div class='heading'>
 			<span class='prefix'><?php echo html::icon($lang->icons['project']); ?>
 				<strong><?php echo $project->id; ?></strong></span>
-			<strong><?php echo html::a($this->createLink('project', 'view', 'project=' . $project->id), $project->name, '_blank'); ?></strong>
-			<small class='text-muted'> <?php echo $lang->project->edit; ?> <?php echo html::icon($lang->icons['edit']); ?></small>
-		</div>
+		<strong><?php echo html::a($this->createLink('project', 'view', 'project=' . $project->id), $project->name, '_blank'); ?></strong>
+		<small class='text-muted'> <?php echo $lang->project->edit; ?> <?php echo html::icon($lang->icons['edit']); ?></small>
 	</div>
-	<!--  target='hiddenwin' -->
-	<form class='form-condensed' method='post' id='dataform' enctype='multipart/form-data'>
+</div>
+
+<div class='container mw-1400px'>
+	<form class='form-condensed' method='post' target='hiddenwin' id='dataform' enctype='multipart/form-data'>
 	<table class='table table-form'>
 		<tr>
 			<th class='w-100px'><?php echo $lang->project->code; ?></th>
@@ -40,22 +40,22 @@
 			<th class='w-90px'><?php echo $lang->project->dateRange; ?></th>
 			<td>
 				<div class='input-group'>
-					<?php echo html::input('begin', $project->begin, "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->begin . "'"); ?>
+					<?php echo html::input('begin', $project->begin, "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->begin . "' readonly='readonly'"); ?>
 					<span class='input-group-addon'><?php echo $lang->project->to; ?></span>
-					<?php echo html::input('espected_completion', $project->espected_completion, "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->espected_completion . "'"); ?>
+					<?php echo html::input('espected_completion', $project->espected_completion, "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->espected_completion . "' readonly='readonly'"); ?>
 				</div>
 			</td>
 		</tr>
 		<tr>
 			<th><?php echo $lang->project->actual_completion; ?></th>
 			<td>
-				<?php echo html::input('actual_completion', $project->actual_completion, "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->actual_completion . "'"); ?>
+				<?php echo html::input('actual_completion', $project->actual_completion, "class='form-control form-date' onchange='computeWorkDays()' placeholder='" . $lang->project->actual_completion . "' readonly='readonly'"); ?>
 			</td>
 		</tr>
 		<tr>
 			<th><?php echo $lang->project->pm; ?></th>
 			<td>
-				<?php echo html::select('pm', $poUsers, $project->pm, "class='form-control'"); ?>
+				<?php echo html::select('pm', $pmUsers, $project->pm, "class='form-control'"); ?>
 			</td>
 		</tr>
 		<tr>

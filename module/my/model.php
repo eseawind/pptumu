@@ -1,46 +1,68 @@
 <?php
+
 /**
- * The model file of dashboard module of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     dashboard
- * @version     $Id: model.php 4129 2013-01-18 01:58:14Z wwccss $
- * @link        http://www.zentao.net
+ * The model file of dashboard module of System.
  */
-?>
-<?php
+
 class myModel extends model
 {
-    /**
-     * Set menu.
-     * 
-     * @access public
-     * @return void
-     */
-    public function setMenu()
-    {
-        $this->lang->my->menu->account = sprintf($this->lang->my->menu->account, $this->app->user->realname);
+	/**
+	 * Set menu.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function setMenu()
+	{
+		$this->lang->my->menu->account = sprintf($this->lang->my->menu->account, $this->app->user->realname);
 
-        /* Adjust the menu order according to the user role. */
-        $role = $this->app->user->role;
-        if($role == 'qa')
-        {
-            unset($this->lang->my->menuOrder[20]);
-            $this->lang->my->menuOrder[32] = 'task';
-        }
-        elseif($role == 'po')
-        {
-            unset($this->lang->my->menuOrder[35]);
-            unset($this->lang->my->menuOrder[20]);
-            $this->lang->my->menuOrder[17] = 'story';
-            $this->lang->my->menuOrder[42] = 'task';
-        }
-        elseif($role == 'pm')
-        {
-            unset($this->lang->my->menuOrder[40]);
-            $this->lang->my->menuOrder[17] = 'myProject';
-        }
-    }
+		/* Adjust the menu order according to the user role. */
+		$role = $this->app->user->role;
+		if ($role == 'qa') {
+			unset($this->lang->my->menuOrder[20]);
+			$this->lang->my->menuOrder[32] = 'task';
+		} elseif ($role == 'po') {
+			unset($this->lang->my->menuOrder[35]);
+			unset($this->lang->my->menuOrder[20]);
+			$this->lang->my->menuOrder[17] = 'story';
+			$this->lang->my->menuOrder[42] = 'task';
+		} elseif ($role == 'pm') {
+			unset($this->lang->my->menuOrder[40]);
+			$this->lang->my->menuOrder[17] = 'myProject';
+		}
+	}
+
+	/**
+	 * order a modification application
+	 * @param $objectType
+	 * @param $objectID
+	 */
+	public function orderApplication()
+	{
+		global $app;
+
+		$dt = date('Y-m-d H:i:s');
+
+		$application = fixer::input('post')->get();
+		$application->applicant = $app->account->username;
+		$application->verified = 0;
+		$application->created = $dt;
+		$application->modified = $dt;
+
+		$this->dao->insert(TABLE_APPLICATION)->data($application)
+			->autoCheck()
+			->check('object_type', 'notempty')
+			->check('object_id', 'notempty')
+			->checkIF($application->object_id != '', 'object_id', 'int')
+			->exec();
+
+		if (!dao::isError()) {
+			$applicationID = $this->dao->lastInsertID();
+
+			return $applicationID;
+		}
+
+		return false;
+	}
+
 }
