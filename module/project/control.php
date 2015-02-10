@@ -24,7 +24,7 @@ class project extends control
 	 * @access public
 	 * @return void
 	 */
-	public function index($locate = 'yes', $status = 'undone', $projectID = 0, $orderBy = 'code_asc', $recTotal = 0, $recPerPage = 10, $pageID = 1)
+	public function index($status = 'undone', $orderBy = 'code_asc', $pageID = 1)
 	{
 		// if($locate == 'yes') $this->locate($this->createLink('project', 'task'));
 
@@ -33,7 +33,8 @@ class project extends control
 
 		/* Load pager and get tasks. */
 		$this->app->loadClass('pager', $static = true);
-		$pager = new pager($recTotal, $recPerPage, $pageID);
+		$recPerPage = 10;
+		$pager = new pager(0, $recPerPage, $pageID);
 
 		$this->app->loadLang('my');
 		$this->view->title = $this->lang->project->allProject;
@@ -152,7 +153,6 @@ class project extends control
 		$browseProjectLink = $this->createLink('project', 'browse', "projectID=$projectID");
 		if (!empty($_POST)) {
 			$changes = $this->project->update($projectID);
-			$this->project->updateProducts($projectID);
 			if (dao::isError()) die(js::error(dao::getError()));
 			if ($changes) {
 				$actionID = $this->loadModel('action')->create('project', $projectID, 'edited');
@@ -174,23 +174,13 @@ class project extends control
 		unset($projects[$projectID]);
 
 		$title = $this->lang->project->edit . $this->lang->colon . $project->name;
-		$position[] = html::a($browseProjectLink, $project->name);
-		$position[] = $this->lang->project->edit;
 
-		$linkedProducts = $this->project->getProducts($project->id);
-		$linkedProducts = join(',', array_keys($linkedProducts));
-
-		$this->view->title = $title;
-		$this->view->position = $position;
 		$this->view->projects = $projects;
 		$this->view->project = $project;
-		$this->view->poUsers = $this->loadModel('user')->getPairs('noclosed,nodeleted,pofirst', $project->PO);
-		$this->view->pmUsers = $this->user->getPairs('noclosed,nodeleted,pmfirst', $project->PM);
-		$this->view->qdUsers = $this->user->getPairs('noclosed,nodeleted,qdfirst', $project->QD);
-		$this->view->rdUsers = $this->user->getPairs('noclosed,nodeleted,devfirst', $project->RD);
-		$this->view->groups = $this->loadModel('group')->getPairs();
-		$this->view->allProducts = $this->loadModel('product')->getPairs();
-		$this->view->linkedProducts = $linkedProducts;
+		$this->view->pmUsers = $this->loadModel('user')->getPairs('noclosed,nodeleted,pmfirst', $project->pm);
+		$this->view->title = $title;
+		$this->view->position[] = html::a($browseProjectLink, $project->name);
+		$this->view->position[] = $this->lang->project->edit;
 
 		$this->display();
 	}

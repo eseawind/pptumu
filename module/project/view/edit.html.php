@@ -2,6 +2,7 @@
 <?php include '../../common/view/datepicker.html.php'; ?>
 <?php include '../../common/view/kindeditor.html.php'; ?>
 <?php js::import($jsRoot . 'misc/date.js'); ?>
+
 <div class='container mw-1400px'>
 	<div id='titlebar'>
 		<div class='heading'>
@@ -11,8 +12,8 @@
 			<small class='text-muted'> <?php echo $lang->project->edit; ?> <?php echo html::icon($lang->icons['edit']); ?></small>
 		</div>
 	</div>
-
-	<form class='form-condensed' method='post' target='hiddenwin' id='dataform' enctype='multipart/form-data'>
+	<!--  target='hiddenwin' -->
+	<form class='form-condensed' method='post' id='dataform' enctype='multipart/form-data'>
 	<table class='table table-form'>
 		<tr>
 			<th class='w-100px'><?php echo $lang->project->code; ?></th>

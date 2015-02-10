@@ -17,9 +17,9 @@
 	<?php } ?>
 </div>
 
-<div class='main'>
-	<table class='table tablesorter'>
-		<?php $vars = "locate=no&status=$status&projectID=$projectID&orderBy=%s&recTotal={$pager->recTotal}&recPerPage={$pager->recPerPage}&pageID={$pager->pageID}"; ?>
+<div class="main">
+	<table class='table table-condensed table-hover table-striped tablesorter'>
+		<?php $vars = "status=$status&orderBy=%s&pageID={$pager->pageID}"; ?>
 		<thead>
 		<tr>
 			<th class='w-id'><?php common::printOrderLink('id', $orderBy, $vars, $lang->idAB); ?></th>

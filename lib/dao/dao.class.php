@@ -839,6 +839,8 @@ class dao
 			if (strpos($skipFields, $fieldName) !== false) continue; // skip it.
 			if (!isset($this->sqlobj->data->$fieldName)) continue;
 			if ($validater['rule'] == 'skip') continue;
+			// if ($validater->null === 0)
+
 			$options = array();
 			if (isset($validater['options'])) $options = array_values($validater['options']);
 			for ($i = 0; $i < VALIDATER::MAX_ARGS; $i++) {
@@ -846,6 +848,7 @@ class dao
 			}
 			$this->check($fieldName, $validater['rule'], $arg0, $arg1, $arg2);
 		}
+
 		return $this;
 	}
 
@@ -945,6 +948,7 @@ class dao
 			$type = str_replace(array('big', 'small', 'medium', 'tiny', 'var'), '', $type);
 			$field = array();
 
+			$field['null'] = $rawField->null == 'YES' ? 1 : 0; // can or not null
 			if ($type == 'enum' or $type == 'set') {
 				$rangeBegin = $firstPOS + 2;                       // Remove the first quote.
 				$rangeEnd = strrpos($rawField->type, ')') - 1;   // Remove the last quote.

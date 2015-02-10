@@ -1,15 +1,9 @@
 <?php
 /**
- * 禅道计划任务服务程序。
- * The crond for zentao.
- *
- * @copyright   Copyright 2009-2013 QingDao Nature Easy Soft Network Technology Co,LTD (www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      jinyong zhu <zhujinyong@cnezsoft.com>
- * @package     bin
- * @version     $Id$
- * @link        http://www.zentao.net
+ * 计划任务服务程序。
+ * The crond for system.
  */
+
 /* Set pathes and timezone. */
 $zentaoPath = dirname(dirname(dirname(__FILE__))) . "/";
 $cronPath   = $zentaoPath . 'bin/cron';
