@@ -1,6 +1,6 @@
-tmp/cache/
-tmp/extension/
-tmp/log/
-tmp/model/
-www/data/upload/
+tmp/cache/*.php
+tmp/extension/*.php
+tmp/log/*.log.php
+tmp/model/*.php
+!www/data/upload/index.html
 
