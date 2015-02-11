@@ -29,11 +29,11 @@
 			<th><?php common::printOrderLink('begin', $orderBy, $vars, $lang->project->begin); ?></th>
 			<th><?php common::printOrderLink('end', $orderBy, $vars, $lang->project->espected_completion); ?></th>
 			<th><?php echo $lang->project->actual_completion; ?></th>
-			<th><?php common::printOrderLink('status', $orderBy, $vars, $lang->project->status); ?></th>
+			<th><?php echo $lang->project->status; ?></th>
 			<th class='w-150px'>项目维护</th>
 		</tr>
 		</thead>
-		<?php foreach ($projectStats as $project) { ?>
+		<?php foreach ($projects as $project) { ?>
 			<tr class='text-center'>
 				<td>
 					<?php echo html::a($this->createLink('project', 'view', 'project=' . $project->id), sprintf('%03d', $project->id)); ?>
@@ -43,13 +43,16 @@
 				<td><?php echo $users[$project->pm]; ?></td>
 				<td><?php echo $project->begin; ?></td>
 				<td><?php echo $project->espected_completion; ?></td>
+				<td><?php echo $project->actual_completion; ?></td>
 				<td class='status-<?php echo $project->status ?>'><?php echo $lang->project->statusList[$project->status]; ?></td>
-				<td class='projectline text-left' values='<?php echo join(',', $project->burns); ?>'></td>
 				<td>
+					<?php if ($project->application_id && $project->application_verified == 1) { ?>
 					<?php echo html::a($this->createLink('project', 'edit', "projectID={$project->id}"), '编辑'); ?>
 					|
-					<?php echo html::a("javascript:orderModificationApplication($(this),\"projectList\")", '申请修改', '', "objecttype='project' objecttypename='项目' objectid='{$project->id}' objectname='{$project->name}'"); ?>
+					<?php } else if (empty($project->application_id)) { ?>
+					<?php echo html::a("javascript: orderModificationApplication(\"application_{$project->id}\", \"projectList\");", '申请编辑', '', "objecttype='project' objecttypename='项目' objectid='{$project->id}' objectname='{$project->name}' id='application_{$project->id}'"); ?>
 					|
+					<?php } ?>
 					<?php echo html::a($this->createLink('project', 'delete', "projectID={$project->id}"), '删除'); ?>
 				</td>
 			</tr>

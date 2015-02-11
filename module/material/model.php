@@ -20,10 +20,12 @@ class materialModel extends model
 	{
 		if ($deleted > 1) $deleted = 1;
 
-		$this->dao->select('material.*, mtype.name AS type_name')->from(TABLE_MATERIAL)->alias('material');
+		$this->dao->select('material.*, mtype.name AS type_name, application.id AS application_id, application.verified AS application_verified')->from(TABLE_MATERIAL)->alias('material');
 		$this->dao->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
-			->on('material.type_id = mtype.id');
-		$this->dao->where(1)->eq(1)
+			->on('material.type_id = mtype.id')
+		->leftJoin(TABLE_APPLICATION)->alias('application')
+		->on("application.object_id = material.id AND application.object_type = 'material' AND application.finished = 0");
+		$this->dao->where(1)
 			->andWhere('material.deleted')->eq($deleted);
 		if ($typeId) {
 			$this->dao->andWhere('material.type_id')->eq($typeId);

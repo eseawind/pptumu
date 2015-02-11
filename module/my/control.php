@@ -456,7 +456,7 @@ class my extends control
 		if (dao::isError()) {
 			$this->send(dao::getError(), 'json');
 		} else {
-			$this->send(1, 'json');
+			$this->send(array('result' => 'success'), 'json');
 		}
 	}
 

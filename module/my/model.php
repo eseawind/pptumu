@@ -44,8 +44,9 @@ class myModel extends model
 		$dt = date('Y-m-d H:i:s');
 
 		$application = fixer::input('post')->get();
-		$application->applicant = $app->account->username;
+		$application->applicant = $app->user->account;;
 		$application->verified = 0;
+		$application->finished = 0;
 		$application->created = $dt;
 		$application->modified = $dt;
 

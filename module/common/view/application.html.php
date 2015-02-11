@@ -15,26 +15,19 @@ function orderModificationApplication(tagObj, replaceID)
 	var url = '<?php echo $this->createLink('my', 'ordermodification'); ?>';
 
 	if (confirm('确认需要修改' + objectTypeName + '[' + objectName + ']?')) {
-		$.ajax(
-			{
-				type: 'POST',
-				url: url,
-				data: {object_type: objectType, object_id: objectId},
-				dataType: 'json',
-				success: function (data) {
-					if (data.result == 'success') {
-						$('#' + replaceID).wrap("<div id='tmpDiv'></div>");
-						$('#tmpDiv').load(document.location.href + ' #' + replaceID, function () {
-							$('#tmpDiv').replaceWith($('#tmpDiv').html());
-							if (typeof sortTable == 'function') {
-								sortTable();
-							}
-							$('#' + replaceID).find('[data-toggle=modal], a.iframe').modalTrigger();
-						});
-					}
+		$.ajax({
+			type: 'POST',
+			url: url,
+			data: {object_type: objectType, object_id: objectId},
+			dataType: 'json',
+			success: function (data) {
+				if (data.result == 'success') {
+					alert('已成功申请修改' + objectTypeName + '[' + objectName + ']');
+
+					document.location.reload();
 				}
 			}
-		);
+		});
 	}
 }
 </script>

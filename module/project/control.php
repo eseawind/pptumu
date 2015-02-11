@@ -26,11 +26,6 @@ class project extends control
 	 */
 	public function index($status = 'undone', $orderBy = 'code_asc', $pageID = 1)
 	{
-		// if($locate == 'yes') $this->locate($this->createLink('project', 'task'));
-
-		if ($this->projects) $this->commonAction($projectID);
-		$this->session->set('projectList', $this->app->getURI(true));
-
 		/* Load pager and get tasks. */
 		$this->app->loadClass('pager', $static = true);
 		$recPerPage = 10;
@@ -39,8 +34,7 @@ class project extends control
 		$this->app->loadLang('my');
 		$this->view->title = $this->lang->project->allProject;
 		$this->view->position[] = $this->lang->project->allProject;
-		$this->view->projectStats = $this->project->getProjectStats($status, 0, 30, $orderBy, $pager);
-		$this->view->projectID = $projectID;
+		$this->view->projects = $this->project->getList(array(), $pager);
 		$this->view->pager = $pager;
 		$this->view->recTotal = $pager->recTotal;
 		$this->view->recPerPage = $pager->recPerPage;
@@ -76,20 +70,13 @@ class project extends control
 
 		if (!$projects and $this->methodName != 'create' and $this->app->getViewType() != 'mhtml') $this->locate($this->createLink('project', 'create'));
 
-		/* Get projects and products info. */
-		$projectID = $this->project->saveState($projectID, array_keys($projects));
-		$project = $this->project->getById($projectID);
-
 		$actions = $this->loadModel('action')->getList('project', $project->id);
-
-		/* Set menu. */
-		$this->project->setMenu($projects, $project->id, $extra);
 
 		/* Assign. */
 		$this->view->projects = $projects;
 		$this->view->actions = $actions;
 
-		return $project;
+		return true;
 	}
 
 	/**

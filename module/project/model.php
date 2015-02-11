@@ -420,9 +420,12 @@ class projectModel extends model
 	 */
 	public function getList($conds = array(), $pager = null)
 	{
-		$this->dao->select('*')->from(TABLE_PROJECT)->where(1)->eq(1)
-			->andWhere('deleted')->eq(0)
-			->orderBy('id DESC');
+		$this->dao->select('project.*, application.id AS application_id, application.verified AS application_verified')->from(TABLE_PROJECT)->alias('project')
+			->leftJoin(TABLE_APPLICATION)->alias('application')
+			->on("application.object_id = project.id AND application.object_type = 'project' AND application.finished = 0")
+			->where(1)
+			->andWhere('project.deleted')->eq(0)
+			->orderBy('project.id DESC');
 		if (is_object($pager) && is_a($pager, 'pager')) {
 			$this->dao->page($pager);
 		}
