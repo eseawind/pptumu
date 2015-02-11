@@ -18,13 +18,12 @@
 		<tr>
 			<td class='text-center'><?php echo $project->code; ?></td>
 			<td><?php echo $project->name; ?></td>
-			<td><?php echo $project->type; ?></td>
-			<td><?php echo $users[$project->pm]; ?></td>
+			<td class='text-center'><?php echo $project->type; ?></td>
+			<td class='text-center'><?php echo $users[$project->pm]; ?></td>
 			<td class='text-center'><?php echo $project->begin . ' -> ' . $project->espected_completion; ?></td>
 			<td class='text-center'><?php echo '进行中'; ?></td>
 			<td class='text-center'>
-				<?php echo html::a($this->createLink('statistics', 'reportlist', "projectID={$project->id}"), '日报表'); ?>
-				|&nbsp;
+				<?php echo html::a($this->createLink('statistics', 'reportlist', "projectID={$project->id}"), '日报表'); ?>|&nbsp;
 				工程量统计</td>
 		</tr>
 		<?php } ?>

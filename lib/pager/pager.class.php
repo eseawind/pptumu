@@ -350,7 +350,8 @@ class pager
 	 */
 	private function createDigest()
 	{
-		return sprintf($this->lang->pager->digest, $this->recTotal, $this->createRecPerPageList(), $this->pageID, $this->pageTotal);
+		// return sprintf($this->lang->pager->digest, $this->recTotal, $this->createRecPerPageList(), $this->pageID, $this->pageTotal);
+		return sprintf($this->lang->pager->digest, $this->recTotal, $this->pageID, $this->pageTotal);
 	}
 
 	/**

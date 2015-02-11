@@ -274,7 +274,8 @@ $lang->error->noData          = '没有数据';
 /* 分页信息。*/
 $lang->pager = new stdclass();
 $lang->pager->noRecord  = "暂时没有记录";
-$lang->pager->digest    = "共 <strong>%s</strong> 条记录，%s <strong>%s/%s</strong> &nbsp; ";
+// $lang->pager->digest    = "共 <strong>%s</strong> 条记录，%s <strong>%s/%s</strong> &nbsp; ";
+$lang->pager->digest    = "共 <strong>%s</strong> 条记录，<strong>%s/%s</strong> &nbsp; ";
 $lang->pager->recPerPage= "每页 <strong>%s</strong> 条";
 $lang->pager->first     = "<i class='icon-step-backward' title='首页'></i>";
 $lang->pager->pre       = "<i class='icon-play icon-rotate-180' title='上一页'></i>";
