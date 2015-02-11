@@ -17,11 +17,13 @@ class machineModel extends model
 		} else if ($isRent < 0) {
 			$isRent = 0;
 		}
-
-		$this->dao->select('machine.*, mtype.name AS type_name')->from(TABLE_MACHINE)->alias('machine');
+		$fields = 'machine.*, mtype.name AS type_name, application.id AS application_id, application.verified AS application_verified';
+		$this->dao->select($fields)->from(TABLE_MACHINE)->alias('machine');
 		$this->dao->leftJoin(TABLE_MACHINETYPE)->alias('mtype')
-			->on('machine.type_id = mtype.id');
-		$this->dao->where(1)->eq(1)
+			->on('machine.type_id = mtype.id')
+		->leftJoin(TABLE_APPLICATION)->alias('application')
+		->on("application.object_id = machine.id AND application.object_type = 'machine' AND application.finished = 0");
+		$this->dao->where(1)
 			->andWhere('deleted')->eq($deleted)
 			->andWhere('is_rent')->eq($isRent);
 		if ($typeId) {

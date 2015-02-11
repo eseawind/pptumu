@@ -60,6 +60,7 @@
 	</table>
 	</form>
 </div>
+
 <script language="javascript">
 $(function () {
 <?php if ($application->verified >= 0) { ?>
@@ -84,4 +85,5 @@ $(function () {
 <?php } ?>
 });
 </script>
+
 <?php include '../../common/view/footer.html.php'; ?>

@@ -19,7 +19,7 @@
 </div>
 
 <div class='main'>
-    <table class='table table-condensed table-hover table-striped tablesorter table-fixed'>
+    <table class='table table-condensed table-hover table-striped tablesorter table-fixed' id="machine_list">
     <thead>
         <tr>
             <th class='w-id'><?php common::printOrderLink('id', $orderBy, '', $lang->idAB);?></th>
@@ -45,8 +45,11 @@
             <td><?php echo (!empty($machine->distribution)) ? $machine->distribution->project_code : ''; ?></td>
             <td><?php echo (!empty($machine->distribution)) ? $machine->distribution->begin . '<br />' . $machine->distribution->end : ''; ?></td>
             <td class='text-center'>
-                <?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $lang->edit); ?>
-                |&nbsp;
+                <?php if ($machine->application_id && $machine->application_verified == 1) { ?>
+                <?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $lang->edit); ?>|&nbsp;
+                <?php } else if (empty($machine->application_id)) { ?>
+                <?php echo html::a("javascript: orderModificationApplication(\"application_{$machine->id}\", \"machine_list\");", '申请编辑', '', "objecttype='machine' objecttypename='机械' objectid='{$machine->id}' objectname='{$machine->name}' id='application_{$machine->id}'"); ?>&nbsp;|
+                <?php } ?>
                 <?php echo html::a($this->createLink('machine', 'distribute', "machineID={$machine->id}"), '分配'); ?>
                 |&nbsp;
                 <?php echo html::a($this->createLink('machine', 'delete', sprintf($editParams, $machine->id)), $lang->delete); ?>
@@ -64,4 +67,5 @@
 
 <script>$("#<?php echo $status; ?>Tab").addClass('active');</script>
 
+<?php include '../../common/view/application.html.php'; // 申请修改 ?>
 <?php include '../../common/view/footer.html.php';?>

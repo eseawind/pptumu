@@ -41,11 +41,9 @@
             <td class='text-center'><?php echo $material->unit;?></td>
             <td class='text-center'>
                 <?php if ($material->application_id && $material->application_verified == 1) { ?>
-                <?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), $lang->edit);?>
-                |
+                <?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), $lang->edit);?>&nbsp;|
                 <?php } else if (empty($material->application_id)) { ?>
-                <?php echo html::a("javascript: orderModificationApplication(\"application_{$material->id}\", \"material_list\");", '申请编辑', '', "objecttype='material' objecttypename='材料' objectid='{$material->id}' objectname='{$material->name}' id='application_{$material->id}'"); ?>
-                |
+                <?php echo html::a("javascript: orderModificationApplication(\"application_{$material->id}\", \"material_list\");", '申请编辑', '', "objecttype='material' objecttypename='材料' objectid='{$material->id}' objectname='{$material->name}' id='application_{$material->id}'"); ?>&nbsp;|
                 <?php } ?>
                 <?php echo html::a($this->createLink('material', 'delete', 'id=' . $material->id), $lang->delete);?>
             </td>

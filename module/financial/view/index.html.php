@@ -27,7 +27,7 @@
 	<table class='table table-condensed table-striped table-bordered tablesorter table-fixed active-disabled'>
 		<thead>
 		<tr class="a-center">
-			<th>序号</th>
+			<th class="w-id">序号</th>
 			<th>申请编号</th>
 			<th>项目名称</th>
 			<th>材料名称 / 申请数量</th>
@@ -40,20 +40,20 @@
 		<tbody>
 		<?php foreach ($applications As $i => $application) { ?>
 		<tr>
-			<td><?php echo $i + 1; ?></td>
-			<td><?php echo $application->code; ?></td>
+			<td class='text-center'><?php echo $i + 1; ?></td>
+			<td class='text-center'><?php echo $application->code; ?></td>
 			<td><?php echo $application->project_name; ?></td>
 			<td><?php foreach ($application->details As $detail) { ?>
 				<p><?php echo $detail->material_name, ' / ', $detail->qty, $detail->material_unit; ?></p>
 			<?php } ?></td>
-			<td><?php echo date('Y-m-d', strtotime($application->created)); ?></td>
-			<td><?php echo $application->created_by; ?></td>
-			<td><?php if ($application->verified) {
+			<td class='text-center'><?php echo date('Y-m-d', strtotime($application->created)); ?></td>
+			<td class='text-center'><?php echo $application->created_by; ?></td>
+			<td class='text-center'><?php if ($application->verified) {
 					echo "<span class=\"label label-badge label-success\">已通过</span>";
 				} else {
 					echo "<span class=\"label label-badge label-warning\">未通过</span>";
 				} ?></td>
-			<td><?php echo html::a($this->createLink('financial', 'verify', "machineID={$application->id}"), '点击审批'); ?></td>
+			<td class='text-center'><?php echo html::a($this->createLink('financial', 'verify', "machineID={$application->id}"), '点击审批'); ?></td>
 		</tr>
 		<?php } ?>
 		</tbody>
