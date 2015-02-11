@@ -3,7 +3,6 @@
 /**
  * The control file of dashboard module
  */
-
 class my extends control
 {
 	/**
@@ -39,8 +38,6 @@ class my extends control
 
 		$this->view->projectStats = $projectStats;
 		$this->view->actions = $this->loadModel('action')->getDynamic('all', 'all', 'date_desc', $pager);
-		$this->view->todos = $this->loadModel('todo')->getList('all', $account, 'wait, doing', $this->config->my->todoCounts);
-		$this->view->tasks = $this->loadModel('task')->getUserTasks($account, 'assignedTo', $this->config->my->taskCounts);
 		$this->view->users = $this->loadModel('user')->getPairs('noletter|withguest');
 		$this->view->title = $this->lang->my->common;
 
@@ -120,7 +117,6 @@ class my extends control
 		/* Assign. */
 		$this->view->title = $this->lang->my->common . $this->lang->colon . $this->lang->my->story;
 		$this->view->position[] = $this->lang->my->story;
-		$this->view->stories = $this->loadModel('story')->getUserStories($this->app->user->account, $type, $sort, $pager);
 		$this->view->users = $this->user->getPairs('noletter');
 		$this->view->type = $type;
 		$this->view->recTotal = $recTotal;

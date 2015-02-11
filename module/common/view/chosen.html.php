@@ -1,7 +1,6 @@
-<?php if($extView = $this->getExtViewFile(__FILE__)){include $extView; return helper::cd();}?>
+<?php if ($extView = $this->getExtViewFile(__FILE__)) {include $extView; return helper::cd();} ?>
 <?php
-if($config->debug)
-{
+if($config->debug)  {
     css::import($jsRoot . 'jquery/chosen/min.css');
     js::import($jsRoot . 'jquery/chosen/min.js');
 }

@@ -1,22 +1,21 @@
-</div><?php /* end '.outer' in 'header.html.php'. */ ?>
+<?php echo '</div>'; /* end '.outer' in 'header.html.php'. */ ?>
+
 <script>setTreeBox()</script>
-<?php if ($extView = $this->getExtViewFile(__FILE__)) {
-	include $extView;
-	return helper::cd();
-} ?>
+<?php if ($extView = $this->getExtViewFile(__FILE__)) {include $extView;return helper::cd();} ?>
 
 <div id='divider'></div>
 <iframe frameborder='0' name='hiddenwin' id='hiddenwin' scrolling='no' class='debugwin hidden'></iframe>
+
 <?php $onlybody = zget($_GET, 'onlybody', 'no'); ?>
 <?php if ($onlybody != 'yes') { ?>
-</div>
-<?php /* end '#wrap' in 'header.html.php'. */ ?>
+<?php echo '</div>'; /* end '#wrap' in 'header.html.php'. */ ?>
+
 <div id='footer'>
   <div id="crumbs">
     <?php commonModel::printBreadMenu($this->moduleName, isset($position) ? $position : ''); ?>
   </div>
   <div id="poweredby">
-  <a href='/' target='_blank' class='text-primary'><i class='icon-zentao'></i><?php echo $lang->zentaoPMS; ?></a>
+    <a href='/' target='_blank' class='text-primary'><i class='icon-zentao'></i><?php echo $lang->zentaoPMS; ?></a>
     &nbsp;
     <?php commonModel::printNotifyLink(); ?>
     <?php // commonModel::printQRCodeLink(); ?>
@@ -25,7 +24,7 @@
 <?php } ?>
 
 <?php
-js::set('onlybody', $onlybody);           // set the onlybody var.
+js::set('onlybody', $onlybody); // set the onlybody var.
 if (isset($pageJS)) js::execute($pageJS);  // load the js for current page.
 
 /* Load hook files for current page. */

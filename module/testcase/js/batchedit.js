@@ -1,4 +1,0 @@
-$(function()
-{
-    $(".chosen").chosen(defaultChosenOptions);
-})

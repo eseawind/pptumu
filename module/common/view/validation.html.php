@@ -1,31 +1,31 @@
-<?php if ($extView = $this->getExtViewFile(__FILE__)) {
-	include $extView;
-	return helper::cd();
-} ?>
+<?php if($extView = $this->getExtViewFile(__FILE__)){include $extView; return helper::cd();}?>
 <?php
 js::import($jsRoot . 'jquery/validation/min.js');
 ?>
-<style>label.error {
-		color: red
-	}</style>
+<style>label.error {color:red}</style>
 <script>
 	requiredFields = "<?php echo isset($this->config->{$this->app->getModuleName()}->{$this->app->getMethodName()}->requiredFields) ? $this->config->{$this->app->getModuleName()}->{$this->app->getMethodName()}->requiredFields : '';?>";
-	$(document).ready(function () {
-		if (typeof requiredFields == 'unDefined') return;
-		for (i in requiredFields) {
+	$(document).ready(function()
+	{
+		if(typeof requiredFields == 'unDefined') return;
+		for(i in requiredFields)
+		{
 			$('form #' + requiredFields[i]).addClass('required');
 		}
 		initValidation();
 		$('form').validate();
 	});
 
-	function initValidation() {
+	function initValidation()
+	{
 		clientLang = "<?php echo $this->app->getClientLang();?>";
 
-		if (clientLang == 'en') {
+		if(clientLang == 'en')
+		{
 			$.extend($.validator,
 				{
-					messages: {
+					messages:
+					{
 						required: "This field is required.",
 						remote: "Please fix this field.",
 						email: "Please enter a valid email address.",
@@ -46,10 +46,12 @@ js::import($jsRoot . 'jquery/validation/min.js');
 					}
 				});
 		}
-		else {
+		else
+		{
 			$.extend($.validator,
 				{
-					messages: {
+					messages:
+					{
 						required: "该字段为必填字段",
 						remote: "Please fix this field",
 						email: "请填写合法的邮箱地址",
