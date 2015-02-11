@@ -1,16 +1,5 @@
-<?php
-/**
- * The contacts manage page of user module.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      chunsheng wang <chunsheng@cnezsoft.com>
- * @package     user
- * @version     $Id$
- * @link        http://www.zentao.net
- */
-?>
 <?php include '../../common/view/header.html.php';?>
+
 <div id='titlebar'>
   <div class='heading'>
     <span class='prefix' title='COMPANY'><?php echo html::icon($lang->icons['company']);?></span>
@@ -86,4 +75,5 @@
     </form>
   </div>
 </div>
+
 <?php include '../../common/view/footer.html.php';?>

@@ -1,15 +1,3 @@
-<?php
-/**
- * The story view file of dashboard module of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Congzhi Chen <congzhi@cnezsoft.com>
- * @package     dashboard
- * @version     $Id: story.html.php 4771 2013-05-05 07:41:02Z chencongzhi520@gmail.com $
- * @link        http://www.zentao.net
- */
-?>
 <?php include '../../common/view/header.html.php';?>
 <?php include '../../common/view/tablesorter.html.php';?>
 <?php include './featurebar.html.php';?>
@@ -26,15 +14,15 @@
 <table class='table tablesorter table-fixed'>
   <thead>
     <tr class='colhead'>
-      <th class='w-id'>    <?php echo $lang->idAB;?></th>
-      <th class='w-pri'>   <?php echo $lang->priAB;?></th>
-      <th class='w-200px'> <?php echo $lang->story->product;?></th>
-      <th>                 <?php echo $lang->story->title;?></th>
-      <th class='w-150px'> <?php echo $lang->story->plan;?></th>
-      <th class='w-user'>  <?php echo $lang->openedByAB;?></th>
-      <th class='w-hour'>  <?php echo $lang->story->estimateAB;?></th>
+      <th class='w-id'><?php echo $lang->idAB;?></th>
+      <th class='w-pri'><?php echo $lang->priAB;?></th>
+      <th class='w-200px'><?php echo $lang->story->product;?></th>
+      <th><?php echo $lang->story->title;?></th>
+      <th class='w-150px'><?php echo $lang->story->plan;?></th>
+      <th class='w-user'><?php echo $lang->openedByAB;?></th>
+      <th class='w-hour'><?php echo $lang->story->estimateAB;?></th>
       <th class='w-status'><?php echo $lang->statusAB;?></th>
-      <th class='w-100px'> <?php echo $lang->story->stageAB;?></th>
+      <th class='w-100px'><?php echo $lang->story->stageAB;?></th>
     </tr>
   </thead>
   <tbody>
