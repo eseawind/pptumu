@@ -5,17 +5,18 @@
 <?php js::import($jsRoot . 'misc/date.js'); ?>
 <?php js::set('holders', $lang->project->placeholder); ?>
 
-<div class='container mw-1400px'>
-	<div id='titlebar'>
-		<div class='heading'>
-			<span class='prefix'><?php echo html::icon($lang->icons['project']);?></span>
-			<strong><small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->project->create;?></strong>
-		</div>
-		<div class='actions'>
-			<button class='btn' id='cpmBtn'><?php echo html::icon($lang->icons['copy']) . ' ' . $lang->project->copy;?></button>
-		</div>
+<div id='titlebar'>
+	<div class='heading'>
+		<span class='prefix'><?php echo html::icon($lang->icons['project']);?></span>
+		<strong><small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->project->create;?></strong>
 	</div>
-	<form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
+	<div class='actions'>
+		<button class='btn' id='cpmBtn'><?php echo html::icon($lang->icons['copy']) . ' ' . $lang->project->copy;?></button>
+	</div>
+</div>
+
+<div class='container mw-1400px'><!--  target='hiddenwin' -->
+	<form class='form-condensed' method='post' id='dataform'>
 	<table class='table table-form'>
 		<tr>
 			<th class='w-90px'>存在问题:</th>

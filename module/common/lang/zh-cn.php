@@ -85,9 +85,10 @@ $lang->menu = new stdclass();
 $lang->menu->my       = '<i class="icon-home"></i><span> 首页</span>|my|index';
 $lang->menu->project  = '工程管理|project|index';
 $lang->menu->material = '材料管理|material|index';
-$lang->menu->machine = '机械管理|machine|index';
-$lang->menu->report = '日报管理|report|index';
 $lang->menu->financial = '财务管理|financial|index';
+$lang->menu->machine = '机械管理|machine|index';
+$lang->menu->report = '工程上报|report|index';
+$lang->menu->dailyreview = '日报审核|dailyreview|index';
 $lang->menu->statistics = '统计管理|statistics|index';
 $lang->menu->company  = '权限管理|company|index';
 
@@ -162,6 +163,12 @@ $lang->material->menu->list = array('link' => '全部材料|material|index');
 $lang->material->menu->apply = array('link' => '申请材料|material|apply');
 $lang->material->menu->applicationindex = array('link' => '申请记录|material|applicationindex');
 
+
+/** 财务管理菜单 */
+$lang->financial = new stdClass();
+$lang->financial->menu = new stdClass();
+$lang->financial->menu->index          = '财务管理';
+
 /** 机械试图菜单设置 */
 $lang->machine = new stdClass();
 $lang->machine->menu = new stdClass();
@@ -169,16 +176,15 @@ $lang->machine->menu = new stdClass();
 $lang->machine->menu->self = array('link' => '自有机械|machine|index', 'varalias' => array('isRent' => 0));
 $lang->machine->menu->rent = array('link' => '租赁机械|machine|index|isRent=1', 'varalias' => array('isRent' => 1));
 
-/* 统计视图菜单设置。*/
+/* 工程上报视图菜单设置。*/
 $lang->report = new stdclass();
 $lang->report->menu = new stdclass();
-
 $lang->report->menu->index            = array('link' => '工程上报|report|index', 'alias' => '');
 
 /** 财务管理菜单 */
-$lang->financial = new stdClass();
-$lang->financial->menu = new stdClass();
-$lang->financial->menu->index          = '财务管理';
+$lang->dailyreview = new stdClass();
+$lang->dailyreview->menu = new stdClass();
+$lang->dailyreview->menu->index          = '日报表列表';
 
 /** 统计管理菜单 */
 $lang->statistics = new stdClass();

@@ -430,7 +430,9 @@ class projectModel extends model
 			$this->dao->page($pager);
 		}
 
-		return $this->dao->fetchAll('id');
+		$projects = $this->dao->fetchAll('id');
+		print_r($projects); exit;
+		return $projects;
 	}
 
 	/**

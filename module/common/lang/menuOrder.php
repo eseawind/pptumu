@@ -5,11 +5,12 @@ global $lang;
 $lang->menuOrder[5]  = 'my';
 $lang->menuOrder[10] = 'project';
 $lang->menuOrder[15] = 'material';
-$lang->menuOrder[20] = 'machine';
-$lang->menuOrder[25] = 'report';
-$lang->menuOrder[30] = 'financial';
-$lang->menuOrder[35] = 'statistics';
-$lang->menuOrder[40] = 'company';
+$lang->menuOrder[20] = 'financial';
+$lang->menuOrder[25] = 'machine';
+$lang->menuOrder[30] = 'report';
+$lang->menuOrder[35] = 'dailyreview';
+$lang->menuOrder[40] = 'statistics';
+$lang->menuOrder[45] = 'company';
 
 /* index menu order. */
 $lang->index->menuOrder[10] = 'project';

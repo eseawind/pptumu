@@ -79,6 +79,7 @@ class reportModel extends model
 		$report = fixer::input('post')
 			->stripTags($this->config->report->editor->create['id'], $this->config->allowedTags)
 			->get();
+		$report->daily_id = $this->getDailyId($report->project_id, $report->report_date);
 		$report->created = $dt;
 		$report->modified = $dt;
 		$report->deleted = 0;
@@ -149,6 +150,7 @@ class reportModel extends model
 		$testation = fixer::input('post')
 			->stripTags($this->config->report->editor->createtestation['id'], $this->config->allowedTags)
 			->get();
+		$testation->daily_id = $this->getDailyId($testation->project_id, $testation->report_date);
 		$testation->created = $dt;
 		$testation->modified = $dt;
 		$testation->deleted = 0;
@@ -179,6 +181,8 @@ class reportModel extends model
 		$problem = fixer::input('post')
 			->stripTags($this->config->report->editor->createproblem['id'], $this->config->allowedTags)
 			->get();
+		$problem->daily_id = $this->getDailyId($problem->project_id, $problem->report_date);
+
 		$problem->created = $dt;
 		$problem->modified = $dt;
 		$problem->deleted = 0;
@@ -196,6 +200,46 @@ class reportModel extends model
 		}
 
 		return false;
+	}
+
+	/**
+	 *
+	 */
+	public function getDailyId($projectID, $date)
+	{
+		global $app;
+
+		$dailyID = $this->dao->select('daily.id')
+			->from(TABLE_DAILY)->alias('daily')
+			->where('daily.project_id')->eq($projectID)
+			->andWhere('daily.date')->eq($date)
+			->orderBy('verified_asc')
+			->limit(1)
+			->fetch();
+
+		if (!$dailyID) {
+			$dt = date('Y-m-d H:i:s');
+			$daily = new stdClass();
+			$daily->project_id = $projectID;
+			$daily->date = $date;
+			$daily->verified = 0;
+			$daily->created = $dt;
+			$daily->modified = $dt;
+			$daily->created_by = $app->user->account;
+
+			$this->dao->insert(TABLE_DAILY)->data($daily)
+				->check('project_id', 'int')
+				->check('date', 'date')
+				->exec();
+
+			if (!dao::isError()) {
+				$dailyID = $this->dao->lastInsertId();
+			}
+		} else {
+			$dailyID = $dailyID->id;
+		}
+
+		return $dailyID;
 	}
 
 	/**

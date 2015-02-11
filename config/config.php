@@ -130,6 +130,7 @@ define('TABLE_MACHINETYPE',   '`' . $config->db->prefix . 'machinetype`');
 define('TABLE_MACHINE',       '`' . $config->db->prefix . 'machine`');
 define('TABLE_MACHINEDISTRIBUTIION', '`' . $config->db->prefix . 'machinedistribution`');
 
+define('TABLE_DAILY',         '`' . $config->db->prefix . 'daily`');
 define('TABLE_REPORT',        '`' . $config->db->prefix . 'report`');
 define('TABLE_TESTATION',     '`' . $config->db->prefix . 'testation`');
 define('TABLE_PROBLEM',       '`' . $config->db->prefix . 'problem`');
