@@ -1,23 +1,17 @@
 <?php
 /**
- * The baisc model file of bugfree convert of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     convert
- * @version     $Id: bugfree.php 4129 2013-01-18 01:58:14Z wwccss $
- * @link        http://www.zentao.net
+ * The baisc model file of bugfree convert.
  */
+
 class bugfreeConvertModel extends convertModel
 {
-    public $map         = array();
-    public $filePath    = '';
+    public $map = array();
+    public $filePath = '';
     static public $info = array();
 
     /**
      * Connect to db auto.
-     * 
+     *
      * @access public
      * @return void
      */
@@ -29,7 +23,7 @@ class bugfreeConvertModel extends convertModel
 
     /**
      * Check table.
-     * 
+     *
      * @access public
      * @return bool
      */
@@ -40,7 +34,7 @@ class bugfreeConvertModel extends convertModel
 
     /**
      * Check the install path.
-     * 
+     *
      * @access public
      * @return bool
      */
@@ -52,7 +46,7 @@ class bugfreeConvertModel extends convertModel
 
     /**
      * Set the path of attachments.
-     * 
+     *
      * @access public
      * @return bool
      */
@@ -63,8 +57,8 @@ class bugfreeConvertModel extends convertModel
 
     /**
      * Excute the convert.
-     * 
-     * @param  int    $version 
+     *
+     * @param  int $version
      * @access public
      * @return void
      */
@@ -74,14 +68,13 @@ class bugfreeConvertModel extends convertModel
 
     /**
      * Clear rows added in converting.
-     * 
+     *
      * @access public
      * @return void
      */
     public function clear()
     {
-        foreach($this->session->state as $table => $maxID)
-        {
+        foreach ($this->session->state as $table => $maxID) {
             $this->dao->dbh($this->dbh)->delete()->from($table)->where('id')->gt($maxID)->exec();
         }
     }

@@ -1,8 +1,8 @@
 <?php
-
 /**
  * The control file of action module.
  */
+
 class action extends control
 {
 	/**

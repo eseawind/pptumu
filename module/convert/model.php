@@ -2,8 +2,6 @@
 /**
  * The model file of convert module.
  */
-?>
-<?php
 
 class convertModel extends model
 {

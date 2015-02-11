@@ -1,8 +1,8 @@
 <?php
-
 /**
  * The control file of common module.
  */
+
 class common extends control
 {
 	/**

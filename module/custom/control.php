@@ -1,8 +1,8 @@
 <?php
-
 /**
  * The control file of custom.
  */
+
 class custom extends control
 {
 	/**

@@ -1,9 +1,9 @@
 <?php
-
 /**
  * The control file of admin module
  *
  */
+
 class admin extends control
 {
 	/**

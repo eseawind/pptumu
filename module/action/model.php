@@ -1,8 +1,8 @@
 <?php
-
 /**
  * The model file of action module.
  */
+
 class actionModel extends model
 {
 	const BE_UNDELETED = 0;    // The deleted object has been undeleted.
@@ -97,6 +97,7 @@ class actionModel extends model
 				);
 			}
 		}
+
 		return json_encode($actions);
 	}
 

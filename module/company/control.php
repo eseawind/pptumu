@@ -1,8 +1,8 @@
 <?php
-
 /**
  * The control file of company module.
  */
+
 class company extends control
 {
 	/**

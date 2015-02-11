@@ -9,5 +9,6 @@
 		?>
 	</div>
 </div>
+
 <?php include '../../misc/view/links.html.php'; ?>
 <?php include '../../common/view/footer.html.php'; ?>

@@ -1,17 +1,6 @@
-<?php
-/**
- * The browse view file of dept module of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     dept
- * @version     $Id: browse.html.php 4728 2013-05-03 06:14:34Z chencongzhi520@gmail.com $
- * @link        http://www.zentao.net
- */
-?>
-<?php include '../../common/view/header.html.php';?>
-<?php include '../../common/view/treeview.html.php';?>
+<?php include '../../common/view/header.html.php'; ?>
+<?php include '../../common/view/treeview.html.php'; ?>
+
 <div id='titlebar'>
   <div class='heading'><?php echo html::icon($lang->icons['dept']);?> <?php echo $lang->dept->common;?></div>
 </div>
@@ -76,8 +65,8 @@
           </form>
         </div>
       </div>
-
     </div>
   </div>
 </div>
+
 <?php include '../../common/view/footer.html.php';?>
