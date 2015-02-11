@@ -15,4 +15,3 @@ $config->editor->extSort[] = 'lang';
 $config->editor->extSort[] = 'js';
 $config->editor->extSort[] = 'css';
 $config->editor->extSort[] = 'config';
-
