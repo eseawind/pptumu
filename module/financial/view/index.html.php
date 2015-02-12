@@ -20,6 +20,9 @@
 		<li class="<?php echo ($verified == 'passed') ? 'active' : ''; ?>">
 			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=passed"), '已审批'); ?>
 		</li>
+		<li class="<?php echo ($verified == 'distributed') ? 'active' : ''; ?>">
+			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=distributed"), '已发放'); ?>
+		</li>
 		<li class="<?php echo ($verified == 'refused') ? 'active' : ''; ?>">
 			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=refused"), '已拒绝'); ?>
 		</li>
@@ -48,8 +51,10 @@
 			<?php } ?></td>
 			<td class='text-center'><?php echo date('Y-m-d', strtotime($application->created)); ?></td>
 			<td class='text-center'><?php echo $application->created_by; ?></td>
-			<td class='text-center'><?php if ($application->verified) {
+			<td class='text-center'><?php if ($application->verified == 1) {
 					echo "<span class=\"label label-badge label-success\">已通过</span>";
+				} else if ($application->verified == 2) {
+					echo "<span class=\"label label-badge label-success\">已采购到位并发放到工地</span>";
 				} else {
 					echo "<span class=\"label label-badge label-warning\">未通过</span>";
 				} ?></td>

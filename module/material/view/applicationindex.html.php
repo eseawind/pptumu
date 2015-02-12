@@ -37,8 +37,10 @@
 			<?php } ?></td>
 			<td><?php echo date('Y-m-d', strtotime($application->created)); ?></td>
 			<td><?php echo $application->created_by; ?></td>
-			<td><?php if ($application->verified) {
+			<td><?php if ($application->verified == 1) {
 				echo "<span class=\"label label-badge label-success\">已通过</span>";
+			} else if ($application->verified == 2) {
+				echo "<span class=\"label label-badge label-success\">已采购到位并发放到工地</span>";
 			} else {
 				echo "<span class=\"label label-badge label-warning\">未通过</span>";
 			} ?></td>

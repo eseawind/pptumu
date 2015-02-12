@@ -295,7 +295,7 @@ class materialModel extends model
 			->leftJoin(TABLE_MATERIAL)->alias('material')
 			->on('detail.material_id = material.id')
 			->where('application.project_id')->eq($projectID)
-			->andWhere('application.verified')->eq(1)
+			->andWhere('application.verified')->eq(2)
 			->andWhere('application.deleted')->eq(0)
 			->orderBy('application.id ASC')
 			->fetchAll();
