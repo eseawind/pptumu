@@ -431,7 +431,7 @@ class projectModel extends model
 		}
 
 		$projects = $this->dao->fetchAll('id');
-		print_r($projects); exit;
+
 		return $projects;
 	}
 

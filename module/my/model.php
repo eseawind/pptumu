@@ -44,26 +44,37 @@ class myModel extends model
 		$dt = date('Y-m-d H:i:s');
 
 		$application = fixer::input('post')->get();
-		$application->applicant = $app->user->account;;
+		$application->applicant = $app->user->account;
 		$application->verified = 0;
 		$application->finished = 0;
 		$application->created = $dt;
 		$application->modified = $dt;
 
-		$this->dao->insert(TABLE_APPLICATION)->data($application)
-			->autoCheck()
-			->check('object_type', 'notempty')
-			->check('object_id', 'notempty')
-			->checkIF($application->object_id != '', 'object_id', 'int')
-			->exec();
+		// 判断是否已经存在相应的申请
+		$existed = $this->dao->select('id')->from(TABLE_APPLICATION)
+			->where('verified')->eq(0)
+			->andWhere('finished')->eq(0)
+			->andWhere('object_type')->eq($application->object_type)
+			->andWhere('object_id')->eq($application->object_id)
+			->fetch();
 
-		if (!dao::isError()) {
-			$applicationID = $this->dao->lastInsertID();
+		$applicationID = null;
+		if (!$existed) {
+			$this->dao->insert(TABLE_APPLICATION)->data($application)
+				->autoCheck()
+				->check('object_type', 'notempty')
+				->check('object_id', 'notempty')
+				->checkIF($application->object_id != '', 'object_id', 'int')
+				->exec();
 
-			return $applicationID;
+			if (!dao::isError()) {
+				$applicationID = $this->dao->lastInsertID();
+			}
+		} else {
+			$applicationID = $existed->id;
 		}
 
-		return false;
+		return $applicationID;
 	}
 
 }

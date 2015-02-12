@@ -22,14 +22,14 @@ class dailyreview extends control
 	}
 
 	/**
-	 * The index page of whole zentao system.
+	 * The index page of dailyreview module.
 	 *
 	 * @access public
 	 * @return void
 	 */
 	public function index($projectID = 0, $verified = 'pending', $pageID = 1)
 	{
-		$verifiedVal = $this->financial->getVerifyStatusVal($verified);
+		$verifiedVal = $this->dailyreview->getVerifyStatusVal($verified);
 
 		if (!empty($_POST)) {
 			$search = fixer::input('post')->get();
@@ -43,14 +43,14 @@ class dailyreview extends control
 
 		$conds = array('project_id' => $projectID);
 		$conds['verified'] = $verifiedVal;
-		$applications = $this->material->getApplicationList($conds, $pager);
+		$dailies = $this->dailyreview->getDailyList($conds, $pager);
 
 		//
 		$projects = $this->project->getPairs();
 
 		$verifiedParams = helper::genParamstr(array('projectID' => $projectID));
 
-		$this->view->applications = $applications;
+		$this->view->dailies = $dailies;
 		$this->view->projects = array('' => '选择项目') + $projects;
 		$this->view->projectID = $projectID;
 		$this->view->verified = $verified;
@@ -59,6 +59,21 @@ class dailyreview extends control
 		$this->view->pager = $pager;
 
 		$this->display();
+	}
+
+	public function showreport($reportID)
+	{
+
+	}
+
+	public function showtestation($testationID)
+	{
+
+	}
+
+	public function showproblem($problemID)
+	{
+
 	}
 
 	/**

@@ -50,11 +50,11 @@ class financialModel extends model
 	 */
 	public function getVerifyStatusVal($statusKey)
 	{
-		if (!array_key_exists($statusKey, $this->config->financial->verificationStatus)) {
+		if (!array_key_exists($statusKey, $this->config->financial->status)) {
 			return 0;
 		}
 
-		return $this->config->financial->verificationStatus[$statusKey];
+		return $this->config->financial->status[$statusKey];
 	}
 
 	/**
@@ -64,10 +64,10 @@ class financialModel extends model
 	{
 		$statusKey = '';
 
-		if (!in_array($statusVal, $this->config->financial->verificationStatus)) {
+		if (!in_array($statusVal, $this->config->financial->status)) {
 			return 'pending';
 		}
-		foreach ($this->config->financial->verificationStatus As $k => $v) {
+		foreach ($this->config->financial->status As $k => $v) {
 			if ($v === $statusVal) {
 				$statusKey = $k;
 				break;

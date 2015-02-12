@@ -13,7 +13,83 @@
 </div>
 
 <div class="main">
+	<ul id="financial_tab" class="nav nav-primary nav-justified">
+		<li class="<?php echo ($verified == 'pending') ? 'active' : ''; ?>">
+			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=pending"), '未审核'); ?>
+		</li>
+		<li class="<?php echo ($verified == 'passed') ? 'active' : ''; ?>">
+			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=passed"), '已审核'); ?>
+		</li>
+		<li class="<?php echo ($verified == 'refused') ? 'active' : ''; ?>">
+			<?php echo html::a($this->createLink('financial', 'index', "{$verifiedParams}&verified=refused"), '已拒绝'); ?>
+		</li>
+	</ul>
 
+	<div>
+		<?php foreach ($dailies As $id => $daily) { ?>
+		<table class='table table-condensed table-striped table-bordered tablesorter table-fixed active-disabled' id='bugAssign'>
+			<tbody>
+			<tr class="a-center">
+				<th><?php echo $daily->project_name; ?></th>
+				<th>项目编号: <?php echo $daily->project_code; ?></th>
+				<th>日期: <?php echo $daily->date; ?></th>
+			</tr>
+			<tr>
+				<td colspan="3">
+				<?php if ($daily->today_report) { ?>
+					本日情况:
+					<?php echo html::a($this->createLink('dailyreview', 'showreport', "reportID={$daily->today_report->id}"), '查看', '',  'class=""');?>
+					<?php if ($daily->today_report->verified) { ?>
+						已审核
+					<?php } else { ?>
+						未审核
+					<?php } ?>
+					&nbsp;&nbsp;
+				<?php } ?>
+				<?php if ($daily->tomorrow_report) { ?>
+					明日计划:
+					<?php echo html::a($this->createLink('dailyreview', 'showreport', "reportID={$daily->tomorrow_report}"), '查看', '',  'class=""');?>
+					<?php if ($daily->tomorrow_report->verified) { ?>
+						已审核
+					<?php } else { ?>
+						未审核
+					<?php } ?>
+					&nbsp;&nbsp;
+				<?php } ?>
+				<?php if ($daily->testation) { ?>
+					填写签证:
+					<?php echo html::a($this->createLink('dailyreview', 'showtestation', "testationID={$daily->testation->id}"), '查看', '',  'class=""');?>
+					<?php if ($daily->testation->verified) { ?>
+						已审核
+					<?php } else { ?>
+						未审核
+					<?php } ?>
+					&nbsp;&nbsp;
+				<?php } ?>
+				<?php if ($daily->problem) { ?>
+					存在问题:
+					<?php echo html::a($this->createLink('dailyreview', 'showproblem', "problemID={$daily->problem->id}"), '查看', '',  'class=""');?>
+					<?php if ($daily->problem->verified) { ?>
+						已审核
+					<?php } else { ?>
+						未审核
+					<?php } ?>
+					&nbsp;&nbsp;
+				<?php } ?>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<?php } ?>
+
+		<table class='table table-condensed table-striped table-bordered tablesorter table-fixed active-disabled' id='bugAssign'>
+			<tfoot>
+			<tr>
+				<td><div class='text-right'><?php $pager->show();?></div></td>
+			</tr>
+			</tfoot>
+		</table>
+	</div>
 </div>
 
 <?php include '../../common/view/footer.html.php';?>
