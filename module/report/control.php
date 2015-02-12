@@ -39,7 +39,7 @@ class report extends control
 	/**
 	 * 添加日报
 	 */
-	public function create($reportType = 'today', $projectID = 0)
+	public function create($projectID = 0, $reportType = 'today')
 	{
 		if (!empty($_POST)) {
 			$reportID = $this->report->create();
@@ -62,6 +62,7 @@ class report extends control
 		$this->view->report = $report;
 		$this->view->materialApps = $materialApps;
 		$this->view->machineDists = $machineDists;
+		$this->view->rentMachineDists = $rentMachineDists;
 		$this->view->reportType = $reportType;
 		$this->view->projectID = $projectID;
 

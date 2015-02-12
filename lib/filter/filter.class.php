@@ -141,6 +141,22 @@ class validater
 	}
 
 	/**
+	 * Date checking. Note: 2009-09-31 will be an valid date, because strtotime auto fixed it to 10-01.
+	 *
+	 * @param  date $date
+	 * @static
+	 * @access public
+	 * @return bool
+	 */
+	public static function checkDatetime($datetime)
+	{
+		if ($date == '0000-00-00 00:00:00') return true;
+		$stamp = strtotime($datetime);
+		if (!is_numeric($stamp)) return false;
+		return checkdate(date('m', $stamp), date('d', $stamp), date('Y', $stamp));
+	}
+
+	/**
 	 * REG checking.
 	 *
 	 * @param  string $var

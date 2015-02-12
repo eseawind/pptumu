@@ -10,3 +10,4 @@ $lang->machine->owner = '负责人';
 $lang->machine->ownerRent = '租赁方名称';
 
 $lang->machine->create = '添加机械';
+

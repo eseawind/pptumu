@@ -139,7 +139,7 @@ class machineModel extends model
 
 		$dt = date('Y-m-d H:i:s');
 		$distribution = fixer::input('post')->get();
-		$distribution->verified = 0;
+		$distribution->verified = 1;
 		$distribution->verified_by = $app->user->account;
 		$distribution->created_by = $app->user->account;
 		$distribution->deleted = 0;
@@ -147,6 +147,10 @@ class machineModel extends model
 		$distribution->modified = $dt;
 
 		$this->dao->insert(TABLE_MACHINEDISTRIBUTIION)->data($distribution)
+			->check('project_id', 'notempty')
+			->check('project_id', 'int')
+			->check('begin', 'datetime')
+			->check('end', 'datetime')
 			->exec();
 
 		if (!dao::isError()) {
@@ -168,18 +172,31 @@ class machineModel extends model
 	{
 		$dt = date('Y-m-d H:i:s');
 
-		$distributions = $this->dao->select('distribution.id, distribution.machine_id, machine.code AS machine_code, machine.name AS machine_name, machine.type_id, mtype.name AS type_name')
+		$this->dao->select('distribution.id, distribution.machine_id, machine.code AS machine_code, machine.name AS machine_name, machine.is_rent, machine.type_id, mtype.name AS type_name')
 			->from(TABLE_MACHINEDISTRIBUTIION)->alias('distribution')
 			->leftJoin(TABLE_MACHINE)->alias('machine')
 			->on('machine.id = distribution.machine_id')
 			->leftJoin(TABLE_MACHINETYPE)->alias('mtype')
 			->on('machine.type_id = mtype.id')
 			->where('distribution.verified')->eq(1)
+			->andWhere('distribution.project_id')->eq($projectID)
 			->andWhere('distribution.deleted')->eq(0)
 			->andWhere('distribution.begin')->lt($dt)
 			->andWhere('distribution.end')->gt($dt)
-			->orderBy('distribution.id DESC')
-			->fetchAll();
+			->orderBy('distribution.id DESC');
+
+		$list = $this->dao->fetchAll('id');
+
+		$distributions = new stdClass();
+		$distributions->self = array();
+		$distributions->rent = array();
+		foreach ($list As $id => $distribution) {
+			if ($distribution->is_rent == 1) {
+				$distributions->rent[$id] = $distribution;
+			} else {
+				$distributions->self[$id] = $distribution;
+			}
+		}
 
 		return $distributions;
 	}

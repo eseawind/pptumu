@@ -15,8 +15,8 @@
 			<button class='btn' id='cpmBtn'><?php echo html::icon($lang->icons['copy']) . ' ' . $lang->project->copy;?></button>
 		</div>
 	</div>
-	<!-- target='hiddenwin' -->
-	<form class='form-condensed' method='post' id='dataform'>
+	<!---->
+	<form class='form-condensed' method='post' target='hiddenwin'  id='dataform'>
 		<h4>人工</h4>
 		<table class='table table-form'>
 		<tbody>
@@ -56,7 +56,7 @@
 			<tr>
 				<td><?php foreach ($materialApps As $app) { ?>
 					<div class="input-group">
-						<span class="input-group-addon w-100px"><?php echo $app->material_name; ?>: </span>
+						<span class="input-group-addon w-200px"><?php echo $app->material_type_name . ' / ' . $app->material_name; ?>: </span>
 						<?php echo html::hidden('material[ids][]', $app->material_id);
 						echo html::input('material[existing_qty][]', $app->qty, 'class="form-control" readonly="readonly"'); ?>
 						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
@@ -64,14 +64,14 @@
 				<?php } ?></td>
 				<td><?php foreach ($materialApps As $app) { ?>
 					<div class="input-group">
-						<span class="input-group-addon w-100px"><?php echo $app->material_name; ?>: </span>
+						<span class="input-group-addon w-200px"><?php echo $app->material_type_name . ' / ' . $app->material_name; ?>: </span>
 						<?php echo html::input('material[used_qty][]', '', 'class="form-control"'); ?>
 						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
 					</div>
 				<?php } ?></td>
 				<td><?php foreach ($materialApps As $app) { ?>
 					<div class="input-group">
-						<span class="input-group-addon w-100px"><?php echo $app->material_name; ?>: </span>
+						<span class="input-group-addon w-200px"><?php echo $app->material_type_name . ' / ' . $app->material_name; ?>: </span>
 						<?php echo html::input('material[remaining_qty][]', '0', 'class="form-control"'); ?>
 						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
 					</div>
@@ -84,23 +84,23 @@
 		<table class='table table-form'>
 		<thead>
 			<tr>
-				<th>公司机械</th>
-				<th>外雇机械</th>
+				<th class="w-p50">公司机械</th>
+				<th class="w-p50">外雇机械</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td><?php foreach ($machineDists As $dist) { ?>
+				<td><?php foreach ($machineDists->self As $dist) { ?>
 					<div class="input-group">
-						<span class="input-group-addon w-180px"><?php echo $dist->type_name . '/' . $dist->machine_name; ?>: </span>
+						<span class="input-group-addon w-180px"><?php echo $dist->type_name . ' / ' . $dist->machine_name; ?>: </span>
 						<?php echo html::hidden('machine[ids][]', $dist->machine_id);
 						echo html::input('machine[used_hours][]', '', 'class="form-control"'); ?>
 						<span class="input-group-addon w-50px">时</span>
 					</div>
 				<?php } ?></td>
-				<td><?php foreach ($machineDists As $dist) { ?>
+				<td><?php foreach ($machineDists->rent As $dist) { ?>
 					<div class="input-group">
-						<span class="input-group-addon w-180px"><?php echo $dist->type_name . '/' . $dist->machine_name; ?>: </span>
+						<span class="input-group-addon w-180px"><?php echo $dist->type_name . ' / ' . $dist->machine_name; ?>: </span>
 						<?php  echo html::hidden('machine[ids][]', $dist->machine_id);
 						echo html::input('machine[used_hours][]', '', 'class="form-control"'); ?>
 						<span class="input-group-addon w-50px">时</span>

@@ -288,12 +288,14 @@ class materialModel extends model
 	 */
 	public function getProjectApplications($projectID)
 	{
-		$proApps = $this->dao->select('application.id AS application_id, detail.id AS detail_id, detail.material_id, detail.qty, material.code AS material_code, material.name AS material_name, material.unit AS material_unit')
+		$proApps = $this->dao->select('application.id AS application_id, detail.id AS detail_id, detail.material_id, detail.qty, material.code AS material_code, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')
 			->from(TABLE_MATERIALAPPLICATION)->alias('application')
 			->rightJoin(TABLE_MATERIALAPPLICATIONDETAIL)->alias('detail')
 			->on('detail.application_id = application.id')
 			->leftJoin(TABLE_MATERIAL)->alias('material')
 			->on('detail.material_id = material.id')
+			->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
+			->on('material.type_id = mtype.id')
 			->where('application.project_id')->eq($projectID)
 			->andWhere('application.verified')->eq(2)
 			->andWhere('application.deleted')->eq(0)

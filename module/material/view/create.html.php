@@ -12,11 +12,11 @@
   <form class='form-condensed' method='post' id='dataform'>
     <table class='table table-form'>
 	  <tr>
-        <th class='w-90px'><?php echo $lang->material->code;?></th>
-        <td class='w-p25-f'><?php echo html::input('code', '', "class='form-control'");?></td><td></td>
+        <th class='w-90px'><?php echo $lang->material->code; ?></th>
+        <td class='w-p25-f'><?php echo html::input('code', '', "class='form-control'"); ?></td><td></td>
       </tr>
       <tr>
-        <th><?php echo $lang->material->name;?></th>
+        <th><?php echo $lang->material->name; ?></th>
         <td><?php echo html::input('name', '', "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
@@ -24,13 +24,13 @@
         <td><?php echo html::select('type_id', $materialTypes, '', "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
-        <th><?php echo $lang->material->unit;?></th>
+        <th><?php echo $lang->material->unit; ?></th>
         <td><?php echo html::select('unit', $units, '', "class='form-control'");?></td><td></td>
       </tr>
 	  <tr>
         <td></td>
 		<td cols="2" class='text-center'>
-			<?php echo html::submitButton() . html::backButton();?>
+          <?php echo html::submitButton() . html::backButton(); ?>
 		</td>
       </tr>
 	</table>
