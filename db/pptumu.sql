@@ -77,7 +77,7 @@ CREATE TABLE `tm_application` (
 
 LOCK TABLES `tm_application` WRITE;
 /*!40000 ALTER TABLE `tm_application` DISABLE KEYS */;
-INSERT INTO `tm_application` VALUES (1,'project',7,'',0,NULL,NULL,NULL,0,'2015-02-11 14:55:49','2015-02-11 14:55:49'),(2,'project',7,'admin',0,NULL,NULL,NULL,0,'2015-02-11 15:00:20','2015-02-11 15:00:20'),(3,'project',7,'admin',0,NULL,NULL,NULL,0,'2015-02-11 15:07:18','2015-02-11 15:07:18'),(4,'material',4,'admin',0,NULL,NULL,NULL,0,'2015-02-11 16:39:15','2015-02-11 16:39:15'),(5,'machine',1,'admin',0,NULL,NULL,NULL,0,'2015-02-11 21:19:33','2015-02-11 21:19:33');
+INSERT INTO `tm_application` VALUES (3,'project',7,'admin',0,NULL,NULL,NULL,0,'2015-02-11 15:07:18','2015-02-11 15:07:18'),(4,'material',4,'admin',0,NULL,NULL,NULL,0,'2015-02-11 16:39:15','2015-02-11 16:39:15'),(5,'machine',1,'admin',0,NULL,NULL,NULL,0,'2015-02-11 21:19:33','2015-02-11 21:19:33');
 /*!40000 ALTER TABLE `tm_application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1806,4 +1806,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-12  7:50:10
+-- Dump completed on 2015-02-12  3:00:23
