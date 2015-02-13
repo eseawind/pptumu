@@ -344,4 +344,5 @@ class report extends control
 			echo "ok\n";
 		}
 	}
+
 }

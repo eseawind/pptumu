@@ -3,20 +3,23 @@
 <?php include '../../common/view/kindeditor.html.php';?>
 
 <?php js::import($jsRoot . 'misc/date.js');?>
-<?php js::set('holders', $lang->project->placeholder);?>
+
+<div class="main">
+
+</div>
 
 <div class='container mw-1400px'>
 	<div id='titlebar'>
 		<div class='heading'>
-			<span class='prefix'><?php echo html::icon($lang->icons['project']);?></span>
-			<strong><small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->project->create;?></strong>
-		</div>
-		<div class='actions'>
-			<button class='btn' id='cpmBtn'><?php echo html::icon($lang->icons['copy']) . ' ' . $lang->project->copy;?></button>
+			<span class='prefix'><?php echo html::icon($lang->icons['project']); ?></span>
+			<strong>
+				<small class='text-muted'><i class='icon icon-plus'></i></small>
+				<?php echo '工程上报'; ?>
+			</strong>
 		</div>
 	</div>
-	<!---->
-	<form class='form-condensed' method='post' target='hiddenwin'  id='dataform'>
+
+	<form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
 		<h4>人工</h4>
 		<table class='table table-form'>
 		<tbody>
