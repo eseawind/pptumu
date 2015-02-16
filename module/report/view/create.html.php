@@ -4,10 +4,49 @@
 
 <?php js::import($jsRoot . 'misc/date.js');?>
 
-<div class="main">
+<?php if ($step == 1) { ?>
+<div class='container mw-1400px'>
+	<div id='titlebar'>
+		<div class='heading'>
+			<span class='prefix'><?php echo html::icon($lang->icons['project']); ?></span>
+			<strong>
+				<small class='text-muted'><i class='icon icon-plus'></i></small>
+				<?php echo '工程上报 > 选择日期'; ?>
+			</strong>
+		</div>
+	</div>
 
+	<form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
+		<table class='table table-form'>
+			<tbody>
+			<tr>
+				<th class='w-90px'>选择日期:</th>
+				<td class='col-xs-2'>
+					<div class="input-group date form-date" data-link-format="yyyy-mm-dd" data-link-field="report_date" data-date-format="dd MM yyyy" data-date="">
+						<?php echo html::input('report_date', $report->report_date, "readonly='readonly' class='form-control' placeholder='报告日期'"); ?>
+						<span class="input-group-addon">
+							<span class="icon-remove"></span>
+						</span>
+						<span class="input-group-addon">
+							<span class="icon-calendar"></span>
+						</span>
+					</div>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td colspan='2' class='text-center'>
+					<?php echo html::hidden('type', $reportType);  ?>
+					<?php echo html::hidden('project_id', $projectID); ?>
+					<?php echo html::submitButton() . html::backButton(); ?>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</form>
 </div>
-
+<?php } else if($step == 2) { ?>
 <div class='container mw-1400px'>
 	<div id='titlebar'>
 		<div class='heading'>
@@ -22,7 +61,7 @@
 	<form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
 		<h4>人工</h4>
 		<table class='table table-form'>
-		<tbody>
+			<tbody>
 			<tr>
 				<th class='w-90px'>公司员工:</th>
 				<td class='w-p25-f'><?php echo html::input('staff_qty', $report->staff_qty, 'class="form-control"');?></td>
@@ -125,25 +164,13 @@
 				<td colspan="2"><?php echo html::textarea('actual_qty', $report->actual_qty, "rows='6' class='form-control'");?></td>
 			</tr>
 			<tr>
-				<th>日期:</th>
-				<td class='col-xs-2'>
-					<div class="input-group date form-date" data-link-format="yyyy-mm-dd" data-link-field="report_date" data-date-format="dd MM yyyy" data-date="">
-						<?php echo html::input('report_date', $report->report_date, "readonly='readonly' class='form-control' placeholder='报告日期'"); ?>
-						<span class="input-group-addon">
-							<span class="icon-remove"></span>
-						</span>
-						<span class="input-group-addon">
-							<span class="icon-calendar"></span>
-						</span>
-					</div>
-				</td>
-				<td></td>
-			</tr>
-			<tr>
 				<td></td>
 				<td colspan='2' class='text-center'>
+					<?php echo html::hidden('daily_id', $dailyID); ?>
+					<?php echo html::hidden('report_date', $daily->date); ?>
 					<?php echo html::hidden('type', $reportType);  ?>
 					<?php echo html::hidden('project_id', $projectID); ?>
+
 					<?php echo html::submitButton() . html::backButton(); ?>
 				</td>
 			</tr>
@@ -151,5 +178,6 @@
 		</table>
 	</form>
 </div>
+<?php } ?>
 
 <?php include '../../common/view/footer.html.php'; ?>

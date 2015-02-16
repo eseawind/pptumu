@@ -39,32 +39,50 @@ class report extends control
 	/**
 	 * 添加日报
 	 */
-	public function create($projectID = 0, $reportType = 'today')
+	public function create($projectID = 0, $reportType = 'today', $step = 1, $dailyID = 0)
 	{
-		if (!empty($_POST)) {
-			$reportID = $this->report->create();
-			if(dao::isError()) die(js::error(dao::getError()));
+		if ($step == 1) {
+			if (!empty($_POST)) {
+				$daily = fixer::input('post')
+					->get();
 
-			$this->loadModel('action')->create('report', $reportID, 'created');
-			die(js::locate($this->createLink('report', 'index'), 'parent'));
+				$dailyID = $this->report->getDailyId($projectID, $daily->report_date);
+				if (dao::isError()) die(js::error(dao::getError()));
+
+				$this->loadModel('action')->create('report', $dailyID, 'created');
+				die(js::locate($this->createLink('report', 'create', "projectID&{$projectID}&reportType=[$reportType]&step=2&daily_id={$dailyID}"), 'parent'));
+			}
+
+			$report = new stdClass();
+			$report->report_date = date('Y-m-d');
+		} else {
+			if (!empty($_POST)) {
+				$reportID = $this->report->create();
+				if (dao::isError()) die(js::error(dao::getError()));
+
+				$this->loadModel('action')->create('report', $reportID, 'created');
+				die(js::locate($this->createLink('report', 'history', "projectID={$projectID}&reportType={$reportType}"), 'parent'));
+			}
+
+			$daily = $this->report->getDailyById($dailyID);
+
+			$materialApps = $this->material->getProjectApplications($projectID);
+
+			$machineDists = $this->machine->getProjectDistribution($projectID);
+
+			$this->view->materialApps = $materialApps;
+			$this->view->machineDists = $machineDists;
+			$this->view->rentMachineDists = $rentMachineDists;
+			$this->view->daily = $daily;
+			$this->view->dailyID = $dailyID;
 		}
 
 		$project = $this->project->getById($projectID);
-
-		$report = new stdClass();
-		$report->report_date = date('Y-m-d');
-
-		$materialApps = $this->material->getProjectApplications($projectID);
-
-		$machineDists = $this->machine->getProjectDistribution($projectID);
-
 		$this->view->project = $project;
 		$this->view->report = $report;
-		$this->view->materialApps = $materialApps;
-		$this->view->machineDists = $machineDists;
-		$this->view->rentMachineDists = $rentMachineDists;
 		$this->view->reportType = $reportType;
 		$this->view->projectID = $projectID;
+		$this->view->step = $step;
 
 		$this->display();
 	}

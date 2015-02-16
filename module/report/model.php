@@ -79,7 +79,7 @@ class reportModel extends model
 		$report = fixer::input('post')
 			->stripTags($this->config->report->editor->create['id'], $this->config->allowedTags)
 			->get();
-		$report->daily_id = $this->getDailyId($report->project_id, $report->report_date);
+		// $report->daily_id = $this->getDailyId($report->project_id, $report->report_date);
 		$report->created = $dt;
 		$report->modified = $dt;
 		$report->deleted = 0;
@@ -116,7 +116,6 @@ class reportModel extends model
 		unset($report->machine);
 
 		$this->dao->insert(TABLE_REPORT)->data($report)
-			->check('content', 'NotEmpty')
 			->check('reprot_date', 'date')
 			->exec();
 		if (!dao::isError()) {
@@ -209,7 +208,7 @@ class reportModel extends model
 	{
 		global $app;
 
-		$dailyID = $this->dao->select('daily.id')
+		$daily = $this->dao->select('daily.id')
 			->from(TABLE_DAILY)->alias('daily')
 			->where('daily.project_id')->eq($projectID)
 			->andWhere('daily.date')->eq($date)
@@ -217,17 +216,17 @@ class reportModel extends model
 			->limit(1)
 			->fetch();
 
-		if (!$dailyID) {
+		if (!$daily) {
 			$dt = date('Y-m-d H:i:s');
-			$daily = new stdClass();
-			$daily->project_id = $projectID;
-			$daily->date = $date;
-			$daily->verified = 0;
-			$daily->created = $dt;
-			$daily->modified = $dt;
-			$daily->created_by = $app->user->account;
+			$dailyData = new stdClass();
+			$dailyData->project_id = $projectID;
+			$dailyData->date = $date;
+			$dailyData->verified = 0;
+			$dailyData->created = $dt;
+			$dailyData->modified = $dt;
+			$dailyData->created_by = $app->user->account;
 
-			$this->dao->insert(TABLE_DAILY)->data($daily)
+			$this->dao->insert(TABLE_DAILY)->data($dailyData)
 				->check('project_id', 'int')
 				->check('date', 'date')
 				->exec();
@@ -236,10 +235,19 @@ class reportModel extends model
 				$dailyID = $this->dao->lastInsertId();
 			}
 		} else {
-			$dailyID = $dailyID->id;
+			$dailyID = $daily->id;
 		}
 
 		return $dailyID;
+	}
+
+	public function getDailyById($dailyID)
+	{
+		$daily = $this->dao->select('*')->from(TABLE_DAILY)->alias('daily')
+			->where('daily.id')->eq($dailyID)
+			->fetch();
+
+		return $daily;
 	}
 
 	/**
