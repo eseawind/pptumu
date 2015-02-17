@@ -72,6 +72,10 @@
 		<tr>
 			<th><?php echo $lang->project->desc; ?></th>
 			<td colspan='2'><?php echo html::textarea('desc', '', "rows='6' class='form-control'"); ?></td>
+		</tr>
+		<tr>
+			<th><?php echo $lang->project->status; ?></th>
+			<td><?php echo html::select('status', $lang->project->statusList, 'doing', "class='form-control'"); ?></td>
 			<td></td>
 		</tr>
 		<tr>

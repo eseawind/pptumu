@@ -3,5 +3,5 @@
 /tmp/log/*.log.php
 /tmp/model/*.php
 /www/data/upload/*
-!www/data/upload/index.html
+!/www/data/upload/index.html
 

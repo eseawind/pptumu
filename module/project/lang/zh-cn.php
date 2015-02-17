@@ -89,8 +89,8 @@ $lang->project->otherInfo = '其他信息';
 /* 字段取值列表。*/
 $lang->project->statusList['wait']      = '未开始';
 $lang->project->statusList['doing']     = '进行中';
-$lang->project->statusList['suspended'] = '已挂起';
 $lang->project->statusList['done']      = '已完成';
+$lang->project->statusList['closed']      = '已关闭';
 
 $lang->project->aclList['open']    = '默认设置(有项目视图权限，即可访问)';
 $lang->project->aclList['private'] = '私有项目(只有项目团队成员才能访问)';

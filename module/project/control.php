@@ -212,6 +212,7 @@ class project extends control
 		$this->view->position[] = html::a($this->createLink('project', 'browse', "projectID=$projectID"), $this->view->project->name);
 		$this->view->position[] = $this->lang->project->start;
 		$this->view->users = $this->loadModel('user')->getPairs('noletter');
+		
 		$this->display();
 	}
 

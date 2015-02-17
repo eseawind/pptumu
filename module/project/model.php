@@ -424,8 +424,10 @@ class projectModel extends model
 			->leftJoin(TABLE_APPLICATION)->alias('application')
 			->on("application.object_id = project.id AND application.object_type = 'project' AND application.finished = 0")
 			->where(1)
-			->andWhere('project.deleted')->eq(0)
-			->orderBy('project.id DESC');
+			->andWhere('project.deleted')->eq(0);
+		if (@$conds['status']) $this->dao->andWhere('project.status')->eq($conds['status']);
+
+		$this->dao->orderBy('project.id DESC');
 		if (is_object($pager) && is_a($pager, 'pager')) {
 			$this->dao->page($pager);
 		}

@@ -25,7 +25,7 @@ class report extends control
 		$recPerPage = 5;
 		$pager = new pager(0, $recPerPage, $pageID);
 
-		$projects = $this->project->getList(array(), $pager);
+		$projects = $this->project->getList(array('status' => 'doing'), $pager);
 
 		$this->view->projects = $projects;
 		$this->view->pager = $pager;

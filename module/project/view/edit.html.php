@@ -67,6 +67,11 @@
 			<td colspan='2'><?php echo html::textarea('desc', htmlspecialchars($project->desc), "rows='6' class='form-control'"); ?></td>
 		</tr>
 		<tr>
+			<th><?php echo $lang->project->status; ?></th>
+			<td><?php echo html::select('status', $lang->project->statusList, $project->status, "class='form-control'"); ?></td>
+			<td></td>
+		</tr>
+		<tr>
 			<td></td>
 			<td colspan='2'><?php echo html::submitButton() . html::backButton(); ?></td>
 		</tr>

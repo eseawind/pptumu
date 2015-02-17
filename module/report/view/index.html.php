@@ -14,7 +14,7 @@
 		<tr class="a-center">
 			<td><?php echo $project->name; ?></td>
 			<td>项目编号: <?php echo $project->code; ?></td>
-			<td>项目进行中</td>
+			<td class='status-<?php echo $project->status ?>'><?php echo $lang->project->statusList[$project->status]; ?></td>
 			<td><?php echo html::a(helper::createLink('project', 'view', "projectrID={$project->id}") . '?onlybody=yes', '了解项目情况', '', "class='about iframe' data-width='900' data-headerless='true' data-class='modal-about'"); ?></td>
 		</tr>
 		<tr>

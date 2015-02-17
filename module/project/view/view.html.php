@@ -34,6 +34,10 @@
 				<th><?php echo $lang->project->pm; ?></th>
 				<td><?php echo zget($users, $project->pm, $project->pm); ?></td>
 			</tr>
+			<tr>
+				<th><?php echo $lang->project->status; ?></th>
+				<td class='status-<?php echo $project->status ?>'><?php echo $lang->project->statusList[$project->status]; ?></td>
+			</tr>
 		</table>
 	</fieldset>
 	<fieldset>
