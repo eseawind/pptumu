@@ -112,6 +112,25 @@ class report extends control
 	}
 
 	/**
+	 * 日报修改
+	 * @param $reportID
+	 */
+	public function edit($reportID)
+	{
+		$report = $this->report->getReportById($reportID);
+
+		$project = $this->project->getById($report->project_id);
+
+		$this->view->report = $report;
+		$this->view->project = $project;
+		$this->view->title = $project->name . ' > ' . $report->report_date . '日报';
+		$this->view->positiion[] = $project->name;
+		$this->view->position[] = $report->report_date . '日报';
+
+		$this->display();
+	}
+
+	/**
 	 * show report detail
 	 */
 	public function show($reportID)
