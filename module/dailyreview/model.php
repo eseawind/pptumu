@@ -12,8 +12,11 @@ class dailyreviewModel extends model
 
 		$this->dao->select($fields)->from(TABLE_DAILY)->alias('daily')
 			->leftJoin(TABLE_PROJECT)->alias('project')
-			->on('project.id = daily.project_id');
-
+			->on('project.id = daily.project_id')
+			->where(1);
+		foreach ($conds As $field => $val) {
+			$this->dao->andWhere($field)->eq($val);
+		}
 		$this->dao->page($pager);
 
 		$dailies = $this->dao->fetchAll('id');

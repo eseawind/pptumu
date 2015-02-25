@@ -3,6 +3,7 @@
 	<tr class='colhead'>
 		<th class='w-id'><?php echo $lang->idAB; ?></th>
 		<th>申请操作</th>
+		<th>标题</th>
 		<th>申请时间</th>
 		<th>申请人</th>
 		<th>状态</th>
@@ -16,13 +17,17 @@
 		<tr class='text-center'>
 			<td><?php echo $application->id; ?></td>
 			<td><?php echo $lang->application->object[$application->object_type] . ' / ' . $lang->application->action[$application->action]; ?></td>
+			<td><?php echo $application->object_name; ?></td>
 			<td><?php echo $application->created; ?></td>
 			<td><?php echo $application->applicant_name ? $application->applicant_name : $application->applicant; ?></td>
-			<td><?php echo $lang->application->status[$application->verified]; ?></td>
+			<td><?php
+				if ($application->finished == 1) echo '已完成', '&nbsp;';
+				echo $lang->application->status[$application->verified];
+			?></td>
 			<td><?php echo $application->verified_name ? $application->verified_name : $application->verified_by; ?></td>
 			<td><?php echo $application->verified_date; ?></td>
 			<td>
-				<?php if (true || !$application->verified) {
+				<?php if (!$application->verified) {
 					echo html::a("javascript: verifyApplication(\"passed_{$application->id}\");", '通过', '', "verified='1' id='passed_{$application->id}'");
 					echo '&nbsp;|';
 					echo html::a("javascript: verifyApplication(\"refused_{$application->id}\");", '拒绝', '', "verified='-1' id='refused_{$application->id}'");
@@ -33,7 +38,7 @@
 	</tbody>
 	<tfoot>
 	<tr>
-		<td colspan='8'>
+		<td colspan='9'>
 			<div class='table-actions clearfix'></div>
 			<div class='text-right'><?php $pager->show(); ?></div>
 		</td>

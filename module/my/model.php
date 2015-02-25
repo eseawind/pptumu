@@ -88,7 +88,9 @@ class myModel extends model
 		$application->verified_by = $app->user->account;
 		$application->modified = $dt;
 		$application->verified_date = $dt;
-
+		if (intval($application->verified) === -1) {
+			$application->finished = 1;
+		}
 		$applicationID = $application->id;
 		unset($application->id);
 
@@ -111,7 +113,7 @@ class myModel extends model
 	 */
 	public function getApplicationList($conds = array(), $pager = null)
 	{
-		if (!@$conds['finished']) $conds['finished'] = 0;
+		// if (!@$conds['finished']) $conds['finished'] = 0;
 		if (!@$conds['object_type']) $conds['object_type'] = 'project';
 
 		$fields = 'application.*, applicant_user.realname AS applicant_name, verified_user.realname AS verified_name';

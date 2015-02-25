@@ -186,7 +186,8 @@ $lang->report->menu->index            = array('link' => '工程上报|report|ind
 /** 财务管理菜单 */
 $lang->dailyreview = new stdClass();
 $lang->dailyreview->menu = new stdClass();
-$lang->dailyreview->menu->index          = '日报表列表';
+$lang->dailyreview->menu->index = array('link' => '日报表列表|dailyreview|index');
+$lang->dailyreview->menu->application = array('link' => '  修改申请|dailyreview|application');
 
 /** 统计管理菜单 */
 $lang->statistics = new stdClass();

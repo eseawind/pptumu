@@ -18,11 +18,11 @@ function orderModificationApplication(tagObj)
 		$.ajax({
 			type: 'POST',
 			url: url,
-			data: {object_type: objectType, object_id: objectId, action: (action ? action : 'edit')},
+			data: {object_type: objectType, object_id: objectId, object_name: objectName, action: (action ? action : 'edit')},
 			dataType: 'json',
 			success: function (data) {
 				if (data.result == 'success') {
-					alert('已成功申请修改' + objectTypeName + '[' + objectName + ']');
+					alert(objectTypeName + '[' + objectName + ']' + '修改申请已经提交，请等待审核。');
 
 					document.location.reload();
 				}

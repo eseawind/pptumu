@@ -41,8 +41,10 @@ class dailyreview extends control
 		$recPerPage = 10;
 		$pager = new pager(0, $recPerPage, $pageID);
 
-		$conds = array('project_id' => $projectID);
+		$conds = array();
 		$conds['verified'] = $verifiedVal;
+		$projectID && $conds['project_id'] = $projectID;
+
 		$dailies = $this->dailyreview->getDailyList($conds, $pager);
 
 		//
@@ -77,13 +79,24 @@ class dailyreview extends control
 	}
 
 	/**
-	 * Just test the extension engine.
-	 *
-	 * @access public
-	 * @return void
+	 * 修改申请
 	 */
-	public function testext()
+	public function application($action = 'edit', $status = 'all', $projectID = 0, $pageID = 1)
 	{
-		echo $this->fetch('misc', 'getsid');
+		/* Load pager and get tasks. */
+		$this->app->loadClass('pager', $static = true);
+		$recPerPage = 10;
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$conds = array('object_type' => 'report', 'action' => $action);
+		$status != 'all' && $conds['status'] = $status;
+		$projectID && $conds['object_id'] = $projectID;
+		$applications = $this->loadModel('my')->getApplicationList($conds, $pager);
+
+		$this->view->applications = $applications;
+		$this->view->pager = $pager;
+
+		$this->display();
 	}
+
 }

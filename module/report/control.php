@@ -130,30 +130,6 @@ class report extends control
 	}
 
 	/**
-	 * 修改申请
-	 */
-	public function modificationrequest($reportID)
-	{
-
-	}
-
-	/**
-	 * 修改申请审查
-	 */
-	public function modificationcheck($reportID)
-	{
-
-	}
-
-	/**
-	 * 日报审核操作
-	 */
-	public function verify($reportID)
-	{
-
-	}
-
-	/**
 	 * 添加项目签证
 	 */
 	public function createtestation($projectID = 0)

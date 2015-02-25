@@ -11,7 +11,10 @@ class reportModel extends model
 	 */
 	public function getProjectReports($projectID, $conds = array(), $pager = null)
 	{
-		$this->dao->select('report.*')->from(TABLE_REPORT)->alias('report')
+		$fields = "report.*, application.id AS application_id, application.verified AS application_verified";
+		$this->dao->select($fields)->from(TABLE_REPORT)->alias('report')
+			->leftJoin(TABLE_APPLICATION)->alias('application')
+			->on("application.object_id = report.id AND application.object_type = 'report' AND application.finished = 0")
 			->where('deleted')->eq(0)
 			->andWhere('report.project_id')->eq($projectID);
 
