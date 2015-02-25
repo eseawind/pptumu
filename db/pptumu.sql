@@ -59,6 +59,7 @@ CREATE TABLE `tm_application` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `object_type` varchar(30) NOT NULL,
   `object_id` int(11) NOT NULL,
+  `object_name` varchar(255) DEFAULT NULL COMMENT '对象名称,如: 工程名称',
   `action` varchar(50) NOT NULL DEFAULT 'edit' COMMENT '申请操作',
   `applicant` varchar(30) NOT NULL COMMENT '申请人',
   `verified` int(2) DEFAULT '0',
@@ -69,7 +70,7 @@ CREATE TABLE `tm_application` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +79,7 @@ CREATE TABLE `tm_application` (
 
 LOCK TABLES `tm_application` WRITE;
 /*!40000 ALTER TABLE `tm_application` DISABLE KEYS */;
-INSERT INTO `tm_application` VALUES (3,'project',7,'edit','admin',-1,'admin','2015-02-25 15:59:28',NULL,0,'2015-02-11 15:07:18','2015-02-25 15:59:28'),(4,'material',4,'edit','admin',0,NULL,NULL,NULL,0,'2015-02-11 16:39:15','2015-02-11 16:39:15'),(5,'machine',1,'edit','admin',0,NULL,NULL,NULL,0,'2015-02-11 21:19:33','2015-02-11 21:19:33'),(6,'project',6,'edit','admin',1,'admin','2015-02-25 16:38:59',NULL,0,'2015-02-25 11:11:51','2015-02-25 16:38:59'),(7,'material',5,'edit','admin',0,NULL,NULL,NULL,0,'2015-02-25 11:14:34','2015-02-25 11:14:34'),(8,'machine',4,'edit','admin',0,NULL,NULL,NULL,0,'2015-02-25 11:15:24','2015-02-25 11:15:24');
+INSERT INTO `tm_application` VALUES (3,'project',7,NULL,'edit','admin',-1,'admin','2015-02-25 17:55:04',NULL,1,'2015-02-11 15:07:18','2015-02-25 17:55:04'),(4,'material',4,NULL,'edit','admin',0,NULL,NULL,NULL,0,'2015-02-11 16:39:15','2015-02-11 16:39:15'),(5,'machine',1,NULL,'edit','admin',0,NULL,NULL,NULL,0,'2015-02-11 21:19:33','2015-02-11 21:19:33'),(6,'project',6,NULL,'edit','admin',1,'admin','2015-02-25 16:38:59',NULL,0,'2015-02-25 11:11:51','2015-02-25 16:38:59'),(7,'material',5,NULL,'edit','admin',0,NULL,NULL,NULL,0,'2015-02-25 11:14:34','2015-02-25 11:14:34'),(8,'machine',4,NULL,'edit','admin',0,NULL,NULL,NULL,0,'2015-02-25 11:15:24','2015-02-25 11:15:24'),(9,'report',4,'2015-02-17日报','edit','admin',1,'admin','2015-02-25 20:30:12',NULL,0,'2015-02-25 19:37:38','2015-02-25 20:30:12');
 /*!40000 ALTER TABLE `tm_application` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1808,4 +1809,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-25 17:45:49
+-- Dump completed on 2015-02-25 20:41:52
