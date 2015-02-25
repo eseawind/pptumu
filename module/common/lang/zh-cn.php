@@ -152,6 +152,7 @@ $lang->project = new stdclass();
 $lang->project->menu = new stdclass();
 
 $lang->project->menu->list      = '所有项目';
+$lang->project->menu->application    = array('link' => '<i class=""></i>&nbsp;修改申请|project|application', 'float' => 'left');
 $lang->project->menu->create    = array('link' => '<i class="icon-plus"></i>&nbsp;添加项目|project|create', 'float' => 'right');
 $lang->project->menu->all       = array('link' => '<i class="icon-th-large"></i>&nbsp;所有项目|project|index|', 'float' => 'right');
 
@@ -162,7 +163,7 @@ $lang->material->menu = new stdclass();
 $lang->material->menu->list = array('link' => '全部材料|material|index');
 $lang->material->menu->apply = array('link' => '申请材料|material|apply');
 $lang->material->menu->applicationindex = array('link' => '申请记录|material|applicationindex');
-
+$lang->material->menu->application = array('link' => '  修改申请|material|application');
 
 /** 财务管理菜单 */
 $lang->financial = new stdClass();
@@ -175,6 +176,7 @@ $lang->machine->menu = new stdClass();
 
 $lang->machine->menu->self = array('link' => '自有机械|machine|index', 'varalias' => array('isRent' => 0));
 $lang->machine->menu->rent = array('link' => '租赁机械|machine|index|isRent=1', 'varalias' => array('isRent' => 1));
+$lang->machine->menu->application = array('link' => '  修改申请|machine|application');
 
 /* 工程上报视图菜单设置。*/
 $lang->report = new stdclass();
@@ -254,6 +256,12 @@ $lang->menugroup->extension   = 'admin';
 $lang->menugroup->custom      = 'admin';
 $lang->menugroup->editor      = 'admin';
 $lang->menugroup->mail        = 'admin';
+
+/** 修改等操作申请  */
+$lang->application = new stdClass();
+$lang->application->status = array('0' => '未处理', '1' => '通过', '-1' => '拒绝');
+$lang->application->object = array('project' => '工程', 'material' => '材料', 'machine' => '机械', 'report' => '日报');
+$lang->application->action = array('edit' => '修改');
 
 /* 错误提示信息。*/
 $lang->error = new stdclass();

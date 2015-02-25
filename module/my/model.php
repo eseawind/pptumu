@@ -6,6 +6,7 @@
 
 class myModel extends model
 {
+
 	/**
 	 * Set menu.
 	 *
@@ -34,8 +35,8 @@ class myModel extends model
 
 	/**
 	 * order a modification application
-	 * @param $objectType
-	 * @param $objectID
+	 * @access public
+	 * @return int
 	 */
 	public function orderApplication()
 	{
@@ -75,6 +76,60 @@ class myModel extends model
 		}
 
 		return $applicationID;
+	}
+
+	public function verifyApplication()
+	{
+		global $app;
+
+		$application = fixer::input('post')->get();
+
+		$dt = date('Y-m-d H:i:s');
+		$application->verified_by = $app->user->account;
+		$application->modified = $dt;
+		$application->verified_date = $dt;
+
+		$applicationID = $application->id;
+		unset($application->id);
+
+		$this->dao->update(TABLE_APPLICATION)->data($application)
+			->where('id')->eq($applicationID)
+			->limit(1)
+			->exec();
+
+		if (!dao::isError()) {
+			return $applicationID;
+		}
+
+		return false;
+	}
+
+	/**
+	 * 获取修改等操作申请的列表
+	 * @param array $conds
+	 * @param null $pager
+	 */
+	public function getApplicationList($conds = array(), $pager = null)
+	{
+		if (!@$conds['finished']) $conds['finished'] = 0;
+		if (!@$conds['object_type']) $conds['object_type'] = 'project';
+
+		$fields = 'application.*, applicant_user.realname AS applicant_name, verified_user.realname AS verified_name';
+		$this->dao->select($fields)->from(TABLE_APPLICATION)->alias('application')
+			->leftJoin(TABLE_USER)->alias('applicant_user')
+			->on('application.applicant = applicant_user.account')
+			->leftJoin(TABLE_USER)->alias('verified_user')
+			->on('application.verified_by = verified_user.account')
+			->where(1);
+
+		foreach ($conds As $k => $v) {
+			$this->dao->andWhere("application.{$k}")->eq($v);
+		}
+		$this->dao->page($pager)
+			->orderBy('application.created DESC');
+		$applications = $this->dao->fetchAll('id');
+
+		return $applications;
 	}
 
 }

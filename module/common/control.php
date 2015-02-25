@@ -14,6 +14,7 @@ class common extends control
 	public function __construct()
 	{
 		parent::__construct();
+
 		$this->common->startSession();
 		$this->common->sendHeader();
 		$this->common->setCompany();
@@ -371,4 +372,5 @@ class common extends control
 	{
 		vprintf($this->lang->runInfo, $this->common->getRunInfo($startTime));
 	}
+
 }

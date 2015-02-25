@@ -24,7 +24,7 @@ class project extends control
 	 * @access public
 	 * @return void
 	 */
-	public function index($status = 'undone', $orderBy = 'code_asc', $pageID = 1)
+	public function index($status = 'doing', $orderBy = 'code_asc', $pageID = 1)
 	{
 		/* Load pager and get tasks. */
 		$this->app->loadClass('pager', $static = true);
@@ -212,7 +212,7 @@ class project extends control
 		$this->view->position[] = html::a($this->createLink('project', 'browse', "projectID=$projectID"), $this->view->project->name);
 		$this->view->position[] = $this->lang->project->start;
 		$this->view->users = $this->loadModel('user')->getPairs('noletter');
-		
+
 		$this->display();
 	}
 
@@ -376,6 +376,27 @@ class project extends control
 			$this->session->set('project', '');
 			die(js::locate(inlink('index'), 'parent'));
 		}
+	}
+
+	/**
+	 * 修改申请
+	 */
+	public function application($action = 'edit', $status = 'all', $projectID = 0, $pageID = 1)
+	{
+		/* Load pager and get tasks. */
+		$this->app->loadClass('pager', $static = true);
+		$recPerPage = 10;
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$conds = array('object_type' => 'project', 'action' => $action);
+		$status != 'all' && $conds['status'] = $status;
+		$projectID && $conds['object_id'] = $projectID;
+		$applications = $this->loadModel('my')->getApplicationList($conds, $pager);
+
+		$this->view->applications = $applications;
+		$this->view->pager = $pager;
+
+		$this->display();
 	}
 
 	/**

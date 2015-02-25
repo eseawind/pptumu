@@ -43,7 +43,7 @@
                 <?php if ($material->application_id && $material->application_verified == 1) { ?>
                 <?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), $lang->edit);?>&nbsp;|
                 <?php } else if (empty($material->application_id)) { ?>
-                <?php echo html::a("javascript: orderModificationApplication(\"application_{$material->id}\", \"material_list\");", '申请编辑', '', "objecttype='material' objecttypename='材料' objectid='{$material->id}' objectname='{$material->name}' id='application_{$material->id}'"); ?>&nbsp;|
+                <?php echo html::a("javascript: orderModificationApplication(\"application_{$material->id}\");", '申请修改', '', "objecttype='material' action='edit' objecttypename='材料' objectid='{$material->id}' objectname='{$material->name}' id='application_{$material->id}'"); ?>&nbsp;|
                 <?php } ?>
                 <?php echo html::a($this->createLink('material', 'delete', 'id=' . $material->id), $lang->delete);?>
             </td>

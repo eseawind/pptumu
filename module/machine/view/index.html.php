@@ -48,7 +48,7 @@
                 <?php if ($machine->application_id && $machine->application_verified == 1) { ?>
                 <?php echo html::a($this->createLink('machine', 'edit', sprintf($editParams, $machine->id)), $lang->edit); ?>|&nbsp;
                 <?php } else if (empty($machine->application_id)) { ?>
-                <?php echo html::a("javascript: orderModificationApplication(\"application_{$machine->id}\", \"machine_list\");", '申请编辑', '', "objecttype='machine' objecttypename='机械' objectid='{$machine->id}' objectname='{$machine->name}' id='application_{$machine->id}'"); ?>&nbsp;|
+                <?php echo html::a("javascript: orderModificationApplication(\"application_{$machine->id}\");", '申请修改', '', "objecttype='machine' action='edit' objecttypename='机械' objectid='{$machine->id}' objectname='{$machine->name}' id='application_{$machine->id}'"); ?>&nbsp;|
                 <?php } ?>
                 <?php echo html::a($this->createLink('machine', 'distribute', "machineID={$machine->id}"), '分配'); ?>
                 |&nbsp;

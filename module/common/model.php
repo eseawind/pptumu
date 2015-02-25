@@ -734,4 +734,5 @@ class commonModel extends model
 		$sort = strpos($firstOrder, '_') === false ? '_asc' : strstr($firstOrder, '_');
 		return strpos($orderBy, $append) === false ? $orderBy . ',' . $append . $sort : $orderBy;
 	}
+
 }

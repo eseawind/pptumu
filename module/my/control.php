@@ -460,4 +460,18 @@ class my extends control
 		}
 	}
 
+	/**
+	 * 验证修改等申请
+	 */
+	public function verifyapplication()
+	{
+		$this->my->verifyApplication();
+
+		if (dao::isError()) {
+			$this->send(dao::getError(), 'json');
+		} else {
+			$this->send(array('result' => 'success'), 'json');
+		}
+	}
+
 }

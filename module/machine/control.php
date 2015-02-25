@@ -105,6 +105,27 @@ class machine extends control
 	}
 
 	/**
+	 * 修改申请
+	 */
+	public function application($action = 'edit', $status = 'all', $projectID = 0, $pageID = 1)
+	{
+		/* Load pager and get tasks. */
+		$this->app->loadClass('pager', $static = true);
+		$recPerPage = 10;
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$conds = array('object_type' => 'machine', 'action' => $action);
+		$status != 'all' && $conds['status'] = $status;
+		$projectID && $conds['object_id'] = $projectID;
+		$applications = $this->loadModel('my')->getApplicationList($conds, $pager);
+
+		$this->view->applications = $applications;
+		$this->view->pager = $pager;
+
+		$this->display();
+	}
+
+	/**
 	 *
 	 */
 	public function distribute($machineID)

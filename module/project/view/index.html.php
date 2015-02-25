@@ -49,7 +49,7 @@
 					<?php if ($project->application_id && $project->application_verified == 1) { ?>
 					<?php echo html::a($this->createLink('project', 'edit', "projectID={$project->id}"), '编辑'); ?>&nbsp;|
 					<?php } else if (empty($project->application_id)) { ?>
-					<?php echo html::a("javascript: orderModificationApplication(\"application_{$project->id}\", \"projectList\");", '申请编辑', '', "objecttype='project' objecttypename='项目' objectid='{$project->id}' objectname='{$project->name}' id='application_{$project->id}'"); ?>&nbsp;|
+					<?php echo html::a("javascript: orderModificationApplication(\"application_{$project->id}\");", '申请修改', '', "objecttype='project' action='edit' objecttypename='项目' objectid='{$project->id}' objectname='{$project->name}' id='application_{$project->id}'"); ?>&nbsp;|
 					<?php } ?>
 					<?php echo html::a($this->createLink('project', 'delete', "projectID={$project->id}"), '删除'); ?>
 				</td>
