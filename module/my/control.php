@@ -30,7 +30,7 @@ class my extends control
 		$account = $this->app->user->account;
 
 		/* Get project and product stats. */
-		$projectStats = $this->loadModel('project')->getProjectStats();
+		$projectStats = $this->loadModel('project')->getList(array('status' => 'doing'));
 
 		/* Set the dynamic pager. */
 		$this->app->loadClass('pager', true);

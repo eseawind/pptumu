@@ -1,14 +1,12 @@
 <div class='panel panel-block' id='projectbox'>
-<?php if (count($projectStats) == 0): ?>
+<?php if (count($projectStats) == 0) { ?>
 	<div class='panel-heading'>
 		<i class='icon-folder-close-alt icon'></i> <strong><?php echo $lang->my->home->projects; ?></strong>
 	</div>
 	<div class='panel-body text-center'><br />
 		<?php echo html::a($this->createLink('project', 'create'), "<i class='icon-plus'></i> " . $lang->my->home->createProject, '', "class='btn btn-primary'"); ?>
-		&nbsp;&nbsp;
-		<?php echo " <i class='icon-question-sign text-muted'></i> " . $lang->my->home->help; ?>
 	</div>
-<?php else: ?>
+<?php } else { ?>
 	<table class='table table-condensed table-hover table-striped table-borderless table-fixed'>
 		<thead>
 		<tr class='text-center'>
@@ -24,7 +22,7 @@
 		</thead>
 		<tbody>
 		<?php $id = 0; ?>
-		<?php foreach ($projectStats as $project): ?>
+		<?php foreach ($projectStats as $project) { ?>
 		<tr class='text-center'>
 			<td><?php echo $project->code; ?></td>
 			<td class='text-left'><?php echo html::a($this->createLink('project', 'view', 'projectID=' . $project->id), $project->name, '', "title=$project->name"); ?></td>
@@ -35,10 +33,10 @@
 				<?php echo $lang->project->statusList[$project->status]; ?>
 			</td>
 		</tr>
-		<?php endforeach; ?>
+		<?php } ?>
 		</tbody>
 	</table>
-<?php endif; ?>
+<?php } ?>
 </div>
 <script>
 $(function () {

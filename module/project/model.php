@@ -448,10 +448,10 @@ class projectModel extends model
 	 * @access public
 	 * @return void
 	 */
-	public function getProjectStats($status = 'undone', $productID = 0, $itemCounts = 30, $orderBy = 'code', $pager = null)
+	public function getProjectStats($status = 'doing', $productID = 0, $itemCounts = 30, $orderBy = 'code', $pager = null)
 	{
 		/* Init vars. */
-		$projects = $this->getList($status, 0, $productID);
+		$projects = $this->getList(array('status' => $status));
 		foreach ($projects as $projectID => $project) {
 			if (!$this->checkPriv($project)) unset($projects[$projectID]);
 		}
