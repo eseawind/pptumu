@@ -1,14 +1,4 @@
 <?php
-/**
- * The action module English file of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     action
- * @version     $Id: en.php 4729 2013-05-03 07:53:55Z chencongzhi520@gmail.com $
- * @link        http://www.zentao.net
- */
 $lang->action->common     = 'Logs';
 $lang->action->product    = 'Product';
 $lang->action->project    = 'Project';

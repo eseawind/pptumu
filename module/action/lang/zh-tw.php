@@ -1,14 +1,4 @@
 <?php
-/**
- * The action module zh-tw file of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青島易軟天創網絡科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     action
- * @version     $Id: zh-tw.php 4955 2013-07-02 01:47:21Z chencongzhi520@gmail.com $
- * @link        http://www.zentao.net
- */
 $lang->action->common     = '系統日誌';
 $lang->action->product    = '產品';
 $lang->action->project    = '項目';

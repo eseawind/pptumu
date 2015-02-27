@@ -18,7 +18,7 @@
     </div>
 </div>
 <div class='main'>
-    <table class='table table-condensed table-hover table-striped tablesorter' id="material_list">
+    <table class='table table-condensed table-hover table-striped tablesorter active-disabled' id="material_list">
         <thead>
         <tr>
             <th class='w-id'><?php common::printOrderLink('id', $orderBy, '', $lang->idAB);?></th>

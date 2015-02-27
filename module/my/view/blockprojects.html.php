@@ -7,7 +7,7 @@
 		<?php echo html::a($this->createLink('project', 'create'), "<i class='icon-plus'></i> " . $lang->my->home->createProject, '', "class='btn btn-primary'"); ?>
 	</div>
 <?php } else { ?>
-	<table class='table table-condensed table-hover table-striped table-borderless table-fixed'>
+	<table class='table table-condensed table-hover table-striped table-borderless table-fixed active-disabled'>
 		<thead>
 		<tr class='text-center'>
 			<th class='w-100px'><?php echo $lang->project->code; ?></th>

@@ -1,7 +1,7 @@
 <?php include '../../common/view/header.html.php'; ?>
 
 <div class='main'>
-	<table class='table table-condensed table-hover table-striped tablesorter table-fixed'>
+	<table class='table table-condensed table-hover table-striped tablesorter table-fixed active-disabled'>
 		<thead>
 		<tr>
 			<th class='w-100px'>编号</th>

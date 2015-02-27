@@ -18,7 +18,7 @@
 </div>
 
 <div class="main">
-	<table class='table table-condensed table-hover table-striped tablesorter' id="projectList">
+	<table class='table table-condensed table-hover table-striped tablesorter active-disabled' id="projectList">
 		<?php $vars = "status=$status&orderBy=%s&pageID={$pager->pageID}"; ?>
 		<thead>
 		<tr>
