@@ -93,7 +93,9 @@ class reportModel extends model
 		foreach ($report->material['ids'] As $i => $materialID) {
 			$materialsUsed[$i] = new stdClass();
 			$materialsUsed[$i]->material_id = $materialID;
-			$materialsUsed[$i]->qty = $report->material['used_qty'][$i];
+			$materialsUsed[$i]->existing_qty = $report->material['existing_qty'][$i];
+			$materialsUsed[$i]->used_qty = $report->material['used_qty'][$i];
+			$materialsUsed[$i]->remaining_qty = $report->material['remaining_qty'][$i];
 
 			$materialsUsed[$i]->project_id = $report->project_id;
 			$materialsUsed[$i]->created = $dt;
