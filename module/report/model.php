@@ -28,6 +28,50 @@ class reportModel extends model
 	}
 
 	/**
+	 * @param $projectID
+	 * @param array $conds
+	 * @param null $pager
+	 * @return array | false
+	 */
+	public function getProjectTestations($projectID, $conds = array(), $pager = null)
+	{
+		$fields = "daily.*, testation.id AS testation_id, testation.title AS testatioin_title, testation.content AS testation_content, application.id AS application_id, application.verified AS application_verified";
+		$this->dao->select($fields)->from(TABLE_DAILY)->alias('daily')
+			->rightJoin(TABLE_TESTATION)->alias('testation')
+			->on('daily.id = testation.daily_id')
+			->leftJoin(TABLE_APPLICATION)->alias('application')
+			->on("application.object_id = testation.id AND application.object_type = 'testation' AND application.finished = 0")
+			->where(1)
+			->andWhere('daily.project_id')->eq($projectID);
+
+		$testations = $this->dao->page($pager)->fetchAll('id');
+
+		return $testations;
+	}
+
+	/**
+	 * @param $projectID
+	 * @param array $conds
+	 * @param null $pager
+	 * @return array | false
+	 */
+	public function getProjectProblems($projectID, $conds = array(), $pager = null)
+	{
+		$fields = "daily.*, problem.id AS problem_id, problem.content AS problem_content, application.id AS application_id, application.verified AS application_verified";
+		$this->dao->select($fields)->from(TABLE_DAILY)->alias('daily')
+			->rightJoin(TABLE_PROBLEM)->alias('problem')
+			->on('daily.id = problem.daily_id')
+			->leftJoin(TABLE_APPLICATION)->alias('application')
+			->on("application.object_id = problem.id AND application.object_type = 'testation' AND application.finished = 0")
+			->where(1)
+			->andWhere('daily.project_id')->eq($projectID);
+
+		$problems = $this->dao->page($pager)->fetchAll('id');
+
+		return $problems;
+	}
+
+	/**
 	 *
 	 */
 	public function getList($projectID, $type = 'today', $conds = array())
@@ -49,7 +93,7 @@ class reportModel extends model
 	{
 		$report = $this->dao->findById((int)$reportID)->from(TABLE_REPORT)->fetch();
 
-		$materialUsed = $this->dao->select('used.id, used.project_id, used.material_id, used.qty, material.code AS material_code, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')->from(TABLE_MATERIALUSEDHISTORY)->alias('used')
+		$materialUsed = $this->dao->select('used.id, used.project_id, used.material_id, used.used_qty, material.code AS material_code, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')->from(TABLE_MATERIALUSEDHISTORY)->alias('used')
 			->leftJoin(TABLE_MATERIAL)->alias('material')
 			->on('used.material_id = material.id')
 			->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
@@ -69,6 +113,44 @@ class reportModel extends model
 		$report->machine_used_history = $machineUsed;
 
 		return $report;
+	}
+
+	/**
+	 * @param $testationID
+	 */
+	public function getTestationById($testationID)
+	{
+		$fields = "daily.*, testation.id AS testation_id, testation.title AS testation_title, testation.content AS testation_content, application.id AS application_id, application.verified AS application_verified";
+		$this->dao->select($fields)->from(TABLE_DAILY)->alias('daily')
+			->rightJoin(TABLE_TESTATION)->alias('testation')
+			->on('daily.id = testation.daily_id')
+			->leftJoin(TABLE_APPLICATION)->alias('application')
+			->on("application.object_id = testation.id AND application.object_type = 'testation' AND application.finished = 0")
+			->where(1)
+			->andWhere('testation.id')->eq($testationID);
+
+		$testation = $this->dao->fetch();
+
+		return $testation;
+	}
+
+	/**
+	 * @param $problemID
+	 */
+	public function getProblemById($problemID)
+	{
+		$fields = "daily.*, problem.id AS problem_id, problem.content AS problem_content, application.id AS application_id, application.verified AS application_verified";
+		$this->dao->select($fields)->from(TABLE_DAILY)->alias('daily')
+			->rightJoin(TABLE_PROBLEM)->alias('problem')
+			->on('daily.id = problem.daily_id')
+			->leftJoin(TABLE_APPLICATION)->alias('application')
+			->on("application.object_id = problem.id AND application.object_type = 'testation' AND application.finished = 0")
+			->where(1)
+			->andWhere('problem.id')->eq($problemID);
+
+		$problem = $this->dao->fetch();
+
+		return $problem;
 	}
 
 	/**

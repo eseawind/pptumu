@@ -66,7 +66,7 @@ class dailyreviewModel extends model
 	 */
 	public function getDailyProblem($dailyID)
 	{
-		$this->dao->select('*')->from(TABLE_TESTATION)
+		$this->dao->select('*')->from(TABLE_PROBLEM)
 			->where('daily_id')->eq($dailyID)
 			->orderBy('id_desc')
 			->limit(1);

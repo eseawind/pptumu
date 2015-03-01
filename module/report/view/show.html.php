@@ -46,7 +46,7 @@
 			<td><?php foreach ($report->material_used_history As $materialUsed) { ?>
 				<div class="input-group">
 					<span class="input-group-addon w-180px"><?php echo $materialUsed->material_type_name . ' / ' . $materialUsed->material_name; ?>: </span>
-					<?php echo $materialUsed->qty; ?>
+					<?php echo $materialUsed->used_qty; ?>
 					<span class=""><?php echo $materialUsed->material_unit; ?></span>
 				</div>
 			<?php } ?></td>

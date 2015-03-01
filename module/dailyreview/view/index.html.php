@@ -38,7 +38,7 @@
 				<td colspan="3">
 				<?php if ($daily->today_report) { ?>
 					本日情况:
-					<?php echo html::a($this->createLink('dailyreview', 'showreport', "reportID={$daily->today_report->id}"), '查看', '',  'class=""');?>
+					<?php echo html::a(helper::createLink('report', 'show', "reportID={$daily->today_report->id}") . '?onlybody=yes', '查看', '', "class='about iframe' data-width='900' data-headerless='true' data-class='modal-about'"); ?>
 					<?php if ($daily->today_report->verified) { ?>
 						已审核
 					<?php } else { ?>
@@ -48,7 +48,7 @@
 				<?php } ?>
 				<?php if ($daily->tomorrow_report) { ?>
 					明日计划:
-					<?php echo html::a($this->createLink('dailyreview', 'showreport', "reportID={$daily->tomorrow_report}"), '查看', '',  'class=""');?>
+					<?php echo html::a(helper::createLink('report', 'show', "reportID={$daily->tomorrow_report->id}") . '?onlybody=yes', '查看', '', "class='about iframe' data-width='900' data-headerless='true' data-class='modal-about'"); ?>
 					<?php if ($daily->tomorrow_report->verified) { ?>
 						已审核
 					<?php } else { ?>
@@ -57,8 +57,8 @@
 					&nbsp;&nbsp;
 				<?php } ?>
 				<?php if ($daily->testation) { ?>
-					填写签证:
-					<?php echo html::a($this->createLink('dailyreview', 'showtestation', "testationID={$daily->testation->id}"), '查看', '',  'class=""');?>
+					签证:
+					<?php echo html::a(helper::createLink('report', 'showtestation', "testationID={$daily->testation->id}") . '?onlybody=yes', '查看', '', "class='about iframe' data-width='900' data-headerless='true' data-class='modal-about'"); ?>
 					<?php if ($daily->testation->verified) { ?>
 						已审核
 					<?php } else { ?>
@@ -68,7 +68,7 @@
 				<?php } ?>
 				<?php if ($daily->problem) { ?>
 					存在问题:
-					<?php echo html::a($this->createLink('dailyreview', 'showproblem', "problemID={$daily->problem->id}"), '查看', '',  'class=""');?>
+					<?php echo html::a(helper::createLink('report', 'showproblem', "problemID={$daily->problem->id}") . '?onlybody=yes', '查看', '', "class='about iframe' data-width='900' data-headerless='true' data-class='modal-about'"); ?>
 					<?php if ($daily->problem->verified) { ?>
 						已审核
 					<?php } else { ?>

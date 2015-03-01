@@ -175,6 +175,29 @@ class report extends control
 	 */
 	public function historytestation($projectID = 0)
 	{
+		/* Load and initial pager. */
+		$this->app->loadClass('pager', $static = true);
+		$recPerPage = 10;
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$testations = $this->report->getProjectTestations($projectID, array(), $pager);
+
+		$this->view->testations = $testations;
+		$this->view->pager = $pager;
+
+		$this->display();
+	}
+
+	/**
+	 * 显示签证详细内容
+	 * @param $testationID
+	 */
+	public function showtestation($testationID)
+	{
+		$testation = $this->report->getTestationById($testationID);
+
+		$this->view->testation = $testation;
+
 		$this->display();
 	}
 
@@ -205,6 +228,29 @@ class report extends control
 	 */
 	public function historyproblem($projectID = 0)
 	{
+		/* Load and initial pager. */
+		$this->app->loadClass('pager', $static = true);
+		$recPerPage = 10;
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$problems = $this->report->getProjectProblems($projectID, array(), $pager);
+
+		$this->view->problems = $problems;
+		$this->view->pager = $pager;
+
+		$this->display();
+	}
+
+	/**
+	 * 显示问题详细内容
+	 * @param $problemID
+	 */
+	public function showproblem($problemID)
+	{
+		$problem = $this->report->getProblemById($problemID);
+
+		$this->view->problem = $problem;
+
 		$this->display();
 	}
 
