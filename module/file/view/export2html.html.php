@@ -1,15 +1,3 @@
-<?php
-/**
- * The export2html view file of file module of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Congzhi Chen <congzhi@cnezsoft.com>
- * @package     file
- * @version     $Id$
- * @link        http://www.zentao.net
- */
-?>
 <html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />

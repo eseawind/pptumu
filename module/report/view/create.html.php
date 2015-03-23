@@ -11,7 +11,7 @@
 			<span class='prefix'><?php echo html::icon($lang->icons['project']); ?></span>
 			<strong>
 				<small class='text-muted'><i class='icon icon-plus'></i></small>
-				<?php echo '工程上报 > 选择日期'; ?>
+				<?php echo $project->name, ' &gt; 工程上报 &gt 选择日期'; ?>
 			</strong>
 		</div>
 	</div>
@@ -53,7 +53,7 @@
 			<span class='prefix'><?php echo html::icon($lang->icons['project']); ?></span>
 			<strong>
 				<small class='text-muted'><i class='icon icon-plus'></i></small>
-				<?php echo '工程上报'; ?>
+				<?php echo $project->name, ' &gt; 工程上报 &gt ', $daily->date, ($reportType == 'today' ? '当日日报' : '明日计划'); ?>
 			</strong>
 		</div>
 	</div>
@@ -87,42 +87,55 @@
 
 		<h4>材料</h4>
 		<table class='table table-form'>
-		<thead>
+			<thead>
 			<tr>
-				<th>进场数量</th>
-				<th>实际用量</th>
-				<th>剩余用量</th>
+				<?php if ($reportType == 'today') { ?><th>进场数量</th><?php } ?>
+				<th colspan="<?php echo ($reportType == 'tomorrow') ? 2 : 1; ?>"><?php echo $reportType == 'today' ? '实际用量' : '计划用量'; ?></th>
+				<?php if ($reportType == 'today') { ?><th>剩余用量</th><?php } ?>
 			</tr>
-		</thead>
-		<tbody>
+			</thead>
+			<tbody>
 			<tr>
+				<?php if ($reportType == 'today') { ?>
 				<td><?php foreach ($materialApps As $app) { ?>
 					<div class="input-group">
 						<span class="input-group-addon w-200px"><?php echo $app->material_type_name . ' / ' . $app->material_name; ?>: </span>
-						<?php echo html::hidden('material[ids][]', $app->material_id);
-						echo html::input('material[existing_qty][]', $app->qty, 'class="form-control" readonly="readonly"'); ?>
+						<?php echo html::input('material[existing_qty][]', $app->qty, "materialid=\"{$app->material_id}\" class=\"form-control\" readonly=\"readonly\""); ?>
 						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
 					</div>
 				<?php } ?></td>
+				<?php } ?>
+				<td colspan="<?php echo ($reportType == 'tomorrow') ? 2 : 1; ?>">
+				<?php foreach ($materialApps As $app) { ?>
+					<div class="input-group">
+						<span class="input-group-addon w-200px"><?php echo $app->material_type_name . ' / ' . $app->material_name; ?>: </span>
+						<?php echo html::hidden('material[ids][]', $app->material_id); ?>
+						<?php echo html::input('material[used_qty][]', '', "materialid=\"{$app->material_id}\" class=\"form-control\""); ?>
+						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
+					</div>
+				<?php } ?>
+				</td>
+				<?php if ($reportType == 'today') { ?>
 				<td><?php foreach ($materialApps As $app) { ?>
 					<div class="input-group">
 						<span class="input-group-addon w-200px"><?php echo $app->material_type_name . ' / ' . $app->material_name; ?>: </span>
-						<?php echo html::input('material[used_qty][]', '', 'class="form-control"'); ?>
+						<?php echo html::input('material[remaining_qty][]', '0', "materialid=\"{$app->material_id}\" class=\"form-control\" readonly=\"readonly\""); ?>
 						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
 					</div>
 				<?php } ?></td>
-				<td><?php foreach ($materialApps As $app) { ?>
-					<div class="input-group">
-						<span class="input-group-addon w-200px"><?php echo $app->material_type_name . ' / ' . $app->material_name; ?>: </span>
-						<?php echo html::input('material[remaining_qty][]', '0', 'class="form-control"'); ?>
-						<span class="input-group-addon fix-border w-50px"><?php echo $app->material_unit; ?></span>
-					</div>
-				<?php } ?></td>
+				<?php } ?>
 			</tr>
-		</tbody>
+			<?php if ($reportType == 'tomorrow') { ?>
+			<tr>
+				<th class='w-90px'>备注:</th>
+				<td><?php echo html::textarea('material_remark', $report->report_material_remark, "class='form-control'");?></td>
+			</tr>
+			<?php } ?>
+			</tbody>
 		</table>
 
 		<h4>机械</h4>
+		<?php if ($reportType == 'today') { ?>
 		<table class='table table-form'>
 		<thead>
 			<tr>
@@ -132,17 +145,24 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td><?php foreach ($machineDists->self As $dist) { ?>
+				<td class="w-p50"><?php foreach ($machineDists->self As $dist) { ?>
 					<div class="input-group">
-						<span class="input-group-addon w-180px"><?php echo $dist->type_name . ' / ' . $dist->machine_name; ?>: </span>
+						<span class="input-group-addon w-160px"><?php echo $dist->type_name , ' / ', $dist->machine_name, " / ", "{$dist->machine_code}"; ?></span>
+						<span class="input-group-addon w-300px">
+							<?php echo $dist->begin, " &gt; ", $dist->end; ?>
+						</span>
 						<?php echo html::hidden('machine[ids][]', $dist->machine_id);
 						echo html::input('machine[used_hours][]', '', 'class="form-control"'); ?>
 						<span class="input-group-addon w-50px">时</span>
 					</div>
 				<?php } ?></td>
-				<td><?php foreach ($machineDists->rent As $dist) { ?>
+				<td class="w-p50"><?php foreach ($machineDists->rent As $dist) { ?>
+					<?php // machineModel::parseMachineDistributeExpire($dist->begin, $dist->end, $daily->date); ?>
 					<div class="input-group">
-						<span class="input-group-addon w-180px"><?php echo $dist->type_name . ' / ' . $dist->machine_name; ?>: </span>
+						<span class="input-group-addon w-160px"><?php echo $dist->type_name , ' / ', $dist->machine_name, " / ", "{$dist->machine_code}"; ?></span>
+						<span class="input-group-addon w-300px">
+							<?php echo $dist->begin, " &gt; ", $dist->end; ?>
+						</span>
 						<?php  echo html::hidden('machine[ids][]', $dist->machine_id);
 						echo html::input('machine[used_hours][]', '', 'class="form-control"'); ?>
 						<span class="input-group-addon w-50px">时</span>
@@ -151,6 +171,16 @@
 			</tr>
 		</tbody>
 		</table>
+		<?php } else { ?>
+		<table class='table table-form'>
+			<tbody>
+			<tr>
+				<th class='w-90px'>备注:</th>
+				<td colspan="2"><?php echo html::textarea('machine_remark', $report->machine_remark, "class='form-control'");?></td>
+			</tr>
+			</tbody>
+		</table>
+		<?php } ?>
 
 		<h4>计划</h4>
 		<table class='table table-form'>
@@ -159,10 +189,12 @@
 				<th class='w-90px'>计划工程量:</th>
 				<td colspan="2"><?php echo html::textarea('planned_qty', $report->planned_qty, "class='form-control'");?></td>
 			</tr>
+			<?php if ($reportType == 'today') { ?>
 			<tr>
 				<th>实际工程量:</th>
 				<td colspan="2"><?php echo html::textarea('actual_qty', $report->actual_qty, "rows='6' class='form-control'");?></td>
 			</tr>
+			<?php } ?>
 			<tr>
 				<td></td>
 				<td colspan='2' class='text-center'>
@@ -178,6 +210,26 @@
 		</table>
 	</form>
 </div>
+<?php if ($reportType == 'today') { ?>
+<script language="javascript">
+$(function() {
+	$('input[name="material[used_qty][]"]').bind('change', function () {
+		var material_id = $(this).attr('materialid');
+
+		var existing_qty = $('input[name="material[existing_qty][]"][materialid="' + material_id + '"]').val();
+		var remaining_qty = existing_qty - $(this).val();
+		if (remaining_qty >= 0) {
+			$('input[name="material[remaining_qty][]"][materialid="' + material_id + '"]').val(remaining_qty);
+		} else {
+			alert('实际用量不能大于进场数量');
+			$(this).val(existing_qty);
+		}
+
+		return true;
+	});
+});
+</script>
+<?php } ?>
 <?php } ?>
 
 <?php include '../../common/view/footer.html.php'; ?>

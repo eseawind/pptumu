@@ -31,10 +31,15 @@ class project extends control
 		$recPerPage = 10;
 		$pager = new pager(0, $recPerPage, $pageID);
 
+		$projectConds = array();
+		if ($this->app->user->role == 'pm') {
+			$projectConds['pm'] = $this->app->user->account;
+		}
+
 		$this->app->loadLang('my');
 		$this->view->title = $this->lang->project->allProject;
 		$this->view->position[] = $this->lang->project->allProject;
-		$this->view->projects = $this->project->getList(array(), $pager);
+		$this->view->projects = $this->project->getList($projectConds, $pager);
 		$this->view->pager = $pager;
 		$this->view->recTotal = $pager->recTotal;
 		$this->view->recPerPage = $pager->recPerPage;
@@ -100,7 +105,7 @@ class project extends control
 
 		$this->view->name = $name;
 		$this->view->code = $code;
-		$this->view->pmUsers = $this->loadModel('user')->getPairs('noclosed,nodeleted,pmfirst');
+		$this->view->pmUsers = $this->loadModel('user')->getPairs('noclosed,nodeleted,pmfirst', '', 'pm');
 		$this->view->title = $this->lang->project->create;
 		$this->view->position[] = $this->view->title;
 
@@ -143,7 +148,7 @@ class project extends control
 
 		$this->view->projects = $projects;
 		$this->view->project = $project;
-		$this->view->pmUsers = $this->loadModel('user')->getPairs('noclosed,nodeleted,pmfirst', $project->pm);
+		$this->view->pmUsers = $this->loadModel('user')->getPairs('noclosed,nodeleted,pmfirst', $project->pm, 'pm');
 		$this->view->title = $title;
 		$this->view->position[] = html::a($browseProjectLink, $project->name);
 		$this->view->position[] = $this->lang->project->edit;
@@ -376,27 +381,6 @@ class project extends control
 			$this->session->set('project', '');
 			die(js::locate(inlink('index'), 'parent'));
 		}
-	}
-
-	/**
-	 * 修改申请
-	 */
-	public function application($action = 'edit', $status = 'all', $projectID = 0, $pageID = 1)
-	{
-		/* Load pager and get tasks. */
-		$this->app->loadClass('pager', $static = true);
-		$recPerPage = 10;
-		$pager = new pager(0, $recPerPage, $pageID);
-
-		$conds = array('object_type' => 'project', 'action' => $action);
-		$status != 'all' && $conds['status'] = $status;
-		$projectID && $conds['object_id'] = $projectID;
-		$applications = $this->loadModel('my')->getApplicationList($conds, $pager);
-
-		$this->view->applications = $applications;
-		$this->view->pager = $pager;
-
-		$this->display();
 	}
 
 	/**

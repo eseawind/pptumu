@@ -10,8 +10,9 @@ $lang->downArrow = '↓';
 $lang->null      = '空';
 $lang->ellipsis  = '…';
 
-$lang->zentaoPMS      = '土木工程管理系统';
-$lang->welcome        = "%s土木工程管理系统";
+$lang->zentaoPMS      = '三星工程管理系统 ';
+//$lang->welcome        = "%s三星工程管理系统 ";
+$lang->welcome        = "三星工程管理系统 ";
 $lang->myControl      = "我的地盘";
 $lang->currentPos     = '当前位置：';
 $lang->logout         = '退出';
@@ -82,7 +83,7 @@ $lang->common->common = '公有模块';
 
 /* 主导航菜单。*/
 $lang->menu = new stdclass();
-$lang->menu->my       = '<i class="icon-home"></i><span> 首页</span>|my|index';
+$lang->menu->my       = '<i class="icon-home"></i><span>首页</span>|my|index';
 $lang->menu->project  = '工程管理|project|index';
 $lang->menu->material = '材料管理|material|index';
 $lang->menu->financial = '财务管理|financial|index';
@@ -132,7 +133,6 @@ $lang->themes['default']     = '默认';
 $lang->index = new stdclass();
 $lang->index->menu = new stdclass();
 
-$lang->index->menu->product = '浏览产品|product|browse';
 $lang->index->menu->project = '浏览项目|project|browse';
 
 /* 我的地盘菜单设置。*/
@@ -152,7 +152,6 @@ $lang->project = new stdclass();
 $lang->project->menu = new stdclass();
 
 $lang->project->menu->list      = '所有项目';
-$lang->project->menu->application    = array('link' => '<i class=""></i>&nbsp;修改申请|project|application', 'float' => 'left');
 $lang->project->menu->create    = array('link' => '<i class="icon-plus"></i>&nbsp;添加项目|project|create', 'float' => 'right');
 $lang->project->menu->all       = array('link' => '<i class="icon-th-large"></i>&nbsp;所有项目|project|index|', 'float' => 'right');
 
@@ -163,7 +162,7 @@ $lang->material->menu = new stdclass();
 $lang->material->menu->list = array('link' => '全部材料|material|index');
 $lang->material->menu->apply = array('link' => '申请材料|material|apply');
 $lang->material->menu->applicationindex = array('link' => '申请记录|material|applicationindex');
-$lang->material->menu->application = array('link' => '  修改申请|material|application');
+$lang->material->menu->create    = array('link' => '<i class="icon-plus"></i>&nbsp;添加材料|material|create', 'float' => 'right');
 
 /** 财务管理菜单 */
 $lang->financial = new stdClass();
@@ -176,7 +175,6 @@ $lang->machine->menu = new stdClass();
 
 $lang->machine->menu->self = array('link' => '自有机械|machine|index', 'varalias' => array('isRent' => 0));
 $lang->machine->menu->rent = array('link' => '租赁机械|machine|index|isRent=1', 'varalias' => array('isRent' => 1));
-$lang->machine->menu->application = array('link' => '  修改申请|machine|application');
 
 /* 工程上报视图菜单设置。*/
 $lang->report = new stdclass();
@@ -192,8 +190,8 @@ $lang->dailyreview->menu->application = array('link' => '  修改申请|dailyrev
 /** 统计管理菜单 */
 $lang->statistics = new stdClass();
 $lang->statistics->menu = new stdClass();
-$lang->statistics->menu->index          = '统计管理';
-
+$lang->statistics->menu->index          = array('link' => '统计管理|statistics|index', 'alias' => 'reportlist,viewtotal');
+$lang->statistics->menu->machineindex    = array('link' => '机械统计|statistics|machineindex', 'alias' => 'machinestatistics');
 
 /* 组织结构视图菜单设置。*/
 $lang->company = new stdclass();
@@ -203,9 +201,9 @@ $lang->company->menu->browseUser   = array('link' => '用户|company|browse', 's
 $lang->company->menu->dept         = array('link' => '部门|dept|browse', 'subModule' => 'dept');
 $lang->company->menu->browseGroup  = array('link' => '权限|group|browse', 'subModule' => 'group');
 $lang->company->menu->view         = array('link' => '公司|company|view', 'alias' => 'edit');
-$lang->company->menu->dynamic      = '动态|company|dynamic|';
+// $lang->company->menu->dynamic      = '动态|company|dynamic|';
 $lang->company->menu->addGroup     = array('link' => '<i class="icon-group"></i>&nbsp;添加分组|group|create', 'float' => 'right');
-$lang->company->menu->batchAddUser = array('link' => '<i class="icon-plus-sign"></i>&nbsp;批量添加|user|batchCreate|dept=%s', 'subModule' => 'user', 'float' => 'right');
+// $lang->company->menu->batchAddUser = array('link' => '<i class="icon-plus-sign"></i>&nbsp;批量添加|user|batchCreate|dept=%s', 'subModule' => 'user', 'float' => 'right');
 $lang->company->menu->addUser      = array('link' => '<i class="icon-plus"></i>&nbsp;添加用户|user|create|dept=%s', 'subModule' => 'user', 'float' => 'right');
 
 $lang->dept  = new stdclass();

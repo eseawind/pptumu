@@ -135,7 +135,7 @@ class control
 	 * @var string
 	 * @access private
 	 */
-	private $output;
+	protected $output;
 
 	/**
 	 * The directory seperator.

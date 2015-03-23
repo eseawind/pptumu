@@ -473,6 +473,19 @@ class helper
 
 		return $code;
 	}
+
+	public static function validate($var, $funcName)
+	{
+		if (!$var) return false;
+
+		$checkFunc = 'check' . ucfirst($funcName);
+		if (Validater::$checkFunc($var)) {
+			return $var;
+		} else {
+			return false;
+		}
+	}
+
 }
 
 /**

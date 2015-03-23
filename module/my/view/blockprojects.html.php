@@ -26,9 +26,9 @@
 		<tr class='text-center'>
 			<td><?php echo $project->code; ?></td>
 			<td class='text-left'><?php echo html::a($this->createLink('project', 'view', 'projectID=' . $project->id), $project->name, '', "title=$project->name"); ?></td>
-			<td><?php echo $project->begin; ?></td>
-			<td><?php echo $project->espected_completion; ?></td>
-			<td><?php echo $project->actual_completion; ?></td>
+			<td><?php echo Helper::validate($project->begin, 'date'); ?></td>
+			<td><?php echo Helper::validate($project->espected_completion, 'date'); ?></td>
+			<td><?php echo Helper::validate($project->actual_completion, 'date'); ?></td>
 			<td class='project-<?php echo $project->status ?>'>
 				<?php echo $lang->project->statusList[$project->status]; ?>
 			</td>

@@ -11,18 +11,23 @@ class reportModel extends model
 	 */
 	public function getProjectReports($projectID, $conds = array(), $pager = null)
 	{
-		$fields = "report.*, application.id AS application_id, application.verified AS application_verified";
-		$this->dao->select($fields)->from(TABLE_REPORT)->alias('report')
+		$fields = "daily.*, report.id AS report_id, report.staff_qty AS report_staff_qty, report.extternal_qty AS report_extternal_qty, report.lunch_qty AS report_lunch_qty, report.supper_qty AS report_supper_qty, report.planned_qty AS report_planned_qty, report.actual_qty AS report_actual_qty, report.type AS report_type, report.material_remark AS report_material_remark, report.machine_remark AS report_machine_remark, application.id AS application_id, application.verified AS application_verified";
+		$this->dao->select($fields)->from(TABLE_DAILY)->alias('daily')
+			->rightJoin(TABLE_REPORT)->alias('report')
+			->on('daily.id = report.daily_id')
 			->leftJoin(TABLE_APPLICATION)->alias('application')
 			->on("application.object_id = report.id AND application.object_type = 'report' AND application.finished = 0")
-			->where('deleted')->eq(0)
-			->andWhere('report.project_id')->eq($projectID);
+			->where('report.deleted')->eq(0)
+			->andWhere('daily.project_id')->eq($projectID);
 
 		if (isset($conds['type']) && in_array($conds['type'], $this->config->report->type)) {
 			$this->dao->andWhere('report.type')->eq($conds['type']);
 		}
+		if (isset($conds['verified'])) {
+			$this->dao->andWhere('report.verified')->eq((int)$conds['verified']);
+		}
 
-		$reports = $this->dao->page($pager)->fetchAll('id');
+		$reports = $this->dao->page($pager)->fetchAll();
 
 		return $reports;
 	}
@@ -43,8 +48,8 @@ class reportModel extends model
 			->on("application.object_id = testation.id AND application.object_type = 'testation' AND application.finished = 0")
 			->where(1)
 			->andWhere('daily.project_id')->eq($projectID);
-
-		$testations = $this->dao->page($pager)->fetchAll('id');
+		if ($conds['daily_id']) $this->dao->andWhere('daily.id')->eq((int)$conds['daily_id']);
+		$testations = $this->dao->page($pager)->fetchAll();
 
 		return $testations;
 	}
@@ -65,14 +70,19 @@ class reportModel extends model
 			->on("application.object_id = problem.id AND application.object_type = 'testation' AND application.finished = 0")
 			->where(1)
 			->andWhere('daily.project_id')->eq($projectID);
+		if ($conds['daily_id']) $this->dao->andWhere('daily.id')->eq((int)$conds['daily_id']);
+		$problems = $this->dao->page($pager)->fetchAll();
 
-		$problems = $this->dao->page($pager)->fetchAll('id');
+		// 获取上传文件
+		foreach ($problems As &$problem) {
+			$problem->files = $this->loadModel('file')->getByObject('problem', $problem->problem_id);
+		}
 
 		return $problems;
 	}
 
 	/**
-	 *
+	 * 获取日报列表
 	 */
 	public function getList($projectID, $type = 'today', $conds = array())
 	{
@@ -81,36 +91,54 @@ class reportModel extends model
 			->andWhere('type')->eq($type)
 			->andWhere('project_id')->eq($projectID);
 
+		if ($conds['daily_id']) $this->dao->andWhere('report.daily_id')->eq((int)$conds['daily_id']);
 		$reports = $this->dao->fetchAll('id');
 
 		return $reports;
 	}
 
 	/**
-	 *
+	 * 获取日报
+	 * @param $reportID
+	 * @return mixed
 	 */
 	public function getReportById($reportID)
 	{
-		$report = $this->dao->findById((int)$reportID)->from(TABLE_REPORT)->fetch();
+		$fields = "daily.*, report.id AS report_id, report.staff_qty AS report_staff_qty, report.extternal_qty AS report_extternal_qty, report.lunch_qty AS report_lunch_qty, report.supper_qty AS report_supper_qty, report.planned_qty AS report_planned_qty, report.actual_qty AS report_actual_qty, report.type AS report_type, report.material_remark AS report_material_remark, report.machine_remark AS report_machine_remark, report.verified AS report_verified, report.verified_by AS report_verified_by, report.verified_date AS report_verified_date, application.id AS application_id, application.verified AS application_verified";
+		$report = $this->dao->select($fields)->from(TABLE_DAILY)->alias('daily')
+			->rightJoin(TABLE_REPORT)->alias('report')
+			->on('daily.id = report.daily_id')
+			->leftJoin(TABLE_APPLICATION)->alias('application')
+			->on("application.object_type = 'report' AND application.object_id = report.id AND application.finished = 0")
+			->where('report.id')->eq((int)$reportID)
+			->fetch();
 
-		$materialUsed = $this->dao->select('used.id, used.project_id, used.material_id, used.used_qty, material.code AS material_code, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')->from(TABLE_MATERIALUSEDHISTORY)->alias('used')
+		$materialUsed = $this->dao->select('used.id, used.project_id, used.material_id, used.existing_qty, used.used_qty, used.remaining_qty, material.code AS material_code, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')->from(TABLE_MATERIALUSEDHISTORY)->alias('used')
 			->leftJoin(TABLE_MATERIAL)->alias('material')
 			->on('used.material_id = material.id')
 			->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
 			->on('material.type_id = mtype.id')
 			->where('used.report_id')->eq($reportID)
 			->fetchAll('id');
-		$machineUsed = $this->dao->select('used.id, used.project_id, used.machine_id, used.hours,
-          machine.code AS machine_code, machine.name AS machine_name, mtype.name AS machiine_type_name')->from(TABLE_MACHINEUSEDHISTORY)->alias('used')
+		$machineUsed = $this->dao->select('used.id, used.project_id, used.machine_id, used.hours, machine.code AS machine_code, machine.name AS machine_name, machine.is_rent AS machine_is_rent, mtype.name AS machiine_type_name')->from(TABLE_MACHINEUSEDHISTORY)->alias('used')
 			->leftJoin(TABLE_MACHINE)->alias('machine')
 			->on('used.machine_id = machine.id')
 			->leftJoin(TABLE_MACHINETYPE)->alias('mtype')
 			->on('machine.type_id = mtype.id')
 			->where('used.report_id')->eq($reportID)
 			->fetchAll('id');
-
-		$report->material_used_history = $materialUsed;
-		$report->machine_used_history = $machineUsed;
+		$machineSelfUsed = array();
+		$machineRentUsed = array();
+		foreach ($machineUsed As $mu) {
+			if ($mu->machine_is_rent == 1) {
+				$machineRentUsed[] = $mu;
+			} else {
+				$machineSelfUsed[] = $mu;
+			}
+		}
+		$report->materialUsed = $materialUsed;
+		$report->machineSelfUsed = $machineSelfUsed;
+		$report->machineRentUsed = $machineRentUsed;
 
 		return $report;
 	}
@@ -120,7 +148,7 @@ class reportModel extends model
 	 */
 	public function getTestationById($testationID)
 	{
-		$fields = "daily.*, testation.id AS testation_id, testation.title AS testation_title, testation.content AS testation_content, application.id AS application_id, application.verified AS application_verified";
+		$fields = "daily.*, testation.id AS testation_id, testation.title AS testation_title, testation.content AS testation_content, testation.verified AS testation_verified, testation.verified_by AS testation_verified_by, testation.verified_date AS testation_verified_date, application.id AS application_id, application.verified AS application_verified";
 		$this->dao->select($fields)->from(TABLE_DAILY)->alias('daily')
 			->rightJoin(TABLE_TESTATION)->alias('testation')
 			->on('daily.id = testation.daily_id')
@@ -139,7 +167,7 @@ class reportModel extends model
 	 */
 	public function getProblemById($problemID)
 	{
-		$fields = "daily.*, problem.id AS problem_id, problem.content AS problem_content, application.id AS application_id, application.verified AS application_verified";
+		$fields = "daily.*, problem.id AS problem_id, problem.content AS problem_content, problem.verified AS problem_verified, problem.verified_by AS problem_verified_by, problem.verified_date AS problem_verified_date, application.id AS application_id, application.verified AS application_verified";
 		$this->dao->select($fields)->from(TABLE_DAILY)->alias('daily')
 			->rightJoin(TABLE_PROBLEM)->alias('problem')
 			->on('daily.id = problem.daily_id')
@@ -149,6 +177,8 @@ class reportModel extends model
 			->andWhere('problem.id')->eq($problemID);
 
 		$problem = $this->dao->fetch();
+
+		$problem->files = $this->loadModel('file')->getByObject('problem', $problemID);
 
 		return $problem;
 	}
@@ -164,7 +194,6 @@ class reportModel extends model
 		$report = fixer::input('post')
 			->stripTags($this->config->report->editor->create['id'], $this->config->allowedTags)
 			->get();
-		// $report->daily_id = $this->getDailyId($report->project_id, $report->report_date);
 		$report->created = $dt;
 		$report->modified = $dt;
 		$report->deleted = 0;
@@ -225,6 +254,68 @@ class reportModel extends model
 		return $reportID;
 	}
 
+	public function update($reportID)
+	{
+		global $app;
+
+		$reportID = (int)$reportID;
+		$oldReport = $this->getReportById($reportID);
+
+		$dt = date('Y-m-d H:i:s');
+		$report = fixer::input('post')
+			->stripTags($this->config->report->editor->create['id'], $this->config->allowedTags)
+			->get();
+		$report->modified = $dt;
+
+		// material used data
+		$materialsUsed = array();
+		foreach ($report->material['materialusedhistoryids'] As $i => $materialhistoryID) {
+			$materialsUsed[$i] = new stdClass();
+			$oldReport->report_type == 'today' && $materialsUsed[$i]->existing_qty = $report->material['existing_qty'][$i];
+			$materialsUsed[$i]->used_qty = $report->material['used_qty'][$i];
+			$oldReport->report_type == 'today' && $materialsUsed[$i]->remaining_qty = $report->material['remaining_qty'][$i];
+
+			$materialsUsed[$i]->modified = $dt;
+
+			$this->dao->update(TABLE_MATERIALUSEDHISTORY)->data($materialsUsed[$i])
+				->where('id')->eq($materialhistoryID)
+				->limit(1)
+				->exec();
+		}
+		unset($report->material);
+
+		if ($oldReport->report_type == 'today') {
+			// machine used data
+			$machinesUsed = array();
+			foreach ($report->machineusedhistoryids As $i => $machinehistoryID) {
+				$machinesUsed[$i] = new stdClass();
+				$machinesUsed[$i]->hours = $report->machine['used_hours'][$i];
+				$machinesUsed[$i]->modified = $dt;
+				$machinesUsed[$i]->deleted = 0;
+
+				$this->dao->update(TABLE_MACHINEUSEDHISTORY)->data($machinesUsed[$i])
+					->where('id')->eq($machinehistoryID)
+					->limit(1)
+					->exec();
+			}
+			unset($report->machine);
+		}
+
+		unset($report->id);
+		$this->dao->update(TABLE_REPORT)->data($report)
+			->check('reprot_date', 'date')
+			->where('id')->eq($reportID)
+			->limit(1)
+			->exec();
+
+		if (!dao::isError()) {
+			$this->loadModel('my');
+			$this->my->finishedApplication('report', $reportID);
+		}
+
+		return $reportID;
+	}
+
 	/**
 	 * Create a Testation
 	 */
@@ -237,23 +328,27 @@ class reportModel extends model
 			->stripTags($this->config->report->editor->createtestation['id'], $this->config->allowedTags)
 			->get();
 		$testation->daily_id = $this->getDailyId($testation->project_id, $testation->report_date);
-		$testation->created = $dt;
-		$testation->modified = $dt;
-		$testation->deleted = 0;
-		$testation->created_by = $app->user->account;
+		// 检查是否存在
+		$exists = $this->getProjectTestations($testation->project_id, array('daily_id' => $testation->daily_id));
+		if (empty($exists)) {
+			$testation->created = $dt;
+			$testation->modified = $dt;
+			$testation->deleted = 0;
+			$testation->created_by = $app->user->account;
 
-		$this->dao->insert(TABLE_TESTATION)->data($testation)
-			->check('content', 'NotEmpty')
-			->check('reprot_date', 'date')
-			->exec();
+			$this->dao->insert(TABLE_TESTATION)->data($testation)
+				->check('content', 'NotEmpty')
+				->check('reprot_date', 'date')
+				->exec();
 
-		if (!dao::isError()) {
-			$testationID = $this->dao->lastInsertId();
+			if (!dao::isError()) {
+				$testationID = $this->dao->lastInsertId();
 
-			return $testationID;
+				return array('error' => 0, 'testation_id' => $testationID);
+			}
+		} else { // 该日的工程签证已经存在
+			return array('error' => 1, 'errormsg' => "{$testation->report_date}签证已经添加，不可以重复添加，如果想要修改请去历史记录申请修改");
 		}
-
-		return false;
 	}
 
 	/**
@@ -266,26 +361,35 @@ class reportModel extends model
 		$dt = date('Y-m-d H:i:s');
 		$problem = fixer::input('post')
 			->stripTags($this->config->report->editor->createproblem['id'], $this->config->allowedTags)
+			->remove('files, labels')
 			->get();
 		$problem->daily_id = $this->getDailyId($problem->project_id, $problem->report_date);
 
-		$problem->created = $dt;
-		$problem->modified = $dt;
-		$problem->deleted = 0;
-		$problem->created_by = $app->user->account;
+		// 检查是否存在
+		$exists = $this->getProjectProblems($problem->project_id, array('daily_id' => $problem->daily_id));
 
-		$this->dao->insert(TABLE_PROBLEM)->data($problem)
-			->check('content', 'NotEmpty')
-			->check('reprot_date', 'date')
-			->exec();
+		if (empty($exists)) {
+			$problem->created = $dt;
+			$problem->modified = $dt;
+			$problem->deleted = 0;
+			$problem->created_by = $app->user->account;
 
-		if (!dao::isError()) {
-			$problemID = $this->dao->lastInsertId();
+			$this->dao->insert(TABLE_PROBLEM)->data($problem)
+				->check('content', 'NotEmpty')
+				->check('reprot_date', 'date')
+				->exec();
 
-			return $problemID;
+			if (!dao::isError()) {
+				$problemID = $this->dao->lastInsertId();
+
+				// update problem document
+				$this->loadModel('file')->saveUpload('problem', $problemID);
+
+				return array('error' => 0, 'problem_id' => $problemID);
+			}
+		} else {
+			return array('error' => 1, 'errormsg' => "{$problem->report_date}存在问题已经添加，不可以重复添加，如果想要修改请去历史记录申请修改");
 		}
-
-		return false;
 	}
 
 	/**
@@ -299,7 +403,6 @@ class reportModel extends model
 			->from(TABLE_DAILY)->alias('daily')
 			->where('daily.project_id')->eq($projectID)
 			->andWhere('daily.date')->eq($date)
-			->orderBy('verified_asc')
 			->limit(1)
 			->fetch();
 
@@ -308,7 +411,6 @@ class reportModel extends model
 			$dailyData = new stdClass();
 			$dailyData->project_id = $projectID;
 			$dailyData->date = $date;
-			$dailyData->verified = 0;
 			$dailyData->created = $dt;
 			$dailyData->modified = $dt;
 			$dailyData->created_by = $app->user->account;
@@ -335,6 +437,46 @@ class reportModel extends model
 			->fetch();
 
 		return $daily;
+	}
+
+	/**
+	 * @param $projectID
+	 * @return array
+	 */
+	public function getProjectMaterialRemaining($projectID)
+	{
+		$materialApps = $this->loadModel('material')->getProjectApplications($projectID, array('verified' => 2));
+		$materialUsed = $this->getMaterialUsedQty($projectID);
+
+		$materialRemaining = array();
+		foreach ($materialApps As $app) {
+			$materialRemaining[$app->material_id] = $app;
+			$materialRemaining[$app->material_id]->qty = $app->qty - $materialUsed[$app->material_id]->used_qty;
+		}
+
+		return $materialRemaining;
+	}
+
+	public function getMaterialUsedQty($projectID)
+	{
+		$fields = 'materialusedhistory.*';
+		$this->dao->select($fields)
+			->from(TABLE_MATERIALUSEDHISTORY)->alias('materialusedhistory')
+			->where(1)
+			->andWhere('materialusedhistory.project_id')->eq($projectID);
+
+		$materialUsedHistory = $this->dao->fetchAll();
+
+		$usedQtys = array();
+		foreach ($materialUsedHistory As $history) {
+			if (!isset($usedQtys[$history->material_id])) {
+				$usedQtys[$history->material_id] = $history;
+			} else {
+				$usedQtys[$history->material_id]->used_qty += $history->used_qty;
+			}
+		}
+
+		return $usedQtys;
 	}
 
 	/**

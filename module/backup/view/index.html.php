@@ -6,7 +6,7 @@
  * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
  * @author      Yidong Wang <yidong@cnezsoft.com>
  * @package     backup
- * @version     $Id: view.html.php 2568 2012-02-09 06:56:35Z shiyangyangwork@yahoo.cn $
+ * @version     $Id: viewtotal.html.php 2568 2012-02-09 06:56:35Z shiyangyangwork@yahoo.cn $
  * @link        http://www.zentao.net
  */
 ?>

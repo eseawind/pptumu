@@ -14,7 +14,6 @@
         <div class='panel-body'>
           <form method='post' target='hiddenwin' action='<?php echo $this->createLink('dept', 'updateOrder');?>'>
             <div id='main'><?php echo $depts;?></div>
-            <div class='text-center'><?php echo html::submitButton($lang->dept->updateOrder);?></div>
           </form>
         </div>
       </div>

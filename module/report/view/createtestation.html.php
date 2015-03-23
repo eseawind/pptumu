@@ -9,10 +9,10 @@
 	<div id='titlebar'>
 		<div class='heading'>
 			<span class='prefix'><?php echo html::icon($lang->icons['project']);?></span>
-			<strong><small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->project->create;?></strong>
-		</div>
-		<div class='actions'>
-			<button class='btn' id='cpmBtn'><?php echo html::icon($lang->icons['copy']) . ' ' . $lang->project->copy;?></button>
+			<strong>
+				<small class='text-muted'><i class='icon icon-plus'></i></small>
+				签证
+			</strong>
 		</div>
 	</div>
 	<form class='form-condensed' method='post' target='hiddenwin' id='dataform'>

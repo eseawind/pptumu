@@ -1,4 +1,4 @@
-<?php include '../../common/view/header.html.php';?>
+<?php include '../../common/view/header.html.php'; ?>
 
 <div class='main'>
 	<div id='titlebar'>
@@ -8,18 +8,14 @@
 	</div>
 
 	<h4><?php echo $problem->date; ?>问题</h4>
-	<table class='table table-form'>
-		<tbody>
-		<tr>
-			<td colspan="2"><?php echo $problem->problem_content; ?></td>
-		</tr>
-		<tr>
-			<td colspan='2' class='text-center'>
-				<?php echo html::backButton(); ?>
-			</td>
-		</tr>
-		</tbody>
-	</table>
+
+	<p><?php echo $problem->problem_content; ?></p>
+
+	<?php if (!empty($problem->files)) { ?>
+	<?php echo $this->fetch('file', 'printFiles', array('files' => $problem->files, 'fieldset' => 'true'));?>
+	<?php } ?>
+
+	<p class='text-center'><?php echo html::backButton(); ?></p>
 </div>
 
 <?php include '../../common/view/footer.html.php'; ?>

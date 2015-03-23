@@ -2,7 +2,7 @@
 
 <div id='featurebar'>
 <form method="post" taget="" class="form-condensed">
-	<div class="input-group">
+	<div class="input-group w-600px">
 		<span class="input-group-addon">按照项目筛查询申请记录：</span>
 		<?php echo html::select('search[project_id]', $projects, $projectID, 'class="form-control"'); ?>
 		<span class="input-group-btn">

@@ -46,10 +46,6 @@
         <td><?php echo html::input('email', '', "class='form-control'");?></td>
       </tr>
       <tr>
-        <th><?php echo $lang->user->commiter;?></th>
-        <td><?php echo html::input('commiter', '', "class='form-control'");?></td>
-      </tr>
-      <tr>
         <th><?php echo $lang->user->join;?></th>
         <td><?php echo html::input('join', '', "class='form-control form-date'");?></td>
       </tr>

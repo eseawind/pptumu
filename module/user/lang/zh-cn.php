@@ -94,14 +94,10 @@ $lang->user->loginFailed = "登录失败，请检查您的用户名或密码是�
 $lang->user->lockWarning = "您还有%s次尝试机会。";
 $lang->user->loginLocked = "密码尝试次数太多，请联系管理员解锁，或%s分钟后重试。";
 
-$lang->user->roleList['']       = '';
-$lang->user->roleList['dev']    = '研发';
-$lang->user->roleList['qa']     = '测试';
 $lang->user->roleList['pm']     = '项目经理';
-$lang->user->roleList['po']     = '产品经理';
-$lang->user->roleList['td']     = '研发主管';
-$lang->user->roleList['pd']     = '产品主管';
-$lang->user->roleList['qd']     = '测试主管';
+$lang->user->roleList['fi']     = '财务人员';
+$lang->user->roleList['mm']     = '机械管理人员';
+$lang->user->roleList['vr']     = '审核人员';
 $lang->user->roleList['top']    = '高层管理';
 $lang->user->roleList['others'] = '其他';
 

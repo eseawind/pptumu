@@ -107,4 +107,43 @@ class dailyreviewModel extends model
 		return $statusKey;
 	}
 
+	/**
+	 * 日报、签证、问题审核
+	 */
+	public function verify()
+	{
+		global $app;
+
+		$verifiedData = fixer::input('post')->get();
+
+		$dt = date('Y-m-d H:i:s');
+		$verifiedData->verified_by = $app->user->account;
+		$verifiedData->modified = $dt;
+		$verifiedData->verified_date = $dt;
+
+		$objectType = $verifiedData->object_type;
+		$objectID = $verifiedData->object_id;
+
+		unset($verifiedData->object_id, $verifiedData->object_type);
+
+		$table = '';
+		switch ($objectType) {
+			case 'report': $table = TABLE_REPORT; break;
+			case 'testation': $table = TABLE_TESTATION; break;
+			case 'problem': $table = TABLE_PROBLEM;
+		}
+		if (!$table) return false;
+
+		$this->dao->update($table)->data($verifiedData)
+			->where('id')->eq($objectID)
+			->limit(1)
+			->exec();
+
+		if (!dao::isError()) {
+			return $objectID;
+		}
+
+		return false;
+	}
+
 }

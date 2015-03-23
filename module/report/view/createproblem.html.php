@@ -8,15 +8,15 @@
 <div id='titlebar'>
 	<div class='heading'>
 		<span class='prefix'><?php echo html::icon($lang->icons['project']);?></span>
-		<strong><small class='text-muted'><i class='icon icon-plus'></i></small> <?php echo $lang->project->create;?></strong>
-	</div>
-	<div class='actions'>
-		<button class='btn' id='cpmBtn'><?php echo html::icon($lang->icons['copy']) . ' ' . $lang->project->copy;?></button>
+		<strong>
+			<small class='text-muted'><i class='icon icon-plus'></i></small>
+			存在问题
+		</strong>
 	</div>
 </div>
 
-<div class='container mw-1400px'><!--  target='hiddenwin' -->
-	<form class='form-condensed' method='post' id='dataform'>
+<div class='container mw-1400px'>
+	<form class='form-condensed' method='post' id='dataform' target='hiddenwin' enctype='multipart/form-data'>
 	<table class='table table-form'>
 		<tr>
 			<th class='w-90px'>存在问题:</th>
@@ -36,6 +36,10 @@
 				</div>
 			</td>
 			<td></td>
+		</tr>
+		<tr>
+			<th><?php echo '上传文件'; ?></th>
+			<td colspan='2'><?php echo $this->fetch('file', 'buildform', 'fileCount=1');?></td>
 		</tr>
 		<tr>
 			<td></td>

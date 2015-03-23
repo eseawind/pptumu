@@ -1,13 +1,6 @@
 <?php
 /**
- * The company module zh-cn file of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     company
- * @version     $Id: zh-cn.php 4714 2013-05-02 08:10:58Z chencongzhi520@gmail.com $
- * @link        http://www.zentao.net
+ * The company module zh-cn file.
  */
 $lang->company->common   = '组织视图';
 $lang->company->index    = "组织视图首页";

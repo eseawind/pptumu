@@ -8,6 +8,7 @@
 </div>
 
 <div class='main'>
+<?php if ($testations) { ?>
 	<ul>
 		<?php foreach ($testations As $id => $testation) { ?>
 		<li>
@@ -25,6 +26,9 @@
 	</ul>
 
 	<p><div class='text-right'><?php $pager->show(); ?></div></p>
+<?php } else { ?>
+	暂时没有报告
+<?Php } ?>
 </div>
 
 <?php include '../../common/view/application.html.php'; // 申请修改 ?>

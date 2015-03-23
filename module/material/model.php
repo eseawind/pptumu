@@ -20,11 +20,9 @@ class materialModel extends model
 	{
 		if ($deleted > 1) $deleted = 1;
 
-		$this->dao->select('material.*, mtype.name AS type_name, application.id AS application_id, application.verified AS application_verified')->from(TABLE_MATERIAL)->alias('material');
+		$this->dao->select('material.*, mtype.name AS type_name')->from(TABLE_MATERIAL)->alias('material');
 		$this->dao->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
-			->on('material.type_id = mtype.id')
-		->leftJoin(TABLE_APPLICATION)->alias('application')
-		->on("application.object_id = material.id AND application.object_type = 'material' AND application.finished = 0");
+			->on('material.type_id = mtype.id');
 		$this->dao->where(1)
 			->andWhere('material.deleted')->eq($deleted);
 		if ($typeId) {
@@ -146,7 +144,7 @@ class materialModel extends model
 	{
 		return $this->dao->select('materialtype.id, materialtype.name')
 			->from(TABLE_MATERIALTYPE)->alias('materialtype')
-			->where(1)->eq(1)
+			->where(1)
 			->fetchPairs();
 	}
 
@@ -187,6 +185,27 @@ class materialModel extends model
 	}
 
 	/**
+	 * 更新材料申请，填充期望到场时间等
+	 * @param $id
+	 */
+	public function updateApplication($applicationId, $application)
+	{
+		$oldApplication = $this->getApplicationById($applicationId);
+
+		$dt = date('Y-m-d H:i:s');
+		$application->modified = $dt;
+
+		$this->dao->update(TABLE_MATERIALAPPLICATION)->data($application)
+			->check('expect_arrival_date', 'date')
+			->where('id')->eq($applicationId)
+			->exec();
+
+		if (!dao::isError()) return common::createChanges($oldApplication, $application);
+
+		return false;
+	}
+
+	/**
 	 * Create material application detail
 	 */
 	public function createApplicationDetail($detail)
@@ -205,15 +224,15 @@ class materialModel extends model
 	/**
 	 *
 	 */
-	public function updateApplicationDetail($id, $detail)
+	public function updateApplicationDetail($applicationId, $detailId, $detail)
 	{
+		$oldDetail = $this->getApplicationdetailById($applicationId, $detailId);
+
 		$this->dao->update(TABLE_MATERIALAPPLICATIONDETAIL)->data($detail)
-			->where('id')->eq($id)
+			->where('id')->eq($detailId)
 			->exec();
 
-		if (!dao::isError()) {
-			return $id;
-		}
+		if (!dao::isError()) return common::createChanges($oldDetail, $detail);
 
 		return false;
 	}
@@ -237,7 +256,9 @@ class materialModel extends model
 		if (isset($conds['verified'])) {
 			$this->dao->andWhere('application.verified')->eq($conds['verified']);
 		}
-		$applications = $this->dao->page($pager)->fetchAll();
+		$applications = $this->dao->orderBy('application.id DESC')
+			->page($pager)
+			->fetchAll();
 
 		foreach ($applications As $i => $application) {
 			$applications[$i]->details = $this->getApplicationDetails($application->id);
@@ -284,11 +305,13 @@ class materialModel extends model
 	}
 
 	/**
-	 *
+	 * @param $projectID
+	 * @param array $conds array('verified' => 2, ....)
+	 * @return mixed
 	 */
-	public function getProjectApplications($projectID)
+	public function getProjectApplications($projectID, $conds = array())
 	{
-		$proApps = $this->dao->select('application.id AS application_id, detail.id AS detail_id, detail.material_id, detail.qty, material.code AS material_code, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')
+		$this->dao->select('application.id AS application_id, detail.id AS detail_id, detail.material_id, detail.qty,  material.code AS material_code, material.name AS material_name, material.unit AS material_unit, mtype.name AS material_type_name')
 			->from(TABLE_MATERIALAPPLICATION)->alias('application')
 			->rightJoin(TABLE_MATERIALAPPLICATIONDETAIL)->alias('detail')
 			->on('detail.application_id = application.id')
@@ -296,14 +319,17 @@ class materialModel extends model
 			->on('detail.material_id = material.id')
 			->leftJoin(TABLE_MATERIALTYPE)->alias('mtype')
 			->on('material.type_id = mtype.id')
-			->where('application.project_id')->eq($projectID)
-			->andWhere('application.verified')->eq(2)
-			->andWhere('application.deleted')->eq(0)
-			->orderBy('application.id ASC')
-			->fetchAll();
+			->where('application.project_id')->eq($projectID);
+		if (isset($conds['verified'])) {
+			$this->dao->andWhere('application.verified')->eq((int)$conds['verified']);
+		}
+		$this->dao->andWhere('application.deleted')->eq(0)
+				->orderBy('application.id DESC');
+
+		$materialApps = $this->dao->fetchAll();
 
 		$proAppQtys = array();
-		foreach ($proApps As $app) {
+		foreach ($materialApps As $app) {
 			if (!isset($proAppQtys[$app->material_id])) {
 				$proAppQtys[$app->material_id] = $app;
 			} else {

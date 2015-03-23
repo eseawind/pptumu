@@ -81,30 +81,15 @@ class material extends control
 	/**
 	 *
 	 */
-	public function delete()
+	public function delete($materialID, $confirm = 'no')
 	{
-
-	}
-
-	/**
-	 * 修改申请
-	 */
-	public function application($action = 'edit', $status = 'all', $projectID = 0, $pageID = 1)
-	{
-		/* Load pager and get tasks. */
-		$this->app->loadClass('pager', $static = true);
-		$recPerPage = 10;
-		$pager = new pager(0, $recPerPage, $pageID);
-
-		$conds = array('object_type' => 'material', 'action' => $action);
-		$status != 'all' && $conds['status'] = $status;
-		$projectID && $conds['object_id'] = $projectID;
-		$applications = $this->loadModel('my')->getApplicationList($conds, $pager);
-
-		$this->view->applications = $applications;
-		$this->view->pager = $pager;
-
-		$this->display();
+		if ($confirm == 'no') {
+			echo js::confirm('确认要删除？', $this->createLink('material', 'delete', "materialID={$materialID}&confirm=yes"));
+			exit;
+		} else {
+			$this->material->delete(TABLE_MATERIAL, $materialID);
+			die(js::locate(inlink('index'), 'parent'));
+		}
 	}
 
 	/**
@@ -122,7 +107,7 @@ class material extends control
 			}
 
 			$this->loadModel('project');
-			$projects = $this->project->getPairs();
+			$projects = $this->project->getPairs('', ($this->app->user->role == 'pm' ? $this->app->user->account : ''));
 
 			$this->view->projects = array('' => '请选择') + $projects;
 		} else if ($step == 'material') {
@@ -146,15 +131,17 @@ class material extends control
 			$this->view->materials = $materials;
 		} else if ($step == 'qty') {
 			if (!empty($_POST)) {
-				$details = fixer::input('post')->get();
+				$details = fixer::input('post')
+					->stripTags($this->config->material->editor->apply['id'], $this->config->allowedTags)
+					->get();
 
 				foreach ($details->id As $index => $id) {
 					$detail = new stdClass();
 					$detail->qty = $details->qty[$index];
 
-					$changes = $this->material->updateApplicationDetail($id, $detail);
-					if(dao::isError()) die(js::error(dao::getError()));
+					$changes = $this->material->updateApplicationDetail($applicationID, $id, $detail);
 
+					if(dao::isError()) die(js::error(dao::getError()));
 					if ($changes) {
 						$actionID = $this->loadModel('action')->create('material application detail', $id, 'edited');
 						$this->action->logHistory($actionID, $changes);
@@ -162,7 +149,18 @@ class material extends control
 					unset($detail);
 				}
 
-				die(js::locate($this->createLink('material', 'index'), 'parent'));
+				$application = new stdClass();
+				$application->expect_arrival_date = $details->expect_arrival_date;
+				$application->remark = $details->remark;
+				$changes = $this->material->updateApplication($applicationID, $application);
+
+				if(dao::isError()) die(js::error(dao::getError()));
+				if ($changes) {
+					$actionID = $this->loadModel('action')->create('material application', $id, 'edited');
+					$this->action->logHistory($actionID, $changes);
+				}
+
+				die(js::locate($this->createLink('material', 'applicationindex'), 'parent'));
 			}
 
 			$details = $this->material->getApplicationDetails($applicationID);

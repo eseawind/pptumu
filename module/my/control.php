@@ -27,10 +27,12 @@ class my extends control
 	 */
 	public function index()
 	{
-		$account = $this->app->user->account;
-
 		/* Get project and product stats. */
-		$projectStats = $this->loadModel('project')->getList(array('status' => 'doing'));
+		$projectConds = array('status' => 'doing');
+		if ($this->app->user->role == 'pm') {
+			$projectConds['pm'] = $this->app->user->account;
+		}
+		$projectStats = $this->loadModel('project')->getList($projectConds);
 
 		/* Set the dynamic pager. */
 		$this->app->loadClass('pager', true);

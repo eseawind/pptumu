@@ -63,9 +63,9 @@ $lang->project->putoff   = '延期';
 $lang->project->suspend  = '挂起';
 $lang->project->close    = '结束';
 
-$lang->project->typeList['sprint']    = '短期迭代';
-$lang->project->typeList['waterfall'] = '长期工程';
-$lang->project->typeList['ops']       = '运维工程';
+$lang->project->typeList['sprint']    = '道路工程';
+$lang->project->typeList['waterfall'] = '桥梁工程';
+$lang->project->typeList['ops']       = '其他工程';
 
 $lang->project->endList[7]    = '一星期';
 $lang->project->endList[14]   = '两星期';

@@ -99,30 +99,15 @@ class machine extends control
 	/**
 	 *
 	 */
-	public function delete($isRent = 0, $machineId)
+	public function delete($machineID, $isRent = 0, $confirm = 'no')
 	{
-
-	}
-
-	/**
-	 * 修改申请
-	 */
-	public function application($action = 'edit', $status = 'all', $projectID = 0, $pageID = 1)
-	{
-		/* Load pager and get tasks. */
-		$this->app->loadClass('pager', $static = true);
-		$recPerPage = 10;
-		$pager = new pager(0, $recPerPage, $pageID);
-
-		$conds = array('object_type' => 'machine', 'action' => $action);
-		$status != 'all' && $conds['status'] = $status;
-		$projectID && $conds['object_id'] = $projectID;
-		$applications = $this->loadModel('my')->getApplicationList($conds, $pager);
-
-		$this->view->applications = $applications;
-		$this->view->pager = $pager;
-
-		$this->display();
+		if ($confirm == 'no') {
+			echo js::confirm('确认要删除？', $this->createLink('machine', 'delete', "machineID={$machineID}&isRent={$isRent}&confirm=yes"));
+			exit;
+		} else {
+			$this->machine->delete(TABLE_MACHINE, $machineID);
+			die(js::locate($this->createLink('machine', 'index', "isRent={$isRent}"), 'parent'));
+		}
 	}
 
 	/**
@@ -134,9 +119,11 @@ class machine extends control
 			$distributionID = $this->machine->distribute();
 			if (dao::isError()) die(js::error(dao::getError()));
 
-			$this->loadModel('action')->create('machine distributiion', $distributionID, 'created');
-
-			die(js::locate($this->createLink('machine', 'index'), 'parent'));
+			$actionModel = $this->loadModel('action');
+			foreach ($distributionID As $did) {
+				is_int($did) && $actionModel->create('machine distributiion', $did, 'created');
+			}
+			die(js::locate($this->createLink('machine', 'distributionlist', "machineID={$machineID}"), 'parent'));
 		}
 
 		$this->loadModel('project');
@@ -147,6 +134,28 @@ class machine extends control
 		$this->view->projects = array('' => '选择项目') + $projects;
 		$this->view->machine = $machine;
 		$this->view->machineID = $machineID;
+
+		$this->display();
+	}
+
+	/**
+	 * 机械分配列表
+	 * @param $machineID
+	 */
+	public function distributionlist($machineID, $pageID = 1)
+	{
+		$machine = $this->machine->getById($machineID);
+
+		// pagination
+		$recPerPage = 20;
+		$this->app->loadClass('pager', $static = true);
+		$pager = new pager(0, $recPerPage, $pageID);
+
+		$distributions = $this->machine->getAllDistributions($machineID, $pager);
+
+		$this->view->machine = $machine;
+		$this->view->distributions = $distributions;
+		$this->view->pager = $pager;
 
 		$this->display();
 	}

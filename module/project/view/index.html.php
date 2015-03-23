@@ -2,19 +2,7 @@
 <?php include '../../common/view/sparkline.html.php'; ?>
 
 <div id='featurebar'>
-	<div class='actions'>
-		<?php echo html::a($this->createLink('project', 'create'), "<i class='icon-plus'></i> " . $lang->project->create, '', "class='btn'") ?>
-	</div>
-	<?php if (false) { ?>
-	<ul class='nav'>
-		<?php echo "<li id='undoneTab'>" . html::a(inlink("index", "locate=no&status=undone&projectID=$project->id"), $lang->project->undone) . '</li>'; ?>
-		<?php echo "<li id='allTab'>" . html::a(inlink("index", "locate=no&status=all&projectID=$project->id"), $lang->project->all) . '</li>'; ?>
-		<?php echo "<li id='waitTab'>" . html::a(inlink("index", "locate=no&status=wait&projectID=$project->id"), $lang->project->statusList['wait']) . '</li>'; ?>
-		<?php echo "<li id='doingTab'>" . html::a(inlink("index", "locate=no&status=doing&projectID=$project->id"), $lang->project->statusList['doing']) . '</li>'; ?>
-		<?php echo "<li id='suspendedTab'>" . html::a(inlink("index", "locate=no&status=suspended&projectID=$project->id"), $lang->project->statusList['suspended']) . '</li>'; ?>
-		<?php echo "<li id='doneTab'>" . html::a(inlink("index", "locate=no&status=done&projectID=$project->id"), $lang->project->statusList['done']) . '</li>'; ?>
-	</ul>
-	<?php } ?>
+	<div class='actions'></div>
 </div>
 
 <div class="main">
@@ -25,6 +13,7 @@
 			<th class='w-id'><?php common::printOrderLink('id', $orderBy, $vars, $lang->idAB); ?></th>
 			<th><?php common::printOrderLink('code', $orderBy, $vars, $lang->project->code); ?></th>
 			<th class='w-200px'><?php common::printOrderLink('name', $orderBy, $vars, $lang->project->name); ?></th>
+			<th><?php echo $lang->project->type; ?></th>
 			<th><?php common::printOrderLink('pm', $orderBy, $vars, $lang->project->pm); ?></th>
 			<th><?php common::printOrderLink('begin', $orderBy, $vars, $lang->project->begin); ?></th>
 			<th><?php common::printOrderLink('end', $orderBy, $vars, $lang->project->espected_completion); ?></th>
@@ -40,18 +29,15 @@
 				</td>
 				<td class='text-left'><?php echo $project->code; ?></td>
 				<td class='text-left'><?php echo html::a($this->createLink('project', 'view', 'project=' . $project->id), $project->name); ?></td>
+				<td><?php echo $lang->project->typeList[$project->type]; ?></td>
 				<td><?php echo $users[$project->pm]; ?></td>
-				<td><?php echo $project->begin; ?></td>
-				<td><?php echo $project->espected_completion; ?></td>
-				<td><?php echo $project->actual_completion; ?></td>
+				<td><?php echo Helper::validate($project->begin, 'date'); ?></td>
+				<td><?php echo Helper::validate($project->espected_completion, 'date'); ?></td>
+				<td><?php echo Helper::validate($project->actual_completion, 'date'); ?></td>
 				<td class='status-<?php echo $project->status ?>'><?php echo $lang->project->statusList[$project->status]; ?></td>
 				<td>
-					<?php if ($project->application_id && $project->application_verified == 1) { ?>
 					<?php echo html::a($this->createLink('project', 'edit', "projectID={$project->id}"), '编辑'); ?>&nbsp;|
-					<?php } else if (empty($project->application_id)) { ?>
-					<?php echo html::a("javascript: orderModificationApplication(\"application_{$project->id}\");", '申请修改', '', "objecttype='project' action='edit' objecttypename='项目' objectid='{$project->id}' objectname='{$project->name}' id='application_{$project->id}'"); ?>&nbsp;|
-					<?php } ?>
-					<?php echo html::a($this->createLink('project', 'delete', "projectID={$project->id}"), '删除'); ?>
+					<?php common::printLink('project', 'delete',  "projectID=$projectID&confirm=no", $lang->delete, 'hiddenwin');?>
 				</td>
 			</tr>
 		<?php } ?>
@@ -67,5 +53,4 @@
 </div>
 <script>$("#<?php echo $status;?>Tab").addClass('active');</script>
 
-<?php include '../../common/view/application.html.php'; // 申请修改 ?>
 <?php include '../../common/view/footer.html.php'; ?>

@@ -55,7 +55,7 @@ class userModel extends model
 	 * @access public
 	 * @return array
 	 */
-	public function getPairs($params = '', $usersToAppended = '')
+	public function getPairs($params = '', $usersToAppended = '', $role = '')
 	{
 		/* Set the query fields and orderBy condition.
 		 *
@@ -65,23 +65,25 @@ class userModel extends model
 		$fields = 'account, realname';
 		if (strpos($params, 'pofirst') !== false) $fields .= ", INSTR(',pd,po,', role) AS roleOrder";
 		if (strpos($params, 'pdfirst') !== false) $fields .= ", INSTR(',po,pd,', role) AS roleOrder";
-		if (strpos($params, 'qafirst') !== false) $fields .= ", INSTR(',qd,qa,', role) AS roleOrder";
 		if (strpos($params, 'qdfirst') !== false) $fields .= ", INSTR(',qa,qd,', role) AS roleOrder";
 		if (strpos($params, 'pmfirst') !== false) $fields .= ", INSTR(',td,pm,', role) AS roleOrder";
-		if (strpos($params, 'devfirst') !== false) $fields .= ", INSTR(',td,pm,qd,qa,dev,', role) AS roleOrder";
+
 		$orderBy = strpos($params, 'first') !== false ? 'roleOrder DESC, account' : 'account';
 
 		/* Get raw records. */
-		$users = $this->dao->select($fields)->from(TABLE_USER)
-			->beginIF(strpos($params, 'nodeleted') !== false)->where('deleted')->eq(0)->fi()
-			->orderBy($orderBy)
-			->fetchAll('account');
+		$this->dao->select($fields)->from(TABLE_USER)
+			->beginIF(strpos($params, 'nodeleted') !== false)->where('deleted')->eq(0)->fi();
+		if ($role && array_key_exists($role, $this->lang->user->roleList)) {
+			$this->dao->andWhere('role')->eq($role);
+		}
+
+		$users = $this->dao->orderBy($orderBy)->fetchAll('account');
 		if ($usersToAppended) $users += $this->dao->select($fields)->from(TABLE_USER)->where('account')->in($usersToAppended)->fetchAll('account');
 
 		/* Cycle the user records to append the first letter of his account. */
 		foreach ($users as $account => $user) {
 			$firstLetter = ucfirst(substr($account, 0, 1)) . ':';
-			if (strpos($params, 'noletter') !== false) $firstLetter = '';
+			if (true || strpos($params, 'noletter') !== false) $firstLetter = '';
 			$users[$account] = $firstLetter . ($user->realname ? $user->realname : $account);
 		}
 

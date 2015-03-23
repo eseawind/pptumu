@@ -27,10 +27,8 @@ class dailyreview extends control
 	 * @access public
 	 * @return void
 	 */
-	public function index($projectID = 0, $verified = 'pending', $pageID = 1)
+	public function index($projectID = 0, $pageID = 1)
 	{
-		$verifiedVal = $this->dailyreview->getVerifyStatusVal($verified);
-
 		if (!empty($_POST)) {
 			$search = fixer::input('post')->get();
 			$projectID = $search->search['project_id'];
@@ -42,7 +40,6 @@ class dailyreview extends control
 		$pager = new pager(0, $recPerPage, $pageID);
 
 		$conds = array();
-		$conds['verified'] = $verifiedVal;
 		$projectID && $conds['project_id'] = $projectID;
 
 		$dailies = $this->dailyreview->getDailyList($conds, $pager);
@@ -50,32 +47,57 @@ class dailyreview extends control
 		//
 		$projects = $this->project->getPairs();
 
-		$verifiedParams = helper::genParamstr(array('projectID' => $projectID));
-
 		$this->view->dailies = $dailies;
 		$this->view->projects = array('' => '选择项目') + $projects;
 		$this->view->projectID = $projectID;
-		$this->view->verified = $verified;
-		$this->view->verifiedVal = $verifiedVal;
-		$this->view->verifiedParams = $verifiedParams;
 		$this->view->pager = $pager;
 
 		$this->display();
 	}
 
-	public function showreport($reportID)
+	/**
+	 * 审核日报
+	 * @param $reportID
+	 */
+	public function reportreview($reportID)
 	{
+		$report = $this->report->getReportById($reportID);
 
+		$project = $this->project->getById($report->project_id);
+
+		$this->view->report = $report;
+		$this->view->project = $project;
+		$this->view->title = $project->name . ' > ' . $report->report_date . '日报';
+		$this->view->positiion[] = $project->name;
+		$this->view->position[] = $report->report_date . '日报';
+
+		$this->display();
 	}
 
-	public function showtestation($testationID)
+	/**
+	 * 签证审核
+	 * @param $testationID
+	 */
+	public function testationreview($testationID)
 	{
+		$testation = $this->report->getTestationById($testationID);
 
+		$this->view->testation = $testation;
+
+		$this->display();
 	}
 
-	public function showproblem($problemID)
+	/**
+	 * 存在问题审核
+	 * @param $problemID
+	 */
+	public function problemreview($problemID)
 	{
+		$problem = $this->report->getProblemById($problemID);
 
+		$this->view->problem = $problem;
+
+		$this->display();
 	}
 
 	/**
@@ -97,6 +119,17 @@ class dailyreview extends control
 		$this->view->pager = $pager;
 
 		$this->display();
+	}
+
+	public function verify()
+	{
+		$this->dailyreview->verify();
+
+		if (dao::isError()) {
+			$this->send(dao::getError(), 'json');
+		} else {
+			$this->send(array('result' => 'success'), 'json');
+		}
 	}
 
 }

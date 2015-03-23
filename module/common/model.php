@@ -208,23 +208,23 @@ class commonModel extends model
 			if (!$isGuest) {
 				echo '<li>' . html::a(helper::createLink('my', 'profile', '', '', true), $lang->profile, '', "class='iframe' data-width='600'") . '</li>';
 				echo '<li>' . html::a(helper::createLink('my', 'changepassword', '', '', true), $lang->changePassword, '', "class='iframe' data-width='500'") . '</li>';
-				echo "<li class='divider'></li>";
+				// echo "<li class='divider'></li>";
 			}
 
 			$isLeft = ($app->company->website and $app->company->backyard) ? '' : ' left';
 
-			echo "<li class='dropdown-submenu{$isLeft}'>";
-			echo "<a href='javascript:;'>" . $lang->theme . "</a><ul class='dropdown-menu'>";
-			foreach ($app->lang->themes as $key => $value) {
+			// echo "<li class='dropdown-submenu{$isLeft}'>";
+			// echo "<a href='javascript:;'>" . $lang->theme . "</a><ul class='dropdown-menu'>";
+			/*foreach ($app->lang->themes as $key => $value) {
 				echo "<li class='theme-option" . ($app->cookie->theme == $key ? " active" : '') . "'><a href='javascript:selectTheme(\"$key\");' data-value='" . $key . "'>" . $value . "</a></li>";
-			}
+			}*/
 			echo '</ul></li>';
 
-			echo "<li class='dropdown-submenu{$isLeft}'>";
-			echo "<a href='javascript:;'>" . $lang->lang . "</a><ul class='dropdown-menu'>";
-			foreach ($app->config->langs as $key => $value) {
+			// echo "<li class='dropdown-submenu{$isLeft}'>";
+			// echo "<a href='javascript:;'>" . $lang->lang . "</a><ul class='dropdown-menu'>";
+			/** foreach ($app->config->langs as $key => $value) {
 				echo "<li class='lang-option" . ($app->cookie->lang == $key ? " active" : '') . "'><a href='javascript:selectLang(\"$key\");' data-value='" . $key . "'>" . $value . "</a></li>";
-			}
+			} */
 			echo '</ul></li>';
 
 			echo '</ul></div>';
@@ -236,10 +236,10 @@ class commonModel extends model
 			}
 		}
 
-		if ($app->company->website) echo html::a($app->company->website, $lang->company->website, '_blank');
-		if ($app->company->backyard) echo html::a($app->company->backyard, $lang->company->backyard, '_blank');
+		// if ($app->company->website) echo html::a($app->company->website, $lang->company->website, '_blank');
+		// if ($app->company->backyard) echo html::a($app->company->backyard, $lang->company->backyard, '_blank');
 
-		echo html::a(helper::createLink('misc', 'about'), $lang->aboutZenTao, '', "class='about iframe' data-width='900' data-headerless='true' data-class='modal-about'");
+		// echo html::a(helper::createLink('misc', 'about'), $lang->aboutZenTao, '', "class='about iframe' data-width='900' data-headerless='true' data-class='modal-about'");
 	}
 
 	/**

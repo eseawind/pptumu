@@ -1,7 +1,7 @@
 <?php
 $config->project = new stdclass();
 $config->project->defaultWorkhours = 7;
-$config->project->orderBy          = 'created, modified';
+$config->project->orderBy          = 'id DESC';
 $config->project->maxBurnDay       = '31';
 
 global $lang, $app;
@@ -13,9 +13,6 @@ $config->project->edit->requiredFields   = 'code, name';
 $config->project->editor = new stdclass();
 $config->project->editor->create  = array('id' => 'desc',    'tools' => 'simpleTools');
 $config->project->editor->edit    = array('id' => 'desc',    'tools' => 'simpleTools');
-$config->project->editor->putoff  = array('id' => 'comment', 'tools' => 'simpleTools');
-$config->project->editor->close   = array('id' => 'comment', 'tools' => 'simpleTools');
-$config->project->editor->suspend = array('id' => 'comment', 'tools' => 'simpleTools');
 
 $config->project->search['module']                   = 'task';
 $config->project->search['fields']['name']           = $lang->task->name;

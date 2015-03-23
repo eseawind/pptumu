@@ -186,13 +186,21 @@ class projectModel extends model
 	 */
 	public function create()
 	{
+		global $app;
+
+		$dt = date('Y-m-d H:i:s');
+
 		$project = fixer::input('post')
 			->stripTags($this->config->project->editor->create['id'], $this->config->allowedTags)
-			->remove('files, labels')
-			->remove('delta')
+			->remove('files, labels, delta')
 			->get();
+		$project->created = $dt;
+		$project->modified = $dt;
+		$project->deleted = 0;
+		$project->created_by = $app->user->account;
+
 		$this->dao->insert(TABLE_PROJECT)->data($project)
-			->autoCheck($skipFields = 'begin,espected_completion')
+			->autoCheck($skipFields = 'begin')
 			->batchcheck($this->config->project->create->requiredFields, 'notempty')
 			->checkIF($project->begin != '', 'begin', 'date')
 			->checkIF($project->espected_completion != '', 'espected_completion', 'date')
@@ -224,17 +232,22 @@ class projectModel extends model
 	 */
 	public function update($projectID)
 	{
-		$oldProject = $this->getById($projectID);
+		global $app;
+
+		$dt = date('Y-m-d H:i:s');
+
 		$projectID = (int)$projectID;
+		$oldProject = $this->getById($projectID);
 
 		$project = fixer::input('post')
 			->setIF($this->post->begin == '0000-00-00', 'begin', '')
 			->setIF($this->post->espected_completion == '0000-00-00', 'espected_completion', '')
 			->setIF($this->post->espected_completion == '0000-00-00', 'actual_completion', '')
 			->stripTags($this->config->project->editor->edit['id'], $this->config->allowedTags)
-			->remove('files, labels')
-			->remove('delta')
+			->remove('files, labels, delta')
 			->get();
+		$project->modified = $dt;
+
 		$this->dao->update(TABLE_PROJECT)->data($project)
 			->autoCheck($skipFields = 'begin,espected_completion,actual_completion')
 			->batchcheck($this->config->project->edit->requiredFields, 'notempty')
@@ -376,24 +389,27 @@ class projectModel extends model
 	 * Get project pairs.
 	 *
 	 * @param  string $mode all|noclosed or empty
+	 * @param string $pm the pm of project
 	 * @access public
 	 * @return array
 	 */
-	public function getPairs($mode = '')
+	public function getPairs($mode = '', $pm = '')
 	{
-		$orderBy = !empty($this->config->project->orderBy) ? $this->config->project->orderBy : 'modified, created';
+		$orderBy = !empty($this->config->project->orderBy) ? $this->config->project->orderBy : 'id DESC';
 		$mode .= $this->cookie->projectMode;
 		/* Order by status's content whether or not done */
-		$projects = $this->dao->select('*')->from(TABLE_PROJECT)
-			->where('1')->eq(1)
+		$this->dao->select('*')->from(TABLE_PROJECT)
+			->where(1)
 			->andWhere('deleted')->eq(0)
-			->orderBy($orderBy)
-			->fetchAll();
+			->andWhere('status')->eq('doing');
+		if ($pm) $this->dao->andWhere('pm')->eq($pm);
+		$projects = $this->dao->orderBy($orderBy)->fetchAll();
+
 		$pairs = array();
 		foreach ($projects as $project) {
 			if (strpos($mode, 'noclosed') !== false and $project->status == 'done') continue;
 			if ($this->checkPriv($project)) {
-				if (strpos($mode, 'nocode') === false and $project->code) {
+				if (false && strpos($mode, 'nocode') === false and $project->code) {
 					$firstChar = strtoupper(substr($project->code, 0, 1));
 					if (ord($firstChar) < 127) $project->name = $firstChar . ':' . $project->name;
 				}
@@ -420,12 +436,11 @@ class projectModel extends model
 	 */
 	public function getList($conds = array(), $pager = null)
 	{
-		$this->dao->select('project.*, application.id AS application_id, application.verified AS application_verified')->from(TABLE_PROJECT)->alias('project')
-			->leftJoin(TABLE_APPLICATION)->alias('application')
-			->on("application.object_id = project.id AND application.object_type = 'project' AND application.finished = 0")
+		$this->dao->select('project.*')->from(TABLE_PROJECT)->alias('project')
 			->where(1)
 			->andWhere('project.deleted')->eq(0);
 		if (@$conds['status']) $this->dao->andWhere('project.status')->eq($conds['status']);
+		if (@$conds['pm']) $this->dao->andWhere('project.pm')->eq($conds['pm']);
 
 		$this->dao->orderBy('project.id DESC');
 		if (is_object($pager) && is_a($pager, 'pager')) {
@@ -448,7 +463,7 @@ class projectModel extends model
 	 * @access public
 	 * @return void
 	 */
-	public function getProjectStats($status = 'doing', $productID = 0, $itemCounts = 30, $orderBy = 'code', $pager = null)
+	public function getProjectStats($status = 'doing', $productID = 0, $itemCounts = 30, $orderBy = 'id', $pager = null)
 	{
 		/* Init vars. */
 		$projects = $this->getList(array('status' => $status));

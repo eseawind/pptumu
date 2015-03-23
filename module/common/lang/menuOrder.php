@@ -81,10 +81,7 @@ $lang->admin->menuOrder[40] = 'convert';
 $lang->admin->menuOrder[45] = 'backup';
 $lang->admin->menuOrder[50] = 'trashes';
 
-$lang->convert->menuOrder   = $lang->admin->menuOrder;
-$lang->upgrade->menuOrder   = $lang->admin->menuOrder;
 $lang->action->menuOrder    = $lang->admin->menuOrder;
-$lang->extension->menuOrder = $lang->admin->menuOrder;
 $lang->custom->menuOrder    = $lang->admin->menuOrder;
 $lang->editor->menuOrder    = $lang->admin->menuOrder;
 $lang->mail->menuOrder      = $lang->admin->menuOrder;

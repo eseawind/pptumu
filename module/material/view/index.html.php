@@ -1,10 +1,8 @@
 <?php include '../../common/view/header.html.php';?>
-
 <?php include '../../common/view/sparkline.html.php';?>
+
 <div id='featurebar'>
-    <div class='actions'>
-        <?php echo html::a($this->createLink('material', 'create'), "<i class='icon-plus'></i> " . $lang->material->create,'', "class='btn'") ?>
-    </div>
+    <div class='actions'></div>
 </div>
 
 <div class='side' id='taskTree'>
@@ -17,6 +15,7 @@
         </ul>
     </div>
 </div>
+
 <div class='main'>
     <table class='table table-condensed table-hover table-striped tablesorter active-disabled' id="material_list">
         <thead>
@@ -40,12 +39,11 @@
             <td class='text-center'><?php echo $material->type_name;?></td>
             <td class='text-center'><?php echo $material->unit;?></td>
             <td class='text-center'>
-                <?php if ($material->application_id && $material->application_verified == 1) { ?>
                 <?php echo html::a($this->createLink('material', 'edit', 'id=' . $material->id), $lang->edit);?>&nbsp;|
-                <?php } else if (empty($material->application_id)) { ?>
-                <?php echo html::a("javascript: orderModificationApplication(\"application_{$material->id}\");", '申请修改', '', "objecttype='material' action='edit' objecttypename='材料' objectid='{$material->id}' objectname='{$material->name}' id='application_{$material->id}'"); ?>&nbsp;|
-                <?php } ?>
-                <?php echo html::a($this->createLink('material', 'delete', 'id=' . $material->id), $lang->delete);?>
+	            <?php common::printLink('material', 'delete',  "materialID={$material->id}&confirm=no", $lang->delete, 'hiddenwin');?>
+	            <?php if (false) { ?>
+		            <?php echo html::a("javascript: orderModificationApplication(\"application_{$material->id}\");", '申请修改', '', "objecttype='material' action='edit' objecttypename='材料' objectid='{$material->id}' objectname='{$material->name}' id='application_{$material->id}'"); ?>&nbsp;|
+	            <?php } ?>
             </td>
         </tr>
         <?php } ?>
@@ -62,5 +60,4 @@
 
 <script>$("#<?php echo $status;?>Tab").addClass('active');</script>
 
-<?php include '../../common/view/application.html.php'; // 申请修改 ?>
 <?php include '../../common/view/footer.html.php';?>

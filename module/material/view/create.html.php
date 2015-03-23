@@ -8,8 +8,8 @@
     </div>
     <div class='actions'></div>
   </div>
-<!-- target='hiddenwin' -->
-  <form class='form-condensed' method='post' id='dataform'>
+
+  <form class='form-condensed' method='post' target='hiddenwin' id='dataform'>
     <table class='table table-form'>
 	  <tr>
         <th class='w-90px'><?php echo $lang->material->code; ?></th>

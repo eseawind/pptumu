@@ -134,4 +134,51 @@ class myModel extends model
 		return $applications;
 	}
 
+	/**
+	 * 获取对象有效的修改操作申请
+	 * @param array $conds
+	 * @param null $pager
+	 */
+	public function getObjectValidApplication($objectType, $objectID, $verified = 1, $finished = 0)
+	{
+		$fields = 'application.*';
+		$this->dao->select($fields)->from(TABLE_APPLICATION)->alias('application')
+			->where(1)
+			->andWhere('object_type')->eq($objectType)
+			->andWhere('object_id')->eq($objectID)
+			->andWhere('verified')->eq($verified)
+			->andWhere('finished')->eq($finished);
+
+		$this->dao->orderBy('application.created DESC')->limit(1);
+		$application = $this->dao->fetch();
+
+		return $application;
+	}
+
+	/**
+	 * 当修改操作完成后，将该对象的修改请求设置为完成
+	 * @param $objectType
+	 * @param $objectID
+	 */
+	public function finishedApplication($objectType, $objectID)
+	{
+		global $app;
+		$oldApplication = $this->getObjectValidApplication($objectType, $objectID, 1, 0);
+
+		$dt = date('Y-m-d H:i:s');
+		$application->modified = $dt;
+		$application->finished = 1;
+
+		$this->dao->update(TABLE_APPLICATION)->data($application)
+			->where('id')->eq($oldApplication->id)
+			->limit(1)
+			->exec();
+
+		if (!dao::isError()) {
+			return $applicationID;
+		}
+
+		return false;
+	}
+
 }

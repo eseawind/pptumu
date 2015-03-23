@@ -38,7 +38,7 @@
 		</tr>
 		<tr>
 			<th><?php echo $lang->project->type; ?></th>
-			<td><?php echo html::input('type', $type, "class='form-control'"); ?></td>
+			<td><?php echo html::select('type', array('' => '') + $lang->project->typeList, '', "class='form-control'"); ?></td>
 			<td></td>
 		</tr>
 		<tr>

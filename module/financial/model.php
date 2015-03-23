@@ -32,7 +32,8 @@ class financialModel extends model
 		if ($application->verified > 0 && !dao::isError()) {
 			// update application detail item
 			foreach ($details['id'] As $i => $did) {
-				$detail = array('price' => $application->detail['price'][$i]);
+				$detail->price = $details['price'][$i];
+				$detail->bid_price = $details['bid_price'][$i];
 
 				$this->dao->update(TABLE_MATERIALAPPLICATIONDETAIL)->data($detail)
 					->where('id')->eq($did)

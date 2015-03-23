@@ -32,8 +32,6 @@ $config->duplicateTime = 60;
 
 /* Supported languages. */
 $config->langs['zh-cn'] = '简体';
-$config->langs['zh-tw'] = '繁體';
-$config->langs['en']    = 'English';
 
 /* Supported charsets. */
 $config->charsets['zh-cn']['utf-8'] = 'UTF-8';
@@ -45,7 +43,7 @@ $config->charsets['en']['utf-8']    = 'UTF-8';
 /* Default settings. */
 $config->default = new stdclass();
 $config->default->view   = 'html';        // Default view.
-$config->default->lang   = 'en';          // Default language.
+$config->default->lang   = 'zh-cn';          // Default language.
 $config->default->theme  = 'default';     // Default theme.
 $config->default->module = 'index';       // Default module.
 $config->default->method = 'index';       // Default method.

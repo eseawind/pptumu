@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * 机械 Model
  */
 
 class machineModel extends model
@@ -9,23 +9,25 @@ class machineModel extends model
 	/**
 	 *
 	 */
-	public function getList($isRent = 0, $typeId = 0, $deleted = 0, $pager = null)
+	public function getList($isRent = '', $typeId = 0, $deleted = 0, $pager = null)
 	{
 		if ($deleted > 1) $deleted = 1;
-		if ($isRent > 1) {
-			$isRent = 1;
-		} else if ($isRent < 0) {
-			$isRent = 0;
+		if ($isRent !== '') {
+			if ($isRent > 1) {
+				$isRent = 1;
+			} else if ($isRent < 0) {
+				$isRent = 0;
+			}
 		}
-		$fields = 'machine.*, mtype.name AS type_name, application.id AS application_id, application.verified AS application_verified';
+		$fields = 'machine.*, mtype.name AS type_name';
 		$this->dao->select($fields)->from(TABLE_MACHINE)->alias('machine');
 		$this->dao->leftJoin(TABLE_MACHINETYPE)->alias('mtype')
-			->on('machine.type_id = mtype.id')
-		->leftJoin(TABLE_APPLICATION)->alias('application')
-		->on("application.object_id = machine.id AND application.object_type = 'machine' AND application.finished = 0");
+			->on('machine.type_id = mtype.id');
 		$this->dao->where(1)
-			->andWhere('deleted')->eq($deleted)
-			->andWhere('is_rent')->eq($isRent);
+			->andWhere('deleted')->eq($deleted);
+		if ($isRent !== '') {
+			$this->dao->andWhere('is_rent')->eq($isRent);
+		}
 		if ($typeId) {
 			$this->dao->andWhere('machine.type_id')->eq($typeId);
 		}
@@ -138,28 +140,38 @@ class machineModel extends model
 		global $app;
 
 		$dt = date('Y-m-d H:i:s');
-		$distribution = fixer::input('post')->get();
-		$distribution->verified = 1;
-		$distribution->verified_by = $app->user->account;
-		$distribution->created_by = $app->user->account;
-		$distribution->deleted = 0;
-		$distribution->created = $dt;
-		$distribution->modified = $dt;
+		$distributions = fixer::input('post')->get();
 
-		$this->dao->insert(TABLE_MACHINEDISTRIBUTIION)->data($distribution)
-			->check('project_id', 'notempty')
-			->check('project_id', 'int')
-			->check('begin', 'datetime')
-			->check('end', 'datetime')
-			->exec();
+		$distributionID = array();
+		foreach ($distributions->project_id As $i => $project_id) {
+			if (!empty($project_id)) {
+				$distribution = new stdClass();
+				$distribution->project_id = $project_id;
+				$distribution->machine_id = $distributions->machine_id;
+				$distribution->begin = $distributions->begin[$i];
+				$distribution->end = $distributions->end[$i];
+				$distribution->verified = 1;
+				$distribution->verified_by = $app->user->account;
+				$distribution->created_by = $app->user->account;
+				$distribution->deleted = 0;
+				$distribution->created = $dt;
+				$distribution->modified = $dt;
 
-		if (!dao::isError()) {
-			$distributionID = $this->dao->lastInsertId();
-
-			return $distributionID;
+				$this->dao->insert(TABLE_MACHINEDISTRIBUTIION)->data($distribution)
+					->check('project_id', 'notempty')
+					->check('project_id', 'int')
+					->check('begin', 'datetime')
+					->check('end', 'datetime')
+					->exec();
+				if (!dao::isError()) {
+					$distributionID[] = $this->dao->lastInsertId();
+				} else {
+					$distributionID[] = dao::getError();
+				}
+			}
 		}
 
-		return false;
+		return $distributionID;
 	}
 
 	/**
@@ -168,11 +180,13 @@ class machineModel extends model
 	 * @param array $mConds conditions for machine
 	 * @return mixed
 	 */
-	public function getProjectDistribution($projectID, $mconds = array())
+	public function getProjectDistribution($projectID, $reportDate = '', $mconds = array())
 	{
-		$dt = date('Y-m-d H:i:s');
+		if ($reportDate === '') {
+			$reportDate = date('Y-m-d');
+		}
 
-		$this->dao->select('distribution.id, distribution.machine_id, machine.code AS machine_code, machine.name AS machine_name, machine.is_rent, machine.type_id, mtype.name AS type_name')
+		$this->dao->select('distribution.id, distribution.project_id, distribution.begin, distribution.end, distribution.machine_id, machine.code AS machine_code, machine.name AS machine_name, machine.is_rent, machine.type_id, mtype.name AS type_name')
 			->from(TABLE_MACHINEDISTRIBUTIION)->alias('distribution')
 			->leftJoin(TABLE_MACHINE)->alias('machine')
 			->on('machine.id = distribution.machine_id')
@@ -181,8 +195,7 @@ class machineModel extends model
 			->where('distribution.verified')->eq(1)
 			->andWhere('distribution.project_id')->eq($projectID)
 			->andWhere('distribution.deleted')->eq(0)
-			->andWhere('distribution.begin')->lt($dt)
-			->andWhere('distribution.end')->gt($dt)
+			->andWhere("(DATE(distribution.begin) >= '{$reportDate}' OR DATE(distribution.end) <= '{$reportDate}')")
 			->orderBy('distribution.id DESC');
 
 		$list = $this->dao->fetchAll('id');
@@ -225,6 +238,63 @@ class machineModel extends model
 			->fetch();
 
 		return $distributions;
+	}
+
+	/**
+	 * @param $machineID
+	 * @param null $pager
+	 * @return mixed | array
+	 */
+	public function getAllDistributions($machineID, $pager = null)
+	{
+		$fields = 'distribution.*, project.code AS project_code, project.name AS project_name';
+		$this->dao->select($fields)
+			->from(TABLE_MACHINEDISTRIBUTIION)->alias('distribution')
+			->leftJoin(TABLE_PROJECT)->alias('project')
+			->on('project.id = distribution.project_id')
+			->where(1)
+			->andWhere('distribution.machine_id')->eq($machineID)
+			->andWhere('distribution.deleted')->eq(0);
+
+		$distributions = $this->dao->orderBy('distribution.id DESC')
+			->page($pager)
+			->fetchAll();
+
+		return $distributions;
+	}
+
+	/**
+	 * 解析机械分配的状态
+	 * @param $begin
+	 * @param $end
+	 */
+	public static function parseDistributionStatus($begin, $end)
+	{
+		if (!(validater::checkDatetime($begin) && validater::checkDatetime($end))) return '--';
+
+		$currentDt = mktime();
+
+		$status = '';
+		if (strtotime($begin) > $currentDt) {
+			$status = 'wait';
+		} else if ((strtotime($begin) <= $currentDt) && (strtotime($end) > $currentDt)) {
+			$status = 'doing';
+		} else if (strtotime($end)  <= $currentDt) {
+			$status = 'done';
+		} else {
+			$status = '--';
+		}
+
+		return $status;
+	}
+
+	/**
+	 * @param $begin
+	 * @param $end
+	 */
+	public static function parseMachineDistributeExpire($begin, $end, $currentDate)
+	{
+		$expireDiff = date_diff($end, $begin);
 	}
 
 }

@@ -37,7 +37,8 @@ $(function()
         startView: 2,
         forceParse: 0,
         showMeridian: 1,
-        format: 'yyyy-mm-dd hh:ii::ss',
+        // format: 'yyyy-mm-dd hh:ii:ss',
+	    format: 'yyyy-mm-dd hh:ii:ss',
         startDate: '1970-1-1'
     }
 

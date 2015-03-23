@@ -4,9 +4,9 @@
 <ul>
 	<?php foreach ($reports As $i => $report) { ?>
 	<li>
-		<?php echo $report->report_date; ?>
-		<?php echo $report->type == 'today' ? '今日' : '明日'; ?>日报
-		<?php echo html::a($this->createLink('report', 'show', "reportID={$report->id}") . '?onlybody=yes', '点击查看', '', "class='about iframe' data-width='900' data-headerless='true' data-class='modal-about'"); ?>
+		<?php echo $report->date; ?>
+		<?php echo $report->report_type == 'today' ? '今日' : '明日'; ?>日报
+		<?php echo html::a($this->createLink('report', 'show', "reportID={$report->report_id}") . '?onlybody=yes', '点击查看', '', "class='about iframe' data-width='900' data-headerless='true' data-class='modal-about'"); ?>
 	</li>
 	<?php } ?>
 </ul>

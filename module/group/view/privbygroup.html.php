@@ -25,11 +25,11 @@
       </li>
       <?php endforeach;?>
 
+	    <?php if (false) { ?>
       <li <?php echo $menu == 'other' ? "class='active'" : "";?>>
         <?php echo html::a(inlink('managePriv', sprintf($params, 'other')), $lang->group->other);?>
       </li>
-
-      <li class='w-150px'><?php echo html::select('version', $this->lang->group->versions, $version, "onchange=showPriv(this.value) class='form-control chosen'");?></li>
+	    <?php } ?>
     </ul>
   </div>
   <table class='table table-hover table-striped table-bordered table-form'> 

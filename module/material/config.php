@@ -10,6 +10,8 @@ $config->material->edit   = new stdclass();
 $config->material->create->requiredFields = 'code, name, type_id, unit';
 $config->material->edit->requiredFields   = 'code, name, type_id, unit';
 
+$config->material->editor->apply = array('id' => 'remark', 'tools' => 'simpleTools');
+
 $config->material->units = array(
 	'㎡' => '㎡', 'm³' => 'm³', '吨' => '吨', '米' => '米', '个' => '个',
 	'把' => '把', '桶' => '桶', '斤' => '斤',

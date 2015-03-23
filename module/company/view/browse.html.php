@@ -1,25 +1,16 @@
 <?php
-/**
- * The browse view file of product dept of ZenTaoPMS.
- *
- * @copyright   Copyright 2009-2013 青岛易软天创网络科技有限公司 (QingDao Nature Easy Soft Network Technology Co,LTD www.cnezsoft.com)
- * @license     LGPL (http://www.gnu.org/licenses/lgpl.html)
- * @author      Chunsheng Wang <chunsheng@cnezsoft.com>
- * @package     product
- * @version     $Id: browse.html.php 5096 2013-07-11 07:02:43Z chencongzhi520@gmail.com $
- * @link        http://www.zentao.net
- */
-?>
-<?php 
 include '../../common/view/header.html.php';
 include '../../common/view/treeview.html.php';
 js::set('deptID', $deptID);
 js::set('confirmDelete', $lang->user->confirmDelete);
 ?>
+<?php if (false) { ?>
 <div id='titlebar'>
   <div class='heading'><?php echo html::icon($lang->icons['company']);?> <?php echo $lang->company->browse;?></div>
 </div>
+
 <div id='querybox' class='show'><?php echo $searchForm?></div>
+<?php } ?>
 <div class='side'>
   <a class='side-handle' data-id='companyTree'><i class='icon-caret-left'></i></a>
   <div class='side-body'>
@@ -96,13 +87,6 @@ js::set('confirmDelete', $lang->user->confirmDelete);
     <tfoot>
     <tr>
       <td colspan='12'>
-      <div class='table-actions clearfix'>
-      <?php
-      if($canBatchEdit or $canManageContacts) echo "<div class='btn-group'>" . html::selectButton() . '</div>';
-      if($canBatchEdit) echo html::submitButton($lang->edit, 'onclick=batchEdit()', 'btn-default');
-      if($canManageContacts) echo html::submitButton($lang->user->contacts->manage, 'onclick=manageContacts()');
-      ?>
-      </div>
       <?php echo $pager->show();?>
       </td>
     </tr>

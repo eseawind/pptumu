@@ -20,15 +20,15 @@
 			</tr>
 			<tr>
 				<th><?php echo $lang->project->beginAndEnd; ?></th>
-				<td><?php echo $project->begin . ' ~ ' . $project->espected_completion; ?></td>
+				<td><?php echo $project->begin . ' ~ ' . Helper::validate($project->espected_completion, 'date'); ?></td>
 			</tr>
 			<tr>
 				<th><?php echo $lang->project->actual_completion; ?></th>
-				<td><?php echo $project->actual_completion; ?></td>
+				<td><?php echo Helper::validate($project->actual_completion, 'date'); ?></td>
 			</tr>
 			<tr>
 				<th><?php echo $lang->project->type; ?></th>
-				<td><?php echo $project->type; ?></td>
+				<td><?php echo $lang->project->typeList[$project->type]; ?></td>
 			</tr>
 			<tr>
 				<th><?php echo $lang->project->pm; ?></th>

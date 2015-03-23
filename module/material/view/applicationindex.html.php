@@ -13,7 +13,7 @@
 </div>
 
 <div class='main'>
-	<table class='table table-condensed table-striped table-bordered tablesorter table-fixed active-disabled'>
+	<table class='table table-condensed table-striped tablesorter active-disabled'>
 		<thead>
 		<tr class="a-center">
 			<th>序号</th>
@@ -23,6 +23,7 @@
 			<th>申请日期</th>
 			<th>申请人</th>
 			<th>申请状态</th>
+			<th>材料到达时间</th>
 			<th>备注</th>
 		</tr>
 		</thead>
@@ -44,6 +45,7 @@
 			} else {
 				echo "<span class=\"label label-badge label-warning\">未通过</span>";
 			} ?></td>
+			<td><?php echo Helper::validate($application->expect_arrival_date, 'date'); ?></td>
 			<td><div class='content'><?php echo $application->remark; ?></div></td>
 		</tr>
 		<?php } ?>

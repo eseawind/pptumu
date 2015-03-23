@@ -34,7 +34,7 @@
 		</tr>
 		<tr>
 			<th><?php echo $lang->project->type; ?></th>
-			<td><?php echo html::input('type', $project->type, "class='form-control'"); ?></td>
+			<td><?php echo html::select('type', array('' => '') + $lang->project->typeList, $project->type, "class='form-control'"); ?></td>
 		</tr>
 		<tr>
 			<th class='w-90px'><?php echo $lang->project->dateRange; ?></th>
